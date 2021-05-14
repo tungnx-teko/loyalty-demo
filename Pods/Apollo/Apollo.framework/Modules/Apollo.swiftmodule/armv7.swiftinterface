@@ -1,0 +1,2352 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target armv7-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Apollo
+@_exported import Apollo
+import Foundation
+import Kingfisher
+import Swift
+import UIKit
+extension UIView {
+  @inlinable internal var viewController: UIKit.UIViewController? {
+    get {
+        var parentResponder: UIResponder? = self
+        while parentResponder != nil {
+            parentResponder = parentResponder!.next
+            if let viewController = parentResponder as? UIViewController {
+                return viewController
+            }
+        }
+        return nil
+    }
+  }
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class SearchHeaderBar : ApolloHeader {
+  @objc @IBInspectable open var searchPlaceholder: Swift.String? {
+    @objc get
+    @objc set
+  }
+  public var searchTextField: UIKit.UITextField {
+    get
+    set
+  }
+  @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+public enum ApolloButtonSize : Swift.String {
+  case small
+  case medium
+  case large
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum ApolloButtonType : Swift.String {
+  case primary
+  case secondary
+  case ghost
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class ApolloButton : UIKit.UIButton {
+  convenience public init(title: Swift.String, size: ApolloButtonSize = .small, type: ApolloButtonType = .primary)
+  convenience public init(size: ApolloButtonSize, type: ApolloButtonType)
+  @objc convenience dynamic public init()
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public var size: ApolloButtonSize {
+    get
+    set
+  }
+  @objc @available(iOS, unavailable, message: "Use only for IB")
+  @IBInspectable public var rawApolloSize: Swift.String? {
+    @objc get
+    @objc set
+  }
+  public var type: ApolloButtonType {
+    get
+    set
+  }
+  @objc @available(iOS, unavailable, message: "Use only for IB")
+  @IBInspectable public var rawApolloType: Swift.String? {
+    @objc get
+    @objc set
+  }
+  public var shouldReload: Swift.Bool {
+    get
+    set
+  }
+  public var title: Swift.String {
+    get
+    set
+  }
+  open var titleColor: UIKit.UIColor? {
+    get
+    set
+  }
+  public var buttonColor: UIKit.UIColor? {
+    get
+    set
+  }
+  public var highlightColor: UIKit.UIColor? {
+    get
+    set
+  }
+  @objc override dynamic open var isHighlighted: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  public var disableColor: UIKit.UIColor
+  public var borderColor: UIKit.UIColor?
+  public var highlightBorderColor: UIKit.UIColor?
+  @objc override dynamic open var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  open var leftIcon: UIKit.UIImage? {
+    get
+    set
+  }
+  open var rightIcon: UIKit.UIImage? {
+    get
+    set
+  }
+  @objc deinit
+  @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+}
+public enum TabMode : Swift.String {
+  case fixed, scrollable
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct TabItem {
+  public var title: Swift.String
+  public var icon: UIKit.UIImage?
+  public var badge: Swift.String?
+  public var viewController: UIKit.UIViewController
+  public init(title: Swift.String, icon: UIKit.UIImage? = nil, badge: Swift.String? = nil, viewController: UIKit.UIViewController)
+}
+@objc @_inheritsConvenienceInitializers public class ApolloTab : UIKit.UIViewController {
+  public var dataSource: [TabItem]
+  public var tabMode: TabMode
+  public var viewControllers: [UIKit.UIViewController] {
+    get
+  }
+  public var direction: UIKit.NSLayoutConstraint.Axis
+  @objc override dynamic public func viewDidLayoutSubviews()
+  public var selectedIndex: Swift.Int {
+    get
+    set
+  }
+  @objc override dynamic public func viewDidLoad()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension ApolloTab : TabGroupDataSource {
+  public func menuViewController(tabGroup: TabGroup, cellForItemAt index: Swift.Int) -> PagingMenuViewCell
+  public func menuViewController(tabGroup: TabGroup, widthForItemAt index: Swift.Int) -> CoreGraphics.CGFloat
+  public func numberOfItemsForMenuViewController(tabGroup: TabGroup) -> Swift.Int
+  public func setBadge(index: Swift.Int, value: Swift.String)
+}
+extension ApolloTab : PagingContentViewControllerDataSource {
+  public func numberOfItemsForContentViewController(viewController: PagingContentViewController) -> Swift.Int
+  public func contentViewController(viewController: PagingContentViewController, viewControllerAt index: Swift.Int) -> UIKit.UIViewController
+}
+extension ApolloTab : TabGroupDelegate {
+  public func menuViewController(tabGroup: TabGroup, didSelect page: Swift.Int, previousPage: Swift.Int)
+}
+extension ApolloTab : PagingContentViewControllerDelegate {
+  public func contentViewController(viewController: PagingContentViewController, didManualScrollOn index: Swift.Int, percent: CoreGraphics.CGFloat)
+}
+public protocol DatePickerDelegate {
+  func didSelectDateTime(type: PickerType, date: Foundation.Date)
+}
+public enum TextLinkType : Swift.String {
+  case leftArrow
+  case rightArrow
+  case none
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @IBDesignable public class TextLink : UIKit.UIButton {
+  public var apolloType: TextLinkType {
+    get
+    set
+  }
+  @objc @available(iOS, unavailable, message: "Use only for IB")
+  @IBInspectable public var rawApolloType: Swift.String? {
+    @objc get
+    @objc set
+  }
+  public init(frame: CoreGraphics.CGRect, type: TextLinkType)
+  convenience public init(type: TextLinkType)
+  public var title: Swift.String {
+    get
+    set
+  }
+  @objc override dynamic public var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  convenience public init(title: Swift.String, type: TextLinkType = .none)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @available(iOS, unavailable)
+  @objc override dynamic public func setImage(_ image: UIKit.UIImage?, for state: UIKit.UIControl.State)
+  @objc override dynamic public var tintColor: UIKit.UIColor! {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public var semanticContentAttribute: UIKit.UISemanticContentAttribute {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+}
+public enum ActionType : Swift.String {
+  case primary, secondary, ghost, textLink
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class AlertAction {
+  public init(icon: UIKit.UIImage? = nil, title: Swift.String, type: ActionType, action: ((AlertAction) -> Swift.Void)? = nil)
+  public init(icon: UIKit.UIImage? = nil, title: Swift.String, type: ActionType, target: Any?, action: ObjectiveC.Selector)
+  @objc deinit
+}
+extension Array where Element == UIKit.NSLayoutConstraint.Attribute {
+  public func anchor(from fromView: UIKit.UIView, to toView: UIKit.UIView, constant: CoreGraphics.CGFloat = 0) -> [UIKit.NSLayoutConstraint]
+}
+@objc @IBDesignable public class ApolloListContent : UIKit.UIControl {
+  @objc @IBInspectable open var text: Swift.String {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var subContent: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var subContentFocus: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var suffixText: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var showSwitch: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var prefixIcon: UIKit.UIImage? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var suffixIcon: UIKit.UIImage? {
+    @objc get
+    @objc set
+  }
+  @objc dynamic public init()
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public func setBadge(value: Swift.String? = nil)
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+}
+@objc @_inheritsConvenienceInitializers open class PagingMenuViewCell : UIKit.UIView {
+  open var isSelected: Swift.Bool
+  public var identifier: Swift.String! {
+    get
+  }
+  public var index: Swift.Int! {
+    get
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers open class PagingMenuFocusViewAnimationCoordinator {
+  final public let beginFrame: CoreGraphics.CGRect
+  final public let endFrame: CoreGraphics.CGRect
+  open func animateFocusView(alongside animation: @escaping (PagingMenuFocusViewAnimationCoordinator) -> Swift.Void, completion: ((Swift.Bool) -> Swift.Void)?)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class PagingMenuFocusView : UIKit.UIView {
+  open var selectedIndex: Swift.Int?
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc deinit
+}
+public protocol PagingMenuViewDataSource : AnyObject {
+  func numberOfItemForPagingMenuView() -> Swift.Int
+  func pagingMenuView(pagingMenuView: PagingMenuView, cellForItemAt index: Swift.Int) -> PagingMenuViewCell
+  func pagingMenuView(pagingMenuView: PagingMenuView, widthForItemAt index: Swift.Int) -> CoreGraphics.CGFloat
+}
+public protocol PagingMenuViewDelegate : AnyObject {
+  func pagingMenuView(pagingMenuView: PagingMenuView, didSelectItemAt index: Swift.Int)
+  func pagingMenuView(pagingMenuView: PagingMenuView, willAnimateFocusViewTo index: Swift.Int, with coordinator: PagingMenuFocusViewAnimationCoordinator)
+  func pagingMenuView(pagingMenuView: PagingMenuView, willDisplay cell: PagingMenuViewCell, forItemAt index: Swift.Int)
+}
+extension PagingMenuViewDelegate {
+  public func pagingMenuView(pagingMenuView: PagingMenuView, didSelectItemAt index: Swift.Int)
+  public func pagingMenuView(pagingMenuView: PagingMenuView, willAnimateFocusViewTo index: Swift.Int, with coordinator: PagingMenuFocusViewAnimationCoordinator)
+  public func pagingMenuView(pagingMenuView: PagingMenuView, willDisplay cell: PagingMenuViewCell, forItemAt index: Swift.Int)
+}
+@objc @_inheritsConvenienceInitializers open class PagingMenuView : UIKit.UIScrollView {
+  public enum Alignment {
+    case center
+    case left
+    case right
+    public static func == (a: PagingMenuView.Alignment, b: PagingMenuView.Alignment) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  final public let focusView: PagingMenuFocusView
+  open var visibleCells: [PagingMenuViewCell] {
+    get
+  }
+  open var cellAlignment: PagingMenuView.Alignment
+  open var cellSpacing: CoreGraphics.CGFloat
+  open var totalSpacing: CoreGraphics.CGFloat {
+    get
+  }
+  weak open var dataSource: PagingMenuViewDataSource?
+  weak open var menuDelegate: PagingMenuViewDelegate?
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  open var numberOfItem: Swift.Int
+  open func indexForItem(at point: CoreGraphics.CGPoint) -> Swift.Int?
+  open func cellForItem(at index: Swift.Int) -> PagingMenuViewCell?
+  open func reloadData(with index: Swift.Int = 0, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  open func register(nib: UIKit.UINib?, with identifier: Swift.String)
+  open func register(type: PagingMenuViewCell.Type, with identifier: Swift.String)
+  open func registerFocusView(view: UIKit.UIView, isBehindCell: Swift.Bool = false)
+  open func registerFocusView(nib: UIKit.UINib, isBehindCell: Swift.Bool = false)
+  open func dequeue(with identifier: Swift.String) -> PagingMenuViewCell
+  open func rectForItem(at index: Swift.Int) -> CoreGraphics.CGRect
+  open func invalidateLayout()
+  @objc override dynamic open func observeValue(forKeyPath keyPath: Swift.String?, of object: Any?, change: [Foundation.NSKeyValueChangeKey : Any]?, context: Swift.UnsafeMutableRawPointer?)
+  open func scroll(index: Swift.Int, percent: CoreGraphics.CGFloat = 0)
+  open func scroll(index: Swift.Int, completeHandler: @escaping (Swift.Bool) -> Swift.Void)
+  @objc override dynamic open func layoutSubviews()
+  @available(iOS 11.0, *)
+  @objc override dynamic open func safeAreaInsetsDidChange()
+  @objc deinit
+}
+extension PagingMenuView {
+  @objc override dynamic open func touchesBegan(_ touches: Swift.Set<UIKit.UITouch>, with event: UIKit.UIEvent?)
+  @objc override dynamic open func touchesEnded(_ touches: Swift.Set<UIKit.UITouch>, with event: UIKit.UIEvent?)
+  @objc override dynamic open func touchesCancelled(_ touches: Swift.Set<UIKit.UITouch>, with event: UIKit.UIEvent?)
+}
+public enum ArrowPosition {
+  case any
+  case top
+  case bottom
+  case right
+  case left
+  public static func == (a: ArrowPosition, b: ArrowPosition) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public struct Preferences {
+  public struct Drawing {
+    public var arrowPosition: ArrowPosition
+    public var cornerRadius: CoreGraphics.CGFloat
+    public var arrowHeight: CoreGraphics.CGFloat
+    public var arrowWidth: CoreGraphics.CGFloat
+    public var foregroundColor: UIKit.UIColor
+    public var backgroundColor: UIKit.UIColor
+    public var textAlignment: UIKit.NSTextAlignment
+    public var borderWidth: CoreGraphics.CGFloat
+    public var borderColor: UIKit.UIColor
+    public var font: UIKit.UIFont
+    public var shadowColor: UIKit.UIColor
+    public var shadowOffset: CoreGraphics.CGSize
+    public var shadowRadius: CoreGraphics.CGFloat
+    public var shadowOpacity: CoreGraphics.CGFloat
+  }
+  public struct Positioning {
+    public var bubbleHInset: CoreGraphics.CGFloat
+    public var bubbleVInset: CoreGraphics.CGFloat
+    public var contentHInset: CoreGraphics.CGFloat
+    public var contentVInset: CoreGraphics.CGFloat
+    public var maxWidth: CoreGraphics.CGFloat
+  }
+  public struct Animating {
+    public var dismissTransform: CoreGraphics.CGAffineTransform
+    public var showInitialTransform: CoreGraphics.CGAffineTransform
+    public var showFinalTransform: CoreGraphics.CGAffineTransform
+    public var springDamping: CoreGraphics.CGFloat
+    public var springVelocity: CoreGraphics.CGFloat
+    public var showInitialAlpha: CoreGraphics.CGFloat
+    public var dismissFinalAlpha: CoreGraphics.CGFloat
+    public var showDuration: Swift.Double
+    public var dismissDuration: Swift.Double
+    public var dismissOnTap: Swift.Bool
+    public var autoHideAfter: Swift.Double
+  }
+  public var drawing: Preferences.Drawing
+  public var positioning: Preferences.Positioning
+  public var animating: Preferences.Animating
+  public var hasBorder: Swift.Bool {
+    get
+  }
+  public var hasShadow: Swift.Bool {
+    get
+  }
+  public init()
+}
+public protocol ApolloInstructionDelegate : AnyObject {
+  func ApolloInstructionDidDismiss(_ tipView: ApolloInstruction)
+}
+@objc @_hasMissingDesignatedInitializers @IBDesignable open class ApolloInstruction : UIKit.UIView {
+  public class func show(forView view: UIKit.UIView, withinSuperview superview: UIKit.UIView? = nil, title: Swift.String, content: Swift.String, buttonText: Swift.String, preferences: Preferences = ApolloInstruction.globalPreferences, delegate: ApolloInstructionDelegate? = nil, animated: Swift.Bool = true)
+  public class func show(forView view: UIKit.UIView, withinSuperview superview: UIKit.UIView? = nil, text: Swift.String, arrowPosition: ArrowPosition = .any, preferences: Preferences = ApolloInstruction.globalPreferences, delegate: ApolloInstructionDelegate? = nil, animated: Swift.Bool = true)
+  @objc override dynamic open var backgroundColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic open var description: Swift.String {
+    @objc get
+  }
+  open var preferences: Preferences {
+    get
+  }
+  public static var globalPreferences: Preferences
+  convenience public init(text: Swift.String, preferences: Preferences = ApolloInstruction.globalPreferences, delegate: ApolloInstructionDelegate? = nil)
+  @objc deinit
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic open func draw(_ rect: CoreGraphics.CGRect)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+}
+extension ApolloInstruction : UIKit.UIGestureRecognizerDelegate {
+  @objc override dynamic open func gestureRecognizerShouldBegin(_ gestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class ApolloBadge : UIKit.UIView {
+  public var value: Swift.String? {
+    get
+    set
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class Switch : UIKit.UISwitch {
+  @objc override dynamic open var onTintColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+public protocol TabGroupDelegate : AnyObject {
+  func menuViewController(tabGroup: TabGroup, focusViewDidEndTransition focusView: PagingMenuFocusView)
+  func menuViewController(tabGroup: TabGroup, didSelect page: Swift.Int, previousPage: Swift.Int)
+  func menuViewController(tabGroup: TabGroup, willAnimateFocusViewTo index: Swift.Int, with coordinator: PagingMenuFocusViewAnimationCoordinator)
+  func menuViewController(tabGroup: TabGroup, willDisplay cell: PagingMenuViewCell, forItemAt index: Swift.Int)
+}
+extension TabGroupDelegate {
+  public func menuViewController(tabGroup: TabGroup, focusViewDidEndTransition focusView: PagingMenuFocusView)
+  public func menuViewController(tabGroup: TabGroup, willAnimateFocusViewTo index: Swift.Int, with coordinator: PagingMenuFocusViewAnimationCoordinator)
+  public func menuViewController(tabGroup: TabGroup, willDisplay cell: PagingMenuViewCell, forItemAt index: Swift.Int)
+}
+public protocol TabGroupDataSource : AnyObject {
+  func numberOfItemsForMenuViewController(tabGroup: TabGroup) -> Swift.Int
+  func menuViewController(tabGroup: TabGroup, cellForItemAt index: Swift.Int) -> PagingMenuViewCell
+  func menuViewController(tabGroup: TabGroup, widthForItemAt index: Swift.Int) -> CoreGraphics.CGFloat
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class TabGroup : UIKit.UIView {
+  weak public var delegate: TabGroupDelegate?
+  weak public var dataSource: TabGroupDataSource?
+  final public let menuView: PagingMenuView
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  public var focusView: PagingMenuFocusView {
+    get
+  }
+  public var focusPointerOffset: CoreGraphics.CGPoint {
+    get
+  }
+  public var percentOffset: CoreGraphics.CGFloat {
+    get
+  }
+  public var cellAlignment: PagingMenuView.Alignment {
+    get
+    set
+  }
+  public var cellSpacing: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  public var contentInset: UIKit.UIEdgeInsets {
+    get
+    set
+  }
+  public func scroll(index: Swift.Int, percent: CoreGraphics.CGFloat = 0, animated: Swift.Bool = true)
+  public var visibleCells: [PagingMenuViewCell] {
+    get
+  }
+  public var currentFocusedCell: PagingMenuViewCell? {
+    get
+  }
+  public var currentFocusedIndex: Swift.Int? {
+    get
+  }
+  public func cellForItem(at index: Swift.Int) -> PagingMenuViewCell?
+  public func registerFocusView(view: UIKit.UIView, isBehindCell: Swift.Bool = false)
+  public func registerFocusView(nib: UIKit.UINib, isBehindCell: Swift.Bool = false)
+  public func register(nib: UIKit.UINib?, forCellWithReuseIdentifier identifier: Swift.String)
+  public func register(type: PagingMenuViewCell.Type, forCellWithReuseIdentifier identifier: Swift.String)
+  public func dequeueReusableCell(withReuseIdentifier identifier: Swift.String, for index: Swift.Int) -> PagingMenuViewCell
+  public func reloadData(with preferredFocusIndex: Swift.Int? = nil, completionHandler: ((Swift.Bool) -> Swift.Void)? = nil)
+  public func invalidateLayout()
+  @objc override dynamic public func layoutSubviews()
+  @objc deinit
+}
+extension TabGroup : UIKit.UIScrollViewDelegate {
+  @objc dynamic public func scrollViewDidEndDecelerating(_ scrollView: UIKit.UIScrollView)
+  @objc dynamic public func scrollViewDidEndDragging(_ scrollView: UIKit.UIScrollView, willDecelerate decelerate: Swift.Bool)
+}
+extension TabGroup : PagingMenuViewDelegate {
+  public func pagingMenuView(pagingMenuView: PagingMenuView, willDisplay cell: PagingMenuViewCell, forItemAt index: Swift.Int)
+  public func pagingMenuView(pagingMenuView: PagingMenuView, willAnimateFocusViewTo index: Swift.Int, with coordinator: PagingMenuFocusViewAnimationCoordinator)
+  public func pagingMenuView(pagingMenuView: PagingMenuView, didSelectItemAt index: Swift.Int)
+}
+extension TabGroup : PagingMenuViewDataSource {
+  public func numberOfItemForPagingMenuView() -> Swift.Int
+  public func pagingMenuView(pagingMenuView: PagingMenuView, widthForItemAt index: Swift.Int) -> CoreGraphics.CGFloat
+  public func pagingMenuView(pagingMenuView: PagingMenuView, cellForItemAt index: Swift.Int) -> PagingMenuViewCell
+}
+public enum ProductStatusType : Swift.String, Swift.CaseIterable {
+  case primary, secondary, ghost
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public typealias AllCases = [ProductStatusType]
+  public static var allCases: [ProductStatusType] {
+    get
+  }
+}
+public enum ProductStatusState : Swift.String, Swift.CaseIterable {
+  case `default`, success, error, pending, branding
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public typealias AllCases = [ProductStatusState]
+  public static var allCases: [ProductStatusState] {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class ApolloProductStatus : UIKit.UIView {
+  public var title: Swift.String
+  public var type: ProductStatusType
+  public var productState: ProductStatusState
+  public init(title: Swift.String, type: ProductStatusType = .primary, state: ProductStatusState = .default)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public func setup()
+  @objc deinit
+}
+public struct Duration : Swift.RawRepresentable {
+  public typealias RawValue = Foundation.TimeInterval
+  public var rawValue: Foundation.TimeInterval {
+    get
+  }
+  public init(rawValue: Foundation.TimeInterval)
+  public static let short: Duration
+  public static let long: Duration
+}
+@objc open class ApolloToast : Foundation.Operation {
+  public var duration: Duration
+  @objc override dynamic open var isExecuting: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic open var isFinished: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  public init(customView: ViewToastable, duration: Duration = .short)
+  public init(message: Swift.String, leftIcon: UIKit.UIImage? = nil, backgroundColor: UIKit.UIColor? = .textPrimary, duration: Duration = .short)
+  public init(message: Swift.String, leftIcon: UIKit.UIImage? = nil, buttonImage: UIKit.UIImage? = nil, buttonTitle: Swift.String?, target: Any? = nil, action: ObjectiveC.Selector? = nil, backgroundColor: UIKit.UIColor? = .textPrimary, duration: Duration = .short)
+  @objc deinit
+  public func show()
+  @objc override dynamic open func cancel()
+  @objc override dynamic open func start()
+  @objc override dynamic open func main()
+  @objc override dynamic public init()
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable public class HeaderItem : UIKit.UIButton {
+  public var badge: Swift.String? {
+    get
+    set
+  }
+  convenience public init(icon: UIKit.UIImage? = nil, title: Swift.String? = nil, color: UIKit.UIColor? = nil, badge: Swift.String? = nil, action: ((HeaderItem) -> Swift.Void)? = nil)
+  convenience public init(icon: UIKit.UIImage? = nil, title: Swift.String? = nil, color: UIKit.UIColor? = nil, badge: Swift.String? = nil, target: Any, selector: ObjectiveC.Selector)
+  @objc convenience dynamic public init()
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+public protocol ViewToastable : UIKit.UIView {
+  var message: Swift.String? { get }
+  func estimateFrame(in window: UIKit.UIWindow) -> CoreGraphics.CGRect
+}
+@objc open class ToastView : UIKit.UIView, ViewToastable {
+  open var useSafeAreaForBottomOffset: Swift.Bool
+  @objc @IBInspectable open var message: Swift.String? {
+    @objc get
+    @objc set
+  }
+  public init(message: Swift.String, leftIcon: UIKit.UIImage? = nil, backgroundColor: UIKit.UIColor?)
+  public init(message: Swift.String, leftIcon: UIKit.UIImage? = nil, buttonImage: UIKit.UIImage?, buttonTitle: Swift.String?, target: Any?, action: ObjectiveC.Selector? = nil, backgroundColor: UIKit.UIColor?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic open func layoutSubviews()
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  open func estimateFrame(in window: UIKit.UIWindow) -> CoreGraphics.CGRect
+  open var shouldRotateManually: Swift.Bool {
+    get
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers final public class ApolloSpacing {
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class ApolloHeader : UIKit.UIView {
+  @objc @IBInspectable open var title: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var statusBarOverlay: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var headerTintColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+  public func addLeftItem(_ item: HeaderItem)
+  public func addRightItem(_ item: HeaderItem)
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+}
+extension ApolloHeader {
+  public class Item {
+    public init(icon: UIKit.UIImage? = nil, color: UIKit.UIColor? = .textPrimary, title: Swift.String? = nil, textLinkType: TextLinkType? = nil, action: ((ApolloHeader.Item) -> Swift.Void)? = nil)
+    public init(icon: UIKit.UIImage? = nil, title: Swift.String? = nil, textLinkType: TextLinkType? = nil, target: Any?, action: ObjectiveC.Selector)
+    public init(customView: UIKit.UIView)
+    @objc deinit
+  }
+}
+public enum ApolloIcon {
+  public enum Outline16 {
+    public static let Add: UIKit.UIImage?
+    public static let MinusCircle: UIKit.UIImage?
+    public static let Minus: UIKit.UIImage?
+    public static let PlusCircle: UIKit.UIImage?
+    public static let Close: UIKit.UIImage?
+    public static let Calendar: UIKit.UIImage?
+    public static let Caution: UIKit.UIImage?
+    public static let Chat: UIKit.UIImage?
+    public static let Check: UIKit.UIImage?
+    public static let Checklist: UIKit.UIImage?
+    public static let Copy: UIKit.UIImage?
+    public static let Dot: UIKit.UIImage?
+    public static let Down: UIKit.UIImage?
+    public static let Download: UIKit.UIImage?
+    public static let DragDrop: UIKit.UIImage?
+    public static let Edit: UIKit.UIImage?
+    public static let File: UIKit.UIImage?
+    public static let Garbage: UIKit.UIImage?
+    public static let Hide: UIKit.UIImage?
+    public static let Infor: UIKit.UIImage?
+    public static let JumpForward: UIKit.UIImage?
+    public static let JumpBack: UIKit.UIImage?
+    public static let Laptop: UIKit.UIImage?
+    public static let Left: UIKit.UIImage?
+    public static let Location: UIKit.UIImage?
+    public static let Mobiphone: UIKit.UIImage?
+    public static let QA: UIKit.UIImage?
+    public static let Refresh: UIKit.UIImage?
+    public static let Right: UIKit.UIImage?
+    public static let Search: UIKit.UIImage?
+    public static let Setting: UIKit.UIImage?
+    public static let Shop: UIKit.UIImage?
+    public static let ShoppingCart: UIKit.UIImage?
+    public static let Shorting: UIKit.UIImage?
+    public static let Sync: UIKit.UIImage?
+    public static let Undo: UIKit.UIImage?
+    public static let Up: UIKit.UIImage?
+    public static let Upload: UIKit.UIImage?
+    public static let Show: UIKit.UIImage?
+  }
+  public enum Outline24 {
+    public static let Account: UIKit.UIImage?
+    public static let AddItem: UIKit.UIImage?
+    public static let MinusCircle: UIKit.UIImage?
+    public static let MinusRetangle: UIKit.UIImage?
+    public static let Minus: UIKit.UIImage?
+    public static let PlusCircle: UIKit.UIImage?
+    public static let PlusRetangle: UIKit.UIImage?
+    public static let Add: UIKit.UIImage?
+    public static let Advisory: UIKit.UIImage?
+    public static let Back: UIKit.UIImage?
+    public static let CircleBack: UIKit.UIImage?
+    public static let CircleDown: UIKit.UIImage?
+    public static let CircleForward: UIKit.UIImage?
+    public static let CircleUp: UIKit.UIImage?
+    public static let Close: UIKit.UIImage?
+    public static let Down: UIKit.UIImage?
+    public static let Downward: UIKit.UIImage?
+    public static let Dino: UIKit.UIImage?
+    public static let Drag: UIKit.UIImage?
+    public static let FacebookMessenger: UIKit.UIImage?
+    public static let Forward: UIKit.UIImage?
+    public static let JumpBack: UIKit.UIImage?
+    public static let JumpForward: UIKit.UIImage?
+    public static let Redo: UIKit.UIImage?
+    public static let Undo: UIKit.UIImage?
+    public static let Up: UIKit.UIImage?
+    public static let Upward: UIKit.UIImage?
+    public static let BackToTop: UIKit.UIImage?
+    public static let BusinessCustomer: UIKit.UIImage?
+    public static let Calculator: UIKit.UIImage?
+    public static let Calendar: UIKit.UIImage?
+    public static let Camera: UIKit.UIImage?
+    public static let Cash: UIKit.UIImage?
+    public static let Caution: UIKit.UIImage?
+    public static let Chart: UIKit.UIImage?
+    public static let Chat: UIKit.UIImage?
+    public static let Check: UIKit.UIImage?
+    public static let Checklist: UIKit.UIImage?
+    public static let Chip: UIKit.UIImage?
+    public static let Clock: UIKit.UIImage?
+    public static let Copy: UIKit.UIImage?
+    public static let CustomerSupport: UIKit.UIImage?
+    public static let Document: UIKit.UIImage?
+    public static let Download: UIKit.UIImage?
+    public static let DragDrop: UIKit.UIImage?
+    public static let Edit: UIKit.UIImage?
+    public static let EndShift: UIKit.UIImage?
+    public static let FaceID: UIKit.UIImage?
+    public static let Favourite: UIKit.UIImage?
+    public static let Filter: UIKit.UIImage?
+    public static let FingerPrint: UIKit.UIImage?
+    public static let FormScale: UIKit.UIImage?
+    public static let Gaming: UIKit.UIImage?
+    public static let Gold: UIKit.UIImage?
+    public static let GuaranteeChecked: UIKit.UIImage?
+    public static let Hamburger: UIKit.UIImage?
+    public static let Headphone: UIKit.UIImage?
+    public static let Homepage: UIKit.UIImage?
+    public static let IDCard: UIKit.UIImage?
+    public static let Image: UIKit.UIImage?
+    public static let Infor: UIKit.UIImage?
+    public static let Installment1: UIKit.UIImage?
+    public static let Installment: UIKit.UIImage?
+    public static let Internet: UIKit.UIImage?
+    public static let Link: UIKit.UIImage?
+    public static let Location: UIKit.UIImage?
+    public static let Lock: UIKit.UIImage?
+    public static let LogOut: UIKit.UIImage?
+    public static let MarkAsRead: UIKit.UIImage?
+    public static let Messenger: UIKit.UIImage?
+    public static let MoneyTransfer: UIKit.UIImage?
+    public static let Monitor: UIKit.UIImage?
+    public static let MoreInfor: UIKit.UIImage?
+    public static let MoreProduct: UIKit.UIImage?
+    public static let MultiDocument: UIKit.UIImage?
+    public static let News: UIKit.UIImage?
+    public static let Notifications: UIKit.UIImage?
+    public static let Order: UIKit.UIImage?
+    public static let PC: UIKit.UIImage?
+    public static let Page: UIKit.UIImage?
+    public static let Payment: UIKit.UIImage?
+    public static let Phone1: UIKit.UIImage?
+    public static let Phone: UIKit.UIImage?
+    public static let Play1: UIKit.UIImage?
+    public static let Preview: UIKit.UIImage?
+    public static let Printer: UIKit.UIImage?
+    public static let Product: UIKit.UIImage?
+    public static let Profile: UIKit.UIImage?
+    public static let DiscountTag: UIKit.UIImage?
+    public static let Discount: UIKit.UIImage?
+    public static let Promo: UIKit.UIImage?
+    public static let Voucher: UIKit.UIImage?
+    public static let QA: UIKit.UIImage?
+    public static let QRCodeScan: UIKit.UIImage?
+    public static let Ram: UIKit.UIImage?
+    public static let Rating: UIKit.UIImage?
+    public static let Refresh: UIKit.UIImage?
+    public static let Refund: UIKit.UIImage?
+    public static let ReturnItem: UIKit.UIImage?
+    public static let SaleFunneling: UIKit.UIImage?
+    public static let Save: UIKit.UIImage?
+    public static let Scanning: UIKit.UIImage?
+    public static let SearchContent: UIKit.UIImage?
+    public static let Search: UIKit.UIImage?
+    public static let Setting: UIKit.UIImage?
+    public static let Share: UIKit.UIImage?
+    public static let Shield: UIKit.UIImage?
+    public static let Shipping: UIKit.UIImage?
+    public static let Shop: UIKit.UIImage?
+    public static let Speaker: UIKit.UIImage?
+    public static let Sorting: UIKit.UIImage?
+    public static let Success: UIKit.UIImage?
+    public static let Switch: UIKit.UIImage?
+    public static let Sync: UIKit.UIImage?
+    public static let Tablet: UIKit.UIImage?
+    public static let Tivi: UIKit.UIImage?
+    public static let TransactionHistory: UIKit.UIImage?
+    public static let TrashBinDeleteRemove: UIKit.UIImage?
+    public static let Unlock: UIKit.UIImage?
+    public static let Upload: UIKit.UIImage?
+    public static let Warehouse: UIKit.UIImage?
+    public static let Washing: UIKit.UIImage?
+    public static let Webcam: UIKit.UIImage?
+    public static let Direction: UIKit.UIImage?
+    public static let Laptop: UIKit.UIImage?
+    public static let BagCheckmark: UIKit.UIImage?
+    public static let Box1: UIKit.UIImage?
+    public static let Cart: UIKit.UIImage?
+    public static let Excel: UIKit.UIImage?
+    public static let ListLocation: UIKit.UIImage?
+    public static let Pause: UIKit.UIImage?
+    public static let Stop: UIKit.UIImage?
+  }
+  public enum Fill16 {
+    public static let ArrowDown: UIKit.UIImage?
+    public static let ArrowLeft: UIKit.UIImage?
+    public static let ArrowRight: UIKit.UIImage?
+    public static let ArrowUp: UIKit.UIImage?
+    public static let DeleteCircle: UIKit.UIImage?
+    public static let DoubleArrow: UIKit.UIImage?
+    public static let EyeHide: UIKit.UIImage?
+    public static let EyeShow: UIKit.UIImage?
+    public static let Image: UIKit.UIImage?
+    public static let Edit: UIKit.UIImage?
+  }
+  public enum Fill24 {
+    public static let Account: UIKit.UIImage?
+    public static let ArrowDown: UIKit.UIImage?
+    public static let ArrowLeft: UIKit.UIImage?
+    public static let ArrowRight: UIKit.UIImage?
+    public static let ArrowUp: UIKit.UIImage?
+    public static let Calendar: UIKit.UIImage?
+    public static let Caution: UIKit.UIImage?
+    public static let Chat: UIKit.UIImage?
+    public static let Checklist: UIKit.UIImage?
+    public static let Clock: UIKit.UIImage?
+    public static let Dino: UIKit.UIImage?
+    public static let Direction: UIKit.UIImage?
+    public static let DiscountTag: UIKit.UIImage?
+    public static let Discount: UIKit.UIImage?
+    public static let DoubleArrow: UIKit.UIImage?
+    public static let EyeHide: UIKit.UIImage?
+    public static let EyeShow: UIKit.UIImage?
+    public static let FacebookMessenger: UIKit.UIImage?
+    public static let Favourite: UIKit.UIImage?
+    public static let Filter: UIKit.UIImage?
+    public static let FlashSale: UIKit.UIImage?
+    public static let FlashOff: UIKit.UIImage?
+    public static let FlashOn: UIKit.UIImage?
+    public static let Garbage: UIKit.UIImage?
+    public static let Homepage: UIKit.UIImage?
+    public static let Image1: UIKit.UIImage?
+    public static let Image: UIKit.UIImage?
+    public static let Infor: UIKit.UIImage?
+    public static let MoreProduct: UIKit.UIImage?
+    public static let Notifications: UIKit.UIImage?
+    public static let Order: UIKit.UIImage?
+    public static let Phone: UIKit.UIImage?
+    public static let Preview: UIKit.UIImage?
+    public static let Profile: UIKit.UIImage?
+    public static let Promo: UIKit.UIImage?
+    public static let Voucher: UIKit.UIImage?
+    public static let Rating: UIKit.UIImage?
+    public static let SKU: UIKit.UIImage?
+    public static let Success: UIKit.UIImage?
+    public static let Setting: UIKit.UIImage?
+    public static let Box1: UIKit.UIImage?
+    public static let Cart: UIKit.UIImage?
+    public static let Edit: UIKit.UIImage?
+    public static let Facebook: UIKit.UIImage?
+    public static let Google: UIKit.UIImage?
+  }
+  public enum Color {
+    public static let atmCard: UIKit.UIImage?
+    public static let atm: UIKit.UIImage?
+    public static let badges: UIKit.UIImage?
+    public static let bank: UIKit.UIImage?
+    public static let cash: UIKit.UIImage?
+    public static let fireFlashsale: UIKit.UIImage?
+    public static let usa: UIKit.UIImage?
+    public static let vietnam: UIKit.UIImage?
+    public static let freeShipping: UIKit.UIImage?
+    public static let gift: UIKit.UIImage?
+    public static let guaranteeChecked: UIKit.UIImage?
+    public static let home: UIKit.UIImage?
+    public static let masterCard: UIKit.UIImage?
+    public static let mobileBanking: UIKit.UIImage?
+    public static let pvShowroom: UIKit.UIImage?
+    public static let payment: UIKit.UIImage?
+    public static let qrCode: UIKit.UIImage?
+    public static let rewardGolden: UIKit.UIImage?
+    public static let rewardBronzeCircle: UIKit.UIImage?
+    public static let rewardBronze: UIKit.UIImage?
+    public static let rewardGoldenCircle: UIKit.UIImage?
+    public static let rewardPlatinumCircle: UIKit.UIImage?
+    public static let rewardPlatinum: UIKit.UIImage?
+    public static let rewardSilverCircle: UIKit.UIImage?
+    public static let rewardSilver: UIKit.UIImage?
+    public static let sale: UIKit.UIImage?
+    public static let shop: UIKit.UIImage?
+    public static let shoppingCart: UIKit.UIImage?
+    public static let success: UIKit.UIImage?
+    public static let visaCard: UIKit.UIImage?
+    public static let visaLogo: UIKit.UIImage?
+    public static let wallet: UIKit.UIImage?
+  }
+  public enum Other {
+    public static let largeTabItem: UIKit.UIImage?
+    public static let avatarAccount: UIKit.UIImage?
+  }
+}
+extension PanModalPresentable where Self : UIKit.UIViewController {
+  public var topOffset: CoreGraphics.CGFloat {
+    get
+  }
+  public var shortFormHeight: PanModalHeight {
+    get
+  }
+  public var longFormHeight: PanModalHeight {
+    get
+  }
+  public var cornerRadius: CoreGraphics.CGFloat {
+    get
+  }
+  public var springDamping: CoreGraphics.CGFloat {
+    get
+  }
+  public var transitionDuration: Swift.Double {
+    get
+  }
+  public var transitionAnimationOptions: UIKit.UIView.AnimationOptions {
+    get
+  }
+  public var panModalBackgroundColor: UIKit.UIColor {
+    get
+  }
+  public var dragIndicatorBackgroundColor: UIKit.UIColor {
+    get
+  }
+  public var scrollIndicatorInsets: UIKit.UIEdgeInsets {
+    get
+  }
+  public var anchorModalToLongForm: Swift.Bool {
+    get
+  }
+  public var allowsExtendedPanScrolling: Swift.Bool {
+    get
+  }
+  public var allowsDragToDismiss: Swift.Bool {
+    get
+  }
+  public var allowsTapToDismiss: Swift.Bool {
+    get
+  }
+  public var isUserInteractionEnabled: Swift.Bool {
+    get
+  }
+  public var isHapticFeedbackEnabled: Swift.Bool {
+    get
+  }
+  public var shouldRoundTopCorners: Swift.Bool {
+    get
+  }
+  public var showDragIndicator: Swift.Bool {
+    get
+  }
+  public func shouldRespond(to panModalGestureRecognizer: UIKit.UIPanGestureRecognizer) -> Swift.Bool
+  public func willRespond(to panModalGestureRecognizer: UIKit.UIPanGestureRecognizer)
+  public func shouldTransition(to state: PanModalPresentationController.PresentationState) -> Swift.Bool
+  public func shouldPrioritize(panModalGestureRecognizer: UIKit.UIPanGestureRecognizer) -> Swift.Bool
+  public func willTransition(to state: PanModalPresentationController.PresentationState)
+  public func panModalWillDismiss()
+  public func panModalDidDismiss()
+}
+extension UIColor {
+  public static let tableHeader: UIKit.UIColor
+  public static let background: UIKit.UIColor
+  public static let divider: UIKit.UIColor
+  public static let disable: UIKit.UIColor
+  public static let border: UIKit.UIColor
+  public static let placeholder: UIKit.UIColor
+  public static let textSecondary: UIKit.UIColor
+  public static let textPrimary: UIKit.UIColor
+  public static let textTitle: UIKit.UIColor
+  public static let primary50: UIKit.UIColor
+  public static let primary100: UIKit.UIColor
+  public static let primary200: UIKit.UIColor
+  public static let primary300: UIKit.UIColor
+  public static let primary400: UIKit.UIColor
+  public static let primary500: UIKit.UIColor
+  public static let primary600: UIKit.UIColor
+  public static let primary700: UIKit.UIColor
+  public static let primary800: UIKit.UIColor
+  public static let primary900: UIKit.UIColor
+  public static let secondary50: UIKit.UIColor
+  public static let secondary100: UIKit.UIColor
+  public static let secondary200: UIKit.UIColor
+  public static let secondary300: UIKit.UIColor
+  public static let secondary400: UIKit.UIColor
+  public static let secondary500: UIKit.UIColor
+  public static let secondary600: UIKit.UIColor
+  public static let secondary700: UIKit.UIColor
+  public static let secondary800: UIKit.UIColor
+  public static let secondary900: UIKit.UIColor
+  public static let link50: UIKit.UIColor
+  public static let link100: UIKit.UIColor
+  public static let link200: UIKit.UIColor
+  public static let link300: UIKit.UIColor
+  public static let link400: UIKit.UIColor
+  public static let link500: UIKit.UIColor
+  public static let link600: UIKit.UIColor
+  public static let link700: UIKit.UIColor
+  public static let link800: UIKit.UIColor
+  public static let link900: UIKit.UIColor
+  public static let pending50: UIKit.UIColor
+  public static let pending100: UIKit.UIColor
+  public static let pending200: UIKit.UIColor
+  public static let pending300: UIKit.UIColor
+  public static let pending400: UIKit.UIColor
+  public static let pending500: UIKit.UIColor
+  public static let pending600: UIKit.UIColor
+  public static let pending700: UIKit.UIColor
+  public static let pending800: UIKit.UIColor
+  public static let pending900: UIKit.UIColor
+  public static let error50: UIKit.UIColor
+  public static let error100: UIKit.UIColor
+  public static let error200: UIKit.UIColor
+  public static let error300: UIKit.UIColor
+  public static let error400: UIKit.UIColor
+  public static let error500: UIKit.UIColor
+  public static let error600: UIKit.UIColor
+  public static let error700: UIKit.UIColor
+  public static let error800: UIKit.UIColor
+  public static let error900: UIKit.UIColor
+  public static let success50: UIKit.UIColor
+  public static let success100: UIKit.UIColor
+  public static let success200: UIKit.UIColor
+  public static let success300: UIKit.UIColor
+  public static let success400: UIKit.UIColor
+  public static let success500: UIKit.UIColor
+  public static let success600: UIKit.UIColor
+  public static let success700: UIKit.UIColor
+  public static let success800: UIKit.UIColor
+  public static let success900: UIKit.UIColor
+  public static let yellow50: UIKit.UIColor
+  public static let yellow100: UIKit.UIColor
+  public static let yellow200: UIKit.UIColor
+  public static let yellow300: UIKit.UIColor
+  public static let yellow400: UIKit.UIColor
+  public static let yellow500: UIKit.UIColor
+  public static let yellow600: UIKit.UIColor
+  public static let yellow700: UIKit.UIColor
+  public static let yellow800: UIKit.UIColor
+  public static let yellow900: UIKit.UIColor
+  public static let shadow: UIKit.UIColor
+}
+public struct DropdownItem {
+  public init(text: Swift.String, icon: UIKit.UIImage? = nil)
+}
+public protocol DropdownDatasource {
+  func dropdown(_ dropdown: ApolloDropdown, dataForRowAt index: Swift.Int) -> DropdownItem
+  func numberOfRows(in dropdown: ApolloDropdown) -> Swift.Int
+}
+public protocol DropdownDelegate {
+  func dropdown(_ dropdown: ApolloDropdown, didSelectRowAt index: Swift.Int)
+}
+@objc @_inheritsConvenienceInitializers open class ApolloDropdown : UIKit.UITextField {
+  public var selectedIndex: Swift.Int?
+  public var dropdownDataSource: DropdownDatasource?
+  public var dropdownDelegate: DropdownDelegate?
+  @objc @IBInspectable public var rowHeight: CoreGraphics.CGFloat
+  @objc @IBInspectable public var rowBackgroundColor: UIKit.UIColor
+  @objc @IBInspectable public var selectedRowColor: UIKit.UIColor
+  @objc @IBInspectable public var hideOptionsWhenSelect: Swift.Bool
+  @objc @IBInspectable public var listHeight: CoreGraphics.CGFloat
+  @IBInspectable @objc override dynamic public var placeholder: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable public var checkMarkEnabled: Swift.Bool
+  @objc @IBInspectable public var handleKeyboard: Swift.Bool
+  @objc override dynamic public var isSelected: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic open func textRect(forBounds bounds: CoreGraphics.CGRect) -> CoreGraphics.CGRect
+  @objc override dynamic open func placeholderRect(forBounds bounds: CoreGraphics.CGRect) -> CoreGraphics.CGRect
+  @objc override dynamic open func editingRect(forBounds bounds: CoreGraphics.CGRect) -> CoreGraphics.CGRect
+  @objc override dynamic open func leftViewRect(forBounds bounds: CoreGraphics.CGRect) -> CoreGraphics.CGRect
+  @objc override dynamic open func rightViewRect(forBounds bounds: CoreGraphics.CGRect) -> CoreGraphics.CGRect
+  @objc deinit
+  public func showList()
+  public func hideList()
+  @objc public func touchAction()
+  public func didSelect(completion: @escaping (Swift.String, Swift.Int, Swift.Int) -> ())
+  public func listWillAppear(completion: @escaping () -> ())
+  public func listDidAppear(completion: @escaping () -> ())
+  public func listWillDisappear(completion: @escaping () -> ())
+  public func listDidDisappear(completion: @escaping () -> ())
+}
+extension ApolloDropdown : UIKit.UITableViewDataSource {
+  @objc dynamic public func tableView(_ tableView: UIKit.UITableView, numberOfRowsInSection section: Swift.Int) -> Swift.Int
+  @objc dynamic public func tableView(_ tableView: UIKit.UITableView, cellForRowAt indexPath: Foundation.IndexPath) -> UIKit.UITableViewCell
+}
+extension ApolloDropdown : UIKit.UITableViewDelegate {
+  @objc dynamic public func tableView(_ tableView: UIKit.UITableView, didSelectRowAt indexPath: Foundation.IndexPath)
+}
+@_hasMissingDesignatedInitializers public class ApolloFont {
+  public static func regular(_ size: CoreGraphics.CGFloat) -> UIKit.UIFont
+  public static func medium(_ size: CoreGraphics.CGFloat) -> UIKit.UIFont
+  public static func bold(_ size: CoreGraphics.CGFloat) -> UIKit.UIFont
+  @objc deinit
+}
+@objc public protocol TagDelegate : AnyObject {
+  @objc optional func tagDidSelect(_ tag: ApolloTagCloud)
+  @objc optional func tagDidDelete(_ tag: ApolloTagCloud)
+}
+public enum ApolloTagSize : Swift.String {
+  case small, medium
+  public var height: CoreGraphics.CGFloat {
+    get
+  }
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class ApolloTagCloud : UIKit.UIControl {
+  public static let automaticRoundCorner: CoreGraphics.CGFloat
+  @objc @IBInspectable open var title: Swift.String? {
+    @objc get
+    @objc set
+  }
+  public var tagSize: ApolloTagSize {
+    get
+    set
+  }
+  @objc @available(iOS, unavailable, message: "Use only for IB")
+  @IBInspectable public var rawApolloSize: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var showCloseIcon: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic open var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var cornerRadius: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable weak open var delegate: TagDelegate?
+  public init(title: Swift.String, size: ApolloTagSize = .small)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic open func layoutSubviews()
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+extension PanModalPresentable where Self : UIKit.UIViewController {
+  public typealias AnimationBlockType = () -> Swift.Void
+  public typealias AnimationCompletionType = (Swift.Bool) -> Swift.Void
+  public typealias LayoutType = UIKit.UIViewController & PanModalPresentable
+  public func panModalTransition(to state: PanModalPresentationController.PresentationState)
+  public func panModalSetNeedsLayoutUpdate()
+  public func panModalPerformUpdates(_ updates: () -> Swift.Void)
+  public func panModalAnimate(_ animationBlock: @escaping Self.AnimationBlockType, _ completion: Self.AnimationCompletionType? = nil)
+}
+public enum PickerType : Swift.String {
+  case date, time, dateTime
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable public class ApolloDateTimePicker : UIKit.UIStackView {
+  public var delegate: DatePickerDelegate?
+  open var pickerType: PickerType
+  public var selectedDate: Foundation.Date?
+  @objc @IBInspectable open var rawPickerType: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var title: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var datePickerTitle: Swift.String?
+  @objc @IBInspectable open var timePickerTitle: Swift.String?
+  @objc @IBInspectable open var buttonTitle: Swift.String?
+  @objc @IBInspectable open var dateFormat: Swift.String
+  @objc @IBInspectable open var timeFormat: Swift.String
+  @objc @IBInspectable open var pickerTintColor: UIKit.UIColor?
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init(coder: Foundation.NSCoder)
+  public init(pickerType: PickerType, title: Swift.String? = nil)
+  @objc deinit
+}
+extension ApolloDateTimePicker : DatePickerDelegate {
+  public func didSelectDateTime(type: PickerType, date: Foundation.Date)
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class ApolloSubtitleButton : UIKit.UIButton {
+  public var title: Swift.String {
+    get
+    set
+  }
+  public var buttonColor: UIKit.UIColor {
+    get
+    set
+  }
+  public var buttonHighlightedColor: UIKit.UIColor
+  public var buttonDisableColor: UIKit.UIColor {
+    get
+    set
+  }
+  public var titleColor: UIKit.UIColor {
+    get
+    set
+  }
+  public var titleDisableColor: UIKit.UIColor {
+    get
+    set
+  }
+  public var subtitleColor: UIKit.UIColor {
+    get
+    set
+  }
+  public var subtitleDisableColor: UIKit.UIColor {
+    get
+    set
+  }
+  @objc override dynamic open var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic open var isHighlighted: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  public var subtitleLabel: ApolloLabel?
+  open var subtitle: Swift.String? {
+    get
+    set
+  }
+  convenience public init(title: Swift.String)
+  convenience public init(title: Swift.String, subTitle: Swift.String)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic open func layoutSubviews()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class RadioGroup : UIKit.UIControl {
+  convenience public init(titles: [Swift.String])
+  open var titles: [Swift.String?] {
+    get
+    set
+  }
+  open var attributedTitles: [Foundation.NSAttributedString?] {
+    get
+    set
+  }
+  @objc @IBInspectable open var selectedIndex: Swift.Int {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var selectedColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var disabledSelectedColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var unselectedColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var disabledUnselectedColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var isVertical: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var indicatorRadius: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var spacing: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var itemSpacing: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var isButtonAfterTitle: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var titleColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc open var titleAlignment: UIKit.NSTextAlignment {
+    @objc get
+    @objc set
+  }
+  @objc open var titleFont: UIKit.UIFont? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public func enable(at index: Swift.Int)
+  public func disable(at index: Swift.Int)
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+public struct PagingKitProxy<Base> {
+  public init(_ base: Base)
+}
+extension NSObjectProtocol {
+  public static var pk: PagingKitProxy<Self.Type> {
+    get
+  }
+  public var pk: PagingKitProxy<Self> {
+    get
+  }
+}
+extension PagingKitProxy where Base == UIKit.UIColor.Type {
+  public var focusRed: UIKit.UIColor {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers open class ApolloGlobalNavigation : UIKit.UITabBarController {
+  public var tabBarHeight: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  public var largeItemIndex: Swift.Int {
+    get
+    set
+  }
+  @objc override dynamic public var viewControllers: [UIKit.UIViewController]? {
+    @objc get
+    @objc set
+  }
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic public func viewDidLayoutSubviews()
+  @objc override dynamic public func tabBar(_ tabBar: UIKit.UITabBar, didSelect item: UIKit.UITabBarItem)
+  public func setBadge(index: Swift.Int, value: Swift.String)
+  @objc deinit
+}
+extension UIFont {
+  public static func loadAllAppFonts()
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class ApolloAlertConfirmation : UIKit.UIViewController {
+  public init(title: Swift.String?, message: Swift.String?, actions: [AlertAction])
+  @objc override dynamic public func loadView()
+  @objc override dynamic public func viewDidLayoutSubviews()
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers open class ToastCenter {
+  open var currentToast: ApolloToast? {
+    get
+  }
+  public var isSupportAccessibility: Swift.Bool
+  public var isQueueEnabled: Swift.Bool
+  public static let `default`: ToastCenter
+  @objc deinit
+  open func add(_ toast: ApolloToast)
+  open func cancelAll()
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class CheckBox : UIKit.UIButton {
+  @objc override dynamic open var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @available(iOS, unavailable)
+  @objc override dynamic open func setImage(_ image: UIKit.UIImage?, for state: UIKit.UIControl.State)
+  @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+@objc open class ApolloBottomSheet : UIKit.UIViewController {
+  public var header: BottomSheetHeader
+  public var contentView: UIKit.UIStackView
+  public init(title: Swift.String)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public var leftIcon: UIKit.UIImage? {
+    get
+    set
+  }
+  @objc public var leftAction: () -> Swift.Void
+  @objc public var rightAction: () -> Swift.Void
+  public var rightIcon: UIKit.UIImage? {
+    get
+    set
+  }
+  public var rightText: Swift.String? {
+    get
+    set
+  }
+  public var headerTitle: Swift.String {
+    get
+    set
+  }
+  public var subtitle: Swift.String? {
+    get
+    set
+  }
+  @objc override dynamic public func viewDidLoad()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+}
+extension ApolloBottomSheet : PanModalPresentable {
+  @objc override dynamic public var preferredStatusBarStyle: UIKit.UIStatusBarStyle {
+    @objc get
+  }
+  public var panScrollable: UIKit.UIScrollView? {
+    get
+  }
+  public var shortFormHeight: PanModalHeight {
+    get
+  }
+  public var longFormHeight: PanModalHeight {
+    get
+  }
+}
+@objc @_hasMissingDesignatedInitializers @IBDesignable public class BottomSheetHeader : UIKit.UIView {
+  public var leftButton: UIKit.UIButton
+  public var rightButton: UIKit.UIButton
+  public var titleLabel: ApolloLabel
+  public var subtitleLabel: ApolloLabel
+  @objc dynamic public init()
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+public protocol PagingContentViewControllerDelegate : AnyObject {
+  func contentViewController(viewController: PagingContentViewController, willBeginManualScrollOn index: Swift.Int)
+  func contentViewController(viewController: PagingContentViewController, didManualScrollOn index: Swift.Int, percent: CoreGraphics.CGFloat)
+  func contentViewController(viewController: PagingContentViewController, didEndManualScrollOn index: Swift.Int)
+  func contentViewController(viewController: PagingContentViewController, willBeginPagingAt index: Swift.Int, animated: Swift.Bool)
+  func contentViewController(viewController: PagingContentViewController, willFinishPagingAt index: Swift.Int, animated: Swift.Bool)
+  func contentViewController(viewController: PagingContentViewController, didFinishPagingAt index: Swift.Int, animated: Swift.Bool)
+}
+extension PagingContentViewControllerDelegate {
+  public func contentViewController(viewController: PagingContentViewController, willBeginManualScrollOn index: Swift.Int)
+  public func contentViewController(viewController: PagingContentViewController, didManualScrollOn index: Swift.Int, percent: CoreGraphics.CGFloat)
+  public func contentViewController(viewController: PagingContentViewController, didEndManualScrollOn index: Swift.Int)
+  public func contentViewController(viewController: PagingContentViewController, willBeginPagingAt index: Swift.Int, animated: Swift.Bool)
+  public func contentViewController(viewController: PagingContentViewController, willFinishPagingAt index: Swift.Int, animated: Swift.Bool)
+  public func contentViewController(viewController: PagingContentViewController, didFinishPagingAt index: Swift.Int, animated: Swift.Bool)
+}
+public protocol PagingContentViewControllerDataSource : AnyObject {
+  func numberOfItemsForContentViewController(viewController: PagingContentViewController) -> Swift.Int
+  func contentViewController(viewController: PagingContentViewController, viewControllerAt index: Swift.Int) -> UIKit.UIViewController
+}
+@objc @_inheritsConvenienceInitializers public class PagingContentViewController : UIKit.UIViewController {
+  weak public var delegate: PagingContentViewControllerDelegate?
+  weak public var dataSource: PagingContentViewControllerDataSource?
+  public var isEnabledPreloadContent: Swift.Bool
+  public var contentOffsetRatio: CoreGraphics.CGFloat {
+    get
+  }
+  public var currentPageIndex: Swift.Int {
+    get
+  }
+  public var currentPagingPercent: CoreGraphics.CGFloat {
+    get
+  }
+  public var adjucentPageIndex: Swift.Int {
+    get
+  }
+  public func reloadData(with page: Swift.Int? = nil, completion: (() -> Swift.Void)? = nil)
+  public func scroll(to page: Swift.Int, animated: Swift.Bool, completion: ((Swift.Bool) -> Swift.Void)? = nil)
+  final public let scrollView: UIKit.UIScrollView
+  public func preloadContentIfNeeded(with scrollingPercent: CoreGraphics.CGFloat)
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public func viewWillAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewDidAppear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewWillDisappear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewDidDisappear(_ animated: Swift.Bool)
+  @objc override dynamic public func viewDidLayoutSubviews()
+  @objc override dynamic public func didReceiveMemoryWarning()
+  @objc override dynamic public func viewWillTransition(to size: CoreGraphics.CGSize, with coordinator: UIKit.UIViewControllerTransitionCoordinator)
+  @objc override dynamic public var shouldAutomaticallyForwardAppearanceMethods: Swift.Bool {
+    @objc get
+  }
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension PagingContentViewController : UIKit.UIScrollViewDelegate {
+  @objc dynamic public func scrollViewWillBeginDragging(_ scrollView: UIKit.UIScrollView)
+  @objc dynamic public func scrollViewDidScroll(_ scrollView: UIKit.UIScrollView)
+  @objc dynamic public func scrollViewWillBeginDecelerating(_ scrollView: UIKit.UIScrollView)
+  @objc dynamic public func scrollViewDidEndDecelerating(_ scrollView: UIKit.UIScrollView)
+  @objc dynamic public func scrollViewDidEndDragging(_ scrollView: UIKit.UIScrollView, willDecelerate decelerate: Swift.Bool)
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class PageControl : UIKit.UIControl {
+  @objc @IBInspectable open var numberOfPages: Swift.Int
+  @objc @IBInspectable open var currentPage: Swift.Int {
+    @objc get
+    @objc @available(*, unavailable)
+    set
+  }
+  @objc @IBInspectable open var activeColor: UIKit.UIColor
+  @objc @IBInspectable open var normalColor: UIKit.UIColor
+  @objc @IBInspectable open var space: CoreGraphics.CGFloat
+  @objc @IBInspectable open var radius: CoreGraphics.CGFloat
+  @objc @IBInspectable open var dotHeight: CoreGraphics.CGFloat
+  @objc @IBInspectable open var dotWidth: CoreGraphics.CGFloat
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  open var pageOffset: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  @objc override dynamic open func draw(_ rect: CoreGraphics.CGRect)
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class ApolloSectionHeader : UIKit.UIView {
+  public var sectionTitleLabel: UIKit.UILabel {
+    get
+    set
+  }
+  public var sectionTextLink: TextLink
+  public var sectionTitle: Swift.String {
+    get
+    set
+  }
+  public var textLinkTitle: Swift.String {
+    get
+    set
+  }
+  convenience public init(title: Swift.String, textLink: Swift.String)
+  convenience public init(title: Swift.String)
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class DimmedView : UIKit.UIView {
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+}
+extension UIViewController {
+  public var isPanModalPresented: Swift.Bool {
+    get
+  }
+  public func presentPanModal(_ viewControllerToPresent: UIKit.UIViewController & PanModalPresentable, sourceView: UIKit.UIView? = nil, sourceRect: CoreGraphics.CGRect = .zero, completion: (() -> Swift.Void)? = nil)
+}
+@objc @_inheritsConvenienceInitializers open class PanModalPresentationController : UIKit.UIPresentationController {
+  public enum PresentationState {
+    case shortForm
+    case longForm
+    public static func == (a: PanModalPresentationController.PresentationState, b: PanModalPresentationController.PresentationState) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  @objc override dynamic public var presentedView: UIKit.UIView {
+    @objc get
+  }
+  @objc deinit
+  @objc override dynamic public func containerViewWillLayoutSubviews()
+  @objc override dynamic public func presentationTransitionWillBegin()
+  @objc override dynamic public func presentationTransitionDidEnd(_ completed: Swift.Bool)
+  @objc override dynamic public func dismissalTransitionWillBegin()
+  @objc override dynamic public func dismissalTransitionDidEnd(_ completed: Swift.Bool)
+  @objc override dynamic public func viewWillTransition(to size: CoreGraphics.CGSize, with coordinator: UIKit.UIViewControllerTransitionCoordinator)
+  @objc override dynamic public init(presentedViewController: UIKit.UIViewController, presenting presentingViewController: UIKit.UIViewController?)
+}
+extension PanModalPresentationController {
+  public func transition(to state: PanModalPresentationController.PresentationState)
+  public func performUpdates(_ updates: () -> Swift.Void)
+  public func setNeedsLayoutUpdate()
+}
+extension PanModalPresentationController : UIKit.UIGestureRecognizerDelegate {
+  @objc dynamic public func gestureRecognizer(_ gestureRecognizer: UIKit.UIGestureRecognizer, shouldBeRequiredToFailBy otherGestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+  @objc dynamic public func gestureRecognizer(_ gestureRecognizer: UIKit.UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIKit.UIGestureRecognizer) -> Swift.Bool
+}
+public enum ApolloStyle : Swift.String {
+  case h1, h2, h3, h4, title1, title2, subtitle1, subtitle2, subtitle3, subtitle4, body1, body2, caption1, caption2, caption3
+  public var font: UIKit.UIFont {
+    get
+  }
+  public var lineHeight: CoreGraphics.CGFloat {
+    get
+  }
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers @IBDesignable open class ApolloLabel : UIKit.UILabel {
+  public init(text: Swift.String)
+  public init(text: Swift.String, font: UIKit.UIFont = ApolloStyle.body1.font)
+  public init(text: Swift.String, style: ApolloStyle = ApolloStyle.body1)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public var style: ApolloStyle {
+    get
+    set
+  }
+  @objc override dynamic open func drawText(in rect: CoreGraphics.CGRect)
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  public func setLineHeight(_ newHeight: CoreGraphics.CGFloat)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class SegmentedControl : UIKit.UIControl {
+  @objc @IBInspectable open var numberOfSegments: Swift.Int {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var selectedIndex: Swift.Int {
+    @objc get
+    @objc set
+  }
+  @objc(animatedWhileSelecting) @IBInspectable open var isAnimatedWhileSelecting: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic public var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  public func setMenuTitles(_ titles: [Swift.String])
+  public func setMenuTitle(_ title: Swift.String?, at index: Swift.Int)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class TitleLabelMenuViewCell : PagingMenuViewCell {
+  public var selectedColor: UIKit.UIColor {
+    get
+    set
+  }
+  public var unselectedColor: UIKit.UIColor {
+    get
+    set
+  }
+  public var badge: Swift.String? {
+    get
+    set
+  }
+  public var direction: UIKit.NSLayoutConstraint.Axis {
+    get
+    set
+  }
+  public var labelWidth: CoreGraphics.CGFloat {
+    get
+  }
+  final public let titleLabel: UIKit.UILabel
+  public func setImage(_ image: UIKit.UIImage?)
+  public var spacing: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  public func calcIntermediateLabelSize(with leftCell: TitleLabelMenuViewCell, percent: CoreGraphics.CGFloat) -> CoreGraphics.CGFloat
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  override public var isSelected: Swift.Bool {
+    get
+    set
+  }
+  @objc deinit
+}
+public struct ProgressChunk {
+  public enum Value : Swift.Comparable {
+    case exact(_: Swift.Double)
+    case greater(than: Swift.Double)
+    public static func < (lhs: ProgressChunk.Value, rhs: ProgressChunk.Value) -> Swift.Bool
+    public static func == (a: ProgressChunk.Value, b: ProgressChunk.Value) -> Swift.Bool
+  }
+  public init(value: ProgressChunk.Value, backgroundColor: UIKit.UIColor?, progressColor: UIKit.UIColor?, title: Swift.String? = nil)
+}
+@objc @_inheritsConvenienceInitializers open class _ProgressBar : UIKit.UIView {
+  open var chunks: [ProgressChunk] {
+    get
+    set
+  }
+  @objc @IBInspectable open var value: Swift.Double {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var maxValue: Swift.Double {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var minValue: Swift.Double {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public init(frame: CoreGraphics.CGRect, chunks: [ProgressChunk])
+  convenience public init(chunks: [ProgressChunk])
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class StickyProgressBar : _ProgressBar {
+  @objc override dynamic open func layoutSubviews()
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  override public init(frame: CoreGraphics.CGRect, chunks: [ProgressChunk])
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class CircularProgressBar : _ProgressBar {
+  @objc override dynamic open func layoutSubviews()
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  override public init(frame: CoreGraphics.CGRect, chunks: [ProgressChunk])
+}
+public enum PanModalHeight : Swift.Equatable {
+  case maxHeight
+  case maxHeightWithTopInset(CoreGraphics.CGFloat)
+  case contentHeight(CoreGraphics.CGFloat)
+  case contentHeightIgnoringSafeArea(CoreGraphics.CGFloat)
+  case intrinsicHeight
+  public static func == (a: PanModalHeight, b: PanModalHeight) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers public class PanModalPresentationDelegate : ObjectiveC.NSObject {
+  public static var `default`: PanModalPresentationDelegate
+  @objc deinit
+  @objc override dynamic public init()
+}
+extension PanModalPresentationDelegate : UIKit.UIViewControllerTransitioningDelegate {
+  @objc dynamic public func animationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController, source: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
+  @objc dynamic public func animationController(forDismissed dismissed: UIKit.UIViewController) -> UIKit.UIViewControllerAnimatedTransitioning?
+  @objc dynamic public func presentationController(forPresented presented: UIKit.UIViewController, presenting: UIKit.UIViewController?, source: UIKit.UIViewController) -> UIKit.UIPresentationController?
+}
+extension PanModalPresentationDelegate : UIKit.UIAdaptivePresentationControllerDelegate, UIKit.UIPopoverPresentationControllerDelegate {
+  @objc dynamic public func adaptivePresentationStyle(for controller: UIKit.UIPresentationController, traitCollection: UIKit.UITraitCollection) -> UIKit.UIModalPresentationStyle
+}
+@objc @_inheritsConvenienceInitializers public class ApolloTableSectionHeaderView : UIKit.UITableViewHeaderFooterView {
+  @objc override dynamic public init(reuseIdentifier: Swift.String?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public var titleLabel: UIKit.UILabel {
+    get
+  }
+  public var textLink: TextLink {
+    get
+  }
+  public var sectionTitle: Swift.String {
+    get
+    set
+  }
+  public var textLinkTitle: Swift.String {
+    get
+    set
+  }
+  @objc deinit
+}
+@objc public class PanModalPresentationAnimator : ObjectiveC.NSObject {
+  public enum TransitionStyle {
+    case presentation
+    case dismissal
+    public static func == (a: PanModalPresentationAnimator.TransitionStyle, b: PanModalPresentationAnimator.TransitionStyle) -> Swift.Bool
+    public var hashValue: Swift.Int {
+      get
+    }
+    public func hash(into hasher: inout Swift.Hasher)
+  }
+  required public init(transitionStyle: PanModalPresentationAnimator.TransitionStyle)
+  @objc override dynamic public init()
+  @objc deinit
+}
+extension PanModalPresentationAnimator : UIKit.UIViewControllerAnimatedTransitioning {
+  @objc dynamic public func transitionDuration(using transitionContext: UIKit.UIViewControllerContextTransitioning?) -> Foundation.TimeInterval
+  @objc dynamic public func animateTransition(using transitionContext: UIKit.UIViewControllerContextTransitioning)
+}
+@objc public protocol FormFieldDelegate : AnyObject {
+  @objc optional func formFieldShouldBeginEditing(_ formField: ApolloFormField) -> Swift.Bool
+  @objc optional func formFieldDidBeginEditing(_ formField: ApolloFormField)
+  @objc optional func formFieldShouldEndEditing(_ formField: ApolloFormField) -> Swift.Bool
+  @objc optional func formFieldDidEndEditing(_ formField: ApolloFormField)
+  @objc optional func formFieldDidEndEditing(_ formField: ApolloFormField, reason: ApolloFormField.DidEndEditingReason)
+  @objc optional func formField(_ formField: ApolloFormField, shouldChangeCharactersIn range: Foundation.NSRange, replacementString string: Swift.String) -> Swift.Bool
+  @available(iOS 13.0, *)
+  @objc optional func formFieldDidChangeSelection(_ formField: ApolloFormField)
+  @objc optional func formFieldShouldClear(_ formField: ApolloFormField) -> Swift.Bool
+  @objc optional func formFieldShouldReturn(_ formField: ApolloFormField) -> Swift.Bool
+  @objc optional func leftViewDidTap(_ formField: ApolloFormField)
+  @objc optional func rightViewDidTap(_ formField: ApolloFormField)
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class ApolloFormField : UIKit.UIControl {
+  public typealias DidEndEditingReason = UIKit.UITextField.DidEndEditingReason
+  @objc override dynamic open var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var title: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var helperText: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var helperTextColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var errorText: Swift.String?
+  @objc @IBInspectable open var prefixIcon: UIKit.UIImage? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var prefixIconColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var suffixIcon: UIKit.UIImage? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var suffixIconColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var prefixText: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var prefixTextColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var suffixText: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var suffixTextColor: UIKit.UIColor {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var errorEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var text: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var attributedText: Foundation.NSAttributedString? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var textColor: UIKit.UIColor? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var font: UIKit.UIFont? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var textAlignment: UIKit.NSTextAlignment {
+    @objc get
+    @objc set
+  }
+  open var defaultTextAttributes: [Foundation.NSAttributedString.Key : Any] {
+    get
+    set
+  }
+  @objc @IBInspectable open var placeholder: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var attributedPlaceholder: Foundation.NSAttributedString? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var clearsOnBeginEditing: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var adjustsFontSizeToFitWidth: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var minimumFontSize: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var maxLength: Swift.Int {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable weak open var delegate: FormFieldDelegate? {
+    @objc get
+    @objc set
+  }
+  open var isEditing: Swift.Bool {
+    get
+  }
+  @objc @IBInspectable open var allowsEditingTextAttributes: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  open var typingAttributes: [Foundation.NSAttributedString.Key : Any]? {
+    get
+    set
+  }
+  @objc override dynamic open var inputView: UIKit.UIView? {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic open var inputAccessoryView: UIKit.UIView? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var clearButtonMode: UIKit.UITextField.ViewMode {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic open func addTarget(_ target: Any?, action: ObjectiveC.Selector, for controlEvents: UIKit.UIControl.Event)
+  @objc override dynamic open func removeTarget(_ target: Any?, action: ObjectiveC.Selector?, for controlEvents: UIKit.UIControl.Event)
+  @objc override dynamic open func becomeFirstResponder() -> Swift.Bool
+  @objc override dynamic open func resignFirstResponder() -> Swift.Bool
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+extension ApolloFormField : UIKit.UITextInputTraits {
+  @objc dynamic open var autocapitalizationType: UIKit.UITextAutocapitalizationType {
+    @objc get
+    @objc set
+  }
+  @objc dynamic open var autocorrectionType: UIKit.UITextAutocorrectionType {
+    @objc get
+    @objc set
+  }
+  @available(iOS 5.0, *)
+  @objc dynamic open var spellCheckingType: UIKit.UITextSpellCheckingType {
+    @objc get
+    @objc set
+  }
+  @available(iOS 11.0, *)
+  @objc dynamic open var smartQuotesType: UIKit.UITextSmartQuotesType {
+    @objc get
+    @objc set
+  }
+  @available(iOS 11.0, *)
+  @objc dynamic open var smartDashesType: UIKit.UITextSmartDashesType {
+    @objc get
+    @objc set
+  }
+  @available(iOS 11.0, *)
+  @objc dynamic open var smartInsertDeleteType: UIKit.UITextSmartInsertDeleteType {
+    @objc get
+    @objc set
+  }
+  @objc dynamic open var keyboardType: UIKit.UIKeyboardType {
+    @objc get
+    @objc set
+  }
+  @objc dynamic open var keyboardAppearance: UIKit.UIKeyboardAppearance {
+    @objc get
+    @objc set
+  }
+  @objc dynamic open var returnKeyType: UIKit.UIReturnKeyType {
+    @objc get
+    @objc set
+  }
+  @objc dynamic open var enablesReturnKeyAutomatically: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc dynamic open var isSecureTextEntry: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc dynamic open var textContentType: UIKit.UITextContentType! {
+    @objc get
+    @objc set
+  }
+  @available(iOS 12.0, *)
+  @objc dynamic open var passwordRules: UIKit.UITextInputPasswordRules? {
+    @objc get
+    @objc set
+  }
+}
+extension ApolloFormField : UIKit.UIContentSizeCategoryAdjusting {
+  @objc dynamic open var adjustsFontForContentSizeCategory: Swift.Bool {
+    @objc get
+    @objc set
+  }
+}
+@objc @_inheritsConvenienceInitializers public class ApolloCollectionSectionHeaderView : UIKit.UICollectionReusableView {
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public var titleLabel: UIKit.UILabel {
+    get
+  }
+  public var textLink: TextLink {
+    get
+  }
+  public var sectionTitle: Swift.String {
+    get
+    set
+  }
+  public var textLinkTitle: Swift.String {
+    get
+    set
+  }
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class UnderlineFocusView : UIKit.UIView {
+  public var underlineColor: UIKit.UIColor {
+    get
+    set
+  }
+  public var underlineHeight: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  public var underlineWidth: CoreGraphics.CGFloat? {
+    get
+    set
+  }
+  public var masksToBounds: Swift.Bool {
+    get
+    set
+  }
+  public var cornerRadius: CoreGraphics.CGFloat {
+    get
+    set
+  }
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+public enum QuantitySize : Swift.String {
+  case `default`, large
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum QuantityType : Swift.String {
+  case `default`, staff
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class ApolloQuantityView : UIKit.UIControl {
+  @objc @IBInspectable open var quantity: Swift.Double {
+    @objc get
+    @objc set
+  }
+  public var type: QuantityType {
+    get
+    set
+  }
+  public var size: QuantitySize {
+    get
+    set
+  }
+  @objc @available(iOS, unavailable, message: "Use only for IB")
+  @IBInspectable public var quantitySize: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var maxQuantity: Swift.Double {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var isEditable: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc override dynamic open var isEnabled: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var step: Swift.Double
+  open var maxFractionDigits: Swift.Int {
+    get
+    set
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  public init(type: QuantityType = .default, size: QuantitySize = .default)
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+extension ApolloQuantityView : UIKit.UITextFieldDelegate {
+  @objc dynamic public func textFieldDidEndEditing(_ textField: UIKit.UITextField)
+}
+public enum InlineMessageState : Swift.String {
+  case `default`, success, error, pending
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class ApolloInlineMessage : UIKit.UIControl {
+  final public let rightTextLink: TextLink
+  @objc @IBInspectable public var text: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable public var rightText: Swift.String? {
+    @objc get
+    @objc set
+  }
+  public var messageState: InlineMessageState
+  @objc @available(iOS, unavailable, message: "Use only for IB")
+  @IBInspectable public var rawState: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable public var showBorder: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  public var leftIcon: UIKit.UIImage? {
+    get
+    set
+  }
+  public var rightIcon: UIKit.UIImage? {
+    get
+    set
+  }
+  @objc dynamic public init()
+  public init(title: Swift.String, state: InlineMessageState = .default, leftIcon: UIKit.UIImage? = nil, rightIcon: UIKit.UIImage? = nil, rightText: Swift.String? = nil)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @IBDesignable open class ApolloAvatar : UIKit.UIView {
+  @objc @IBInspectable open var indicatorSize: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  public var placeholderImage: UIKit.UIImage?
+  @objc @IBInspectable open var size: CoreGraphics.CGFloat {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var indicatorImage: UIKit.UIImage? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var image: UIKit.UIImage? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var imageUrl: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var indicatorImageUrl: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var text: Swift.String? {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var highlightedImage: UIKit.UIImage? {
+    @objc get
+    @objc set
+  }
+  @available(iOS 13.0, *)
+  open var preferredSymbolConfiguration: UIKit.UIImage.SymbolConfiguration? {
+    get
+    set
+  }
+  @objc @IBInspectable open var isHighlighted: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  open var animationImages: [UIKit.UIImage]? {
+    get
+    set
+  }
+  open var highlightedAnimationImages: [UIKit.UIImage]? {
+    get
+    set
+  }
+  @objc @IBInspectable open var animationDuration: Foundation.TimeInterval {
+    @objc get
+    @objc set
+  }
+  @objc @IBInspectable open var animationRepeatCount: Swift.Int {
+    @objc get
+    @objc set
+  }
+  open func startAnimating()
+  open func stopAnimating()
+  open var isAnimating: Swift.Bool {
+    get
+  }
+  convenience public init(imageUrl: Swift.String)
+  convenience public init(image: UIKit.UIImage?)
+  convenience public init(image: UIKit.UIImage?, highlightedImage: UIKit.UIImage?)
+  convenience public init(size: CoreGraphics.CGFloat = 24)
+  convenience public init(text: Swift.String)
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc override dynamic open var intrinsicContentSize: CoreGraphics.CGSize {
+    @objc get
+  }
+  @objc deinit
+}
+extension ApolloAvatar {
+  public static func imageSnap(text: Swift.String?, color: UIKit.UIColor, circular: Swift.Bool, stroke: Swift.Bool, textAttributes: [Foundation.NSAttributedString.Key : Any]?, in rect: CoreGraphics.CGRect, contentMode: UIKit.UIView.ContentMode) -> UIKit.UIImage?
+}
+public protocol PanModalPresentable : AnyObject {
+  var panScrollable: UIKit.UIScrollView? { get }
+  var topOffset: CoreGraphics.CGFloat { get }
+  var shortFormHeight: PanModalHeight { get }
+  var longFormHeight: PanModalHeight { get }
+  var cornerRadius: CoreGraphics.CGFloat { get }
+  var springDamping: CoreGraphics.CGFloat { get }
+  var transitionDuration: Swift.Double { get }
+  var transitionAnimationOptions: UIKit.UIView.AnimationOptions { get }
+  var panModalBackgroundColor: UIKit.UIColor { get }
+  var dragIndicatorBackgroundColor: UIKit.UIColor { get }
+  var scrollIndicatorInsets: UIKit.UIEdgeInsets { get }
+  var anchorModalToLongForm: Swift.Bool { get }
+  var allowsExtendedPanScrolling: Swift.Bool { get }
+  var allowsDragToDismiss: Swift.Bool { get }
+  var allowsTapToDismiss: Swift.Bool { get }
+  var isUserInteractionEnabled: Swift.Bool { get }
+  var isHapticFeedbackEnabled: Swift.Bool { get }
+  var shouldRoundTopCorners: Swift.Bool { get }
+  var showDragIndicator: Swift.Bool { get }
+  func shouldRespond(to panModalGestureRecognizer: UIKit.UIPanGestureRecognizer) -> Swift.Bool
+  func willRespond(to panModalGestureRecognizer: UIKit.UIPanGestureRecognizer)
+  func shouldPrioritize(panModalGestureRecognizer: UIKit.UIPanGestureRecognizer) -> Swift.Bool
+  func shouldTransition(to state: PanModalPresentationController.PresentationState) -> Swift.Bool
+  func willTransition(to state: PanModalPresentationController.PresentationState)
+  func panModalWillDismiss()
+  func panModalDidDismiss()
+}
+extension ApolloButtonSize : Swift.Equatable {}
+extension ApolloButtonSize : Swift.Hashable {}
+extension ApolloButtonSize : Swift.RawRepresentable {}
+extension ApolloButtonType : Swift.Equatable {}
+extension ApolloButtonType : Swift.Hashable {}
+extension ApolloButtonType : Swift.RawRepresentable {}
+extension TabMode : Swift.Equatable {}
+extension TabMode : Swift.Hashable {}
+extension TabMode : Swift.RawRepresentable {}
+extension TextLinkType : Swift.Equatable {}
+extension TextLinkType : Swift.Hashable {}
+extension TextLinkType : Swift.RawRepresentable {}
+extension ActionType : Swift.Equatable {}
+extension ActionType : Swift.Hashable {}
+extension ActionType : Swift.RawRepresentable {}
+extension PagingMenuView.Alignment : Swift.Equatable {}
+extension PagingMenuView.Alignment : Swift.Hashable {}
+extension ArrowPosition : Swift.Equatable {}
+extension ArrowPosition : Swift.Hashable {}
+extension ProductStatusType : Swift.Equatable {}
+extension ProductStatusType : Swift.Hashable {}
+extension ProductStatusType : Swift.RawRepresentable {}
+extension ProductStatusState : Swift.Equatable {}
+extension ProductStatusState : Swift.Hashable {}
+extension ProductStatusState : Swift.RawRepresentable {}
+extension ApolloTagSize : Swift.Equatable {}
+extension ApolloTagSize : Swift.Hashable {}
+extension ApolloTagSize : Swift.RawRepresentable {}
+extension PickerType : Swift.Equatable {}
+extension PickerType : Swift.Hashable {}
+extension PickerType : Swift.RawRepresentable {}
+extension PanModalPresentationController.PresentationState : Swift.Equatable {}
+extension PanModalPresentationController.PresentationState : Swift.Hashable {}
+extension ApolloStyle : Swift.Equatable {}
+extension ApolloStyle : Swift.Hashable {}
+extension ApolloStyle : Swift.RawRepresentable {}
+extension PanModalPresentationAnimator.TransitionStyle : Swift.Equatable {}
+extension PanModalPresentationAnimator.TransitionStyle : Swift.Hashable {}
+extension QuantitySize : Swift.Equatable {}
+extension QuantitySize : Swift.Hashable {}
+extension QuantitySize : Swift.RawRepresentable {}
+extension QuantityType : Swift.Equatable {}
+extension QuantityType : Swift.Hashable {}
+extension QuantityType : Swift.RawRepresentable {}
+extension InlineMessageState : Swift.Equatable {}
+extension InlineMessageState : Swift.Hashable {}
+extension InlineMessageState : Swift.RawRepresentable {}

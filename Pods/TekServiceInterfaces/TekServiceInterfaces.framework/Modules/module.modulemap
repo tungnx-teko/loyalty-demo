@@ -1,0 +1,11 @@
+framework module TekServiceInterfaces {
+  umbrella header "TekServiceInterfaces.h"
+
+  export *
+  module * { export * }
+}
+
+module TekServiceInterfaces.Swift {
+    header "TekServiceInterfaces-Swift.h"
+    requires objc
+}

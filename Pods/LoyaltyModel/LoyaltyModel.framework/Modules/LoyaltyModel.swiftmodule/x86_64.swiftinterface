@@ -1,0 +1,340 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name LoyaltyModel
+import Foundation
+@_exported import LoyaltyModel
+import Swift
+import TekCoreNetwork
+import UIKit
+public class EncryptedCodeResult : Swift.Codable {
+  public var encryptedMembershipQrdata: LoyaltyModel.QrData
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class QrData : Swift.Codable {
+  public var code: Swift.String {
+    get
+  }
+  public var issueAt: Swift.Int64 {
+    get
+  }
+  public var expireAt: Swift.Int64 {
+    get
+  }
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class MemberResult : Swift.Codable {
+  public var member: LoyaltyModel.MemberInfo? {
+    get
+  }
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class MemberInfo : Swift.Codable {
+  public var id: Swift.String {
+    get
+  }
+  public var phone: Swift.String {
+    get
+  }
+  public var name: Swift.String {
+    get
+  }
+  public var status: Swift.Int {
+    get
+  }
+  public var point: Swift.Int {
+    get
+  }
+  public var tierPoint: Swift.Int? {
+    get
+  }
+  public var keepTierTo: Swift.Int64? {
+    get
+  }
+  public var accumulationTo: Swift.Int64? {
+    get
+  }
+  public var accumulationFrom: Swift.Int64? {
+    get
+  }
+  public var currentTier: LoyaltyModel.TierInfo? {
+    get
+  }
+  public var nextTier: LoyaltyModel.TierInfo? {
+    get
+  }
+  public var isRegistered: Swift.Bool {
+    get
+  }
+  public var hasTier: Swift.Bool {
+    get
+  }
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class TierInfo : Swift.Codable {
+  public var code: Swift.String {
+    get
+  }
+  public var name: Swift.String {
+    get
+  }
+  public var minPoint: Swift.Int {
+    get
+  }
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@_inheritsConvenienceInitializers public class LoyaltyStatusCode : TekCoreNetwork.TekoStringCode {
+  @objc override dynamic public var successCode: Swift.String {
+    @objc get
+  }
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  override public init(code: Swift.String?, message: Swift.String?)
+}
+@_hasMissingDesignatedInitializers public class HistoryResponse : TekCoreNetwork.BaseResponse<LoyaltyModel.LoyaltyStatusCode>, Swift.Encodable {
+  public var result: LoyaltyModel.HistoryResult?
+  public var extra: LoyaltyModel.LoyaltyPaging?
+  public func encode(to encoder: Swift.Encoder) throws
+  public var error: LoyaltyModel.LoyaltyError? {
+    get
+  }
+  @objc deinit
+  override public init(code: LoyaltyModel.LoyaltyStatusCode)
+}
+@_hasMissingDesignatedInitializers public class GetMemberInfoResponse : TekCoreNetwork.BaseResponse<LoyaltyModel.LoyaltyStatusCode>, Swift.Encodable {
+  public var result: LoyaltyModel.MemberResult?
+  public func encode(to encoder: Swift.Encoder) throws
+  public var error: LoyaltyModel.LoyaltyError? {
+    get
+  }
+  @objc deinit
+  override public init(code: LoyaltyModel.LoyaltyStatusCode)
+}
+public class LoyaltyPaging : Swift.Decodable {
+  public var responseId: Swift.String
+  public var currentPage: Swift.Int
+  public var checksum: Swift.String
+  public var totalPage: Swift.Int
+  public var totalItems: Swift.Int
+  public var pageSize: Swift.Int
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class MerchantsResponse : TekCoreNetwork.BaseResponse<LoyaltyModel.LoyaltyStatusCode>, Swift.Encodable {
+  public var result: LoyaltyModel.MerchantsResult?
+  public var extra: LoyaltyModel.LoyaltyPaging?
+  public func encode(to encoder: Swift.Encoder) throws
+  public var error: LoyaltyModel.LoyaltyError? {
+    get
+  }
+  @objc deinit
+  override public init(code: LoyaltyModel.LoyaltyStatusCode)
+}
+public class Network : Swift.Codable {
+  public var id: Swift.Int {
+    get
+  }
+  public var name: Swift.String {
+    get
+  }
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class NetworkConfigResult : Swift.Codable {
+  public var networkInfo: LoyaltyModel.Network? {
+    get
+  }
+  public var networkConfig: LoyaltyModel.NetworkConfig? {
+    get
+  }
+  public var networkTiers: [LoyaltyModel.NetworkTier]? {
+    get
+  }
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public enum TransactionType : Swift.String, Swift.Codable, Swift.CaseIterable {
+  case GRANT
+  case SPEND
+  case RETURN_GRANT
+  case RETURN_SPEND
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public typealias AllCases = [LoyaltyModel.TransactionType]
+  public static var allCases: [LoyaltyModel.TransactionType] {
+    get
+  }
+}
+public enum TransactionStatus : Swift.Int, Swift.Decodable {
+  case `init`
+  case failInit
+  case unfinished
+  case finished
+  case fail
+  case processing
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public enum AccountingType : Swift.String, Swift.Decodable {
+  case Debit, Credit
+  public var prefix: Swift.String {
+    get
+  }
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public class Transaction : Swift.Codable {
+  public var id: Swift.String
+  public var refId: Swift.String?
+  public var orderCode: Swift.String?
+  public var txnType: LoyaltyModel.TransactionType
+  public var txnTypeText: Swift.String
+  public var accountingType: LoyaltyModel.AccountingType
+  public var status: LoyaltyModel.TransactionStatus
+  public var point: Swift.Int
+  public var createdAt: Swift.Int64
+  public var refTime: Swift.Int64?
+  public var txnDesc: Swift.String?
+  public var createdBy: Swift.String
+  public var networkId: Swift.Int
+  public var networkName: Swift.String
+  public var merchantCode: Swift.String?
+  public var merchantName: Swift.String?
+  public var terminalCode: Swift.String?
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class MerchantsResult : Swift.Codable {
+  public var merchants: [LoyaltyModel.Merchant]
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class NetworkTier : Swift.Codable {
+  public var code: Swift.String {
+    get
+  }
+  public var name: Swift.String {
+    get
+  }
+  public var fromPoint: Swift.Int {
+    get
+  }
+  public var cardTieredImg: Swift.String? {
+    get
+  }
+  public var tierIcon: Swift.String? {
+    get
+  }
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public enum LoyaltyError : Foundation.LocalizedError, Swift.Equatable {
+  case missingParam(message: Swift.String)
+  case unauthorized
+  case subjectNotFound(message: Swift.String)
+  case system
+  case unexpected
+  case invalidParam(message: Swift.String)
+  case invalidParamFormat(message: Swift.String)
+  case paramOutOfRange(message: Swift.String)
+  case conflict(message: Swift.String)
+  case subjectInactive(message: Swift.String)
+  public init(code: Swift.String, message: Swift.String)
+  public static func == (a: LoyaltyModel.LoyaltyError, b: LoyaltyModel.LoyaltyError) -> Swift.Bool
+}
+@_hasMissingDesignatedInitializers public class EncryptedCodeResponse : TekCoreNetwork.BaseResponse<LoyaltyModel.LoyaltyStatusCode>, Swift.Encodable {
+  public var result: LoyaltyModel.EncryptedCodeResult?
+  public func encode(to encoder: Swift.Encoder) throws
+  public var error: LoyaltyModel.LoyaltyError? {
+    get
+  }
+  @objc deinit
+  override public init(code: LoyaltyModel.LoyaltyStatusCode)
+}
+@_hasMissingDesignatedInitializers public class NetworkConfigResponse : TekCoreNetwork.BaseResponse<LoyaltyModel.LoyaltyStatusCode>, Swift.Encodable {
+  public var message: Swift.String
+  public var executionTime: Swift.Int?
+  public var result: LoyaltyModel.NetworkConfigResult?
+  public func encode(to encoder: Swift.Encoder) throws
+  public var error: LoyaltyModel.LoyaltyError? {
+    get
+  }
+  @objc deinit
+  override public init(code: LoyaltyModel.LoyaltyStatusCode)
+}
+public struct NetworkConfig : Swift.Codable {
+  public var exchangeRate: Swift.Int {
+    get
+  }
+  public var currencyImg: Swift.String {
+    get
+  }
+  public var currencyName: Swift.String {
+    get
+  }
+  public var cardDefaultImg: Swift.String? {
+    get
+  }
+  public var avatarDefaultImg: Swift.String? {
+    get
+  }
+  public var allowGetMemberByPhone: Swift.Bool? {
+    get
+  }
+  public var faqWebUrl: Swift.String? {
+    get
+  }
+  public var benefitWebUrl: Swift.String? {
+    get
+  }
+  public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@_hasMissingDesignatedInitializers public class HistoryResult : Swift.Codable {
+  public var transactions: [LoyaltyModel.Transaction]
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class Merchant : Swift.Codable {
+  public var id: Swift.String
+  public var networkId: Swift.Int
+  public var networkName: Swift.String
+  public var merchantCode: Swift.String
+  public var merchantName: Swift.String
+  public func encode(to encoder: Swift.Encoder) throws
+  required public init(from decoder: Swift.Decoder) throws
+  @objc deinit
+}
+extension LoyaltyModel.TransactionType : Swift.Equatable {}
+extension LoyaltyModel.TransactionType : Swift.Hashable {}
+extension LoyaltyModel.TransactionType : Swift.RawRepresentable {}
+extension LoyaltyModel.TransactionStatus : Swift.Equatable {}
+extension LoyaltyModel.TransactionStatus : Swift.Hashable {}
+extension LoyaltyModel.TransactionStatus : Swift.RawRepresentable {}
+extension LoyaltyModel.AccountingType : Swift.Equatable {}
+extension LoyaltyModel.AccountingType : Swift.Hashable {}
+extension LoyaltyModel.AccountingType : Swift.RawRepresentable {}

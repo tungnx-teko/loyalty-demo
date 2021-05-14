@@ -1,0 +1,534 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name LoyaltyUI
+import Apollo
+import ApolloTheme
+import FittedSheets
+import Foundation
+import Kingfisher
+import LoyaltyComponent
+import LoyaltyCore
+import LoyaltyModel
+@_exported import LoyaltyUI
+import Photos
+import QuartzCore
+import Swift
+import TerraInstancesManager
+import UIKit
+import WebKit
+@objc @_inheritsConvenienceInitializers public class InAppWebBase : UIKit.UIViewController, WebKit.WKNavigationDelegate {
+  @objc override dynamic public func viewDidLoad()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+public enum FilterCriteria : Swift.Equatable {
+  case week, month, threeMonths, allTime
+  case allMerchant
+  case merchant(name: Swift.String, code: Swift.String)
+  case empty
+  public static func == (a: LoyaltyUI.FilterCriteria, b: LoyaltyUI.FilterCriteria) -> Swift.Bool
+}
+@objc @_inheritsConvenienceInitializers public class FilterModal : UIKit.UIViewController {
+  public var shouldShowSeeMoreButton: Swift.Bool
+  @objc override dynamic public func viewDidLoad()
+  public func reloadData()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension FilterModal : UIKit.UICollectionViewDataSource {
+  @objc dynamic public func numberOfSections(in collectionView: UIKit.UICollectionView) -> Swift.Int
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, numberOfItemsInSection section: Swift.Int) -> Swift.Int
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, cellForItemAt indexPath: Foundation.IndexPath) -> UIKit.UICollectionViewCell
+}
+extension FilterModal : UIKit.UICollectionViewDelegateFlowLayout {
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, referenceSizeForHeaderInSection section: Swift.Int) -> CoreGraphics.CGSize
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, referenceSizeForFooterInSection section: Swift.Int) -> CoreGraphics.CGSize
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, sizeForItemAt indexPath: Foundation.IndexPath) -> CoreGraphics.CGSize
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, minimumLineSpacingForSectionAt section: Swift.Int) -> CoreGraphics.CGFloat
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, layout collectionViewLayout: UIKit.UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Swift.Int) -> CoreGraphics.CGFloat
+}
+extension FilterModal : UIKit.UICollectionViewDelegate {
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, viewForSupplementaryElementOfKind kind: Swift.String, at indexPath: Foundation.IndexPath) -> UIKit.UICollectionReusableView
+  @objc dynamic public func collectionView(_ collectionView: UIKit.UICollectionView, didSelectItemAt indexPath: Foundation.IndexPath)
+}
+@objc @_inheritsConvenienceInitializers public class MembershipViewController : UIKit.UIViewController {
+  public var terraApp: TerraInstancesManager.ITerraApp?
+  @objc override dynamic public func viewDidLoad()
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension MembershipViewController : LoyaltyUI.MembershipViewDelegate {
+  public func loyaltyProgramButtonWasTapped(url: Swift.String)
+  public func historyButtonWasTapped()
+  public func onMembershipSuccess()
+  public func onMembershipError(error: LoyaltyModel.LoyaltyError)
+  public func didGetNetworkConfig()
+}
+@objc @_inheritsConvenienceInitializers public class LoyaltyHistoryViewController : UIKit.UIViewController {
+  public var terraApp: TerraInstancesManager.ITerraApp?
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers public class FilterTabViewController : UIKit.UIViewController {
+  public var dataSource: [Apollo.TabItem]
+  public var tabMode: Apollo.TabMode
+  public var viewControllers: [UIKit.UIViewController] {
+    get
+  }
+  public var direction: UIKit.NSLayoutConstraint.Axis
+  @objc override dynamic public func viewDidLayoutSubviews()
+  public var selectedIndex: Swift.Int {
+    get
+    set
+  }
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+  @objc deinit
+}
+extension FilterTabViewController : Apollo.TabGroupDataSource {
+  public func menuViewController(tabGroup: Apollo.TabGroup, cellForItemAt index: Swift.Int) -> Apollo.PagingMenuViewCell
+  public func menuViewController(tabGroup: Apollo.TabGroup, widthForItemAt index: Swift.Int) -> CoreGraphics.CGFloat
+  public func numberOfItemsForMenuViewController(tabGroup: Apollo.TabGroup) -> Swift.Int
+  public func setBadge(index: Swift.Int, value: Swift.String)
+}
+extension FilterTabViewController : Apollo.PagingContentViewControllerDataSource {
+  public func numberOfItemsForContentViewController(viewController: Apollo.PagingContentViewController) -> Swift.Int
+  public func contentViewController(viewController: Apollo.PagingContentViewController, viewControllerAt index: Swift.Int) -> UIKit.UIViewController
+}
+extension FilterTabViewController : Apollo.TabGroupDelegate {
+  public func menuViewController(tabGroup: Apollo.TabGroup, didSelect page: Swift.Int, previousPage: Swift.Int)
+}
+extension FilterTabViewController : Apollo.PagingContentViewControllerDelegate {
+  public func contentViewController(viewController: Apollo.PagingContentViewController, didManualScrollOn index: Swift.Int, percent: CoreGraphics.CGFloat)
+}
+extension FilterTabViewController : Apollo.TagDelegate {
+  @objc dynamic public func tagDidDelete(_ tag: Apollo.ApolloTagCloud)
+}
+public typealias ESRefreshHandler = (() -> ())
+@objc @_inheritsConvenienceInitializers open class ESRefreshComponent : UIKit.UIView {
+  weak open var scrollView: UIKit.UIScrollView?
+  open var handler: LoyaltyUI.ESRefreshHandler?
+  open var animator: (LoyaltyUI.ESRefreshAnimatorProtocol & LoyaltyUI.ESRefreshProtocol)!
+  open var isRefreshing: Swift.Bool {
+    get
+  }
+  open var isAutoRefreshing: Swift.Bool {
+    get
+  }
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  convenience public init(frame: CoreGraphics.CGRect, handler: @escaping LoyaltyUI.ESRefreshHandler)
+  convenience public init(frame: CoreGraphics.CGRect, handler: @escaping LoyaltyUI.ESRefreshHandler, animator: LoyaltyUI.ESRefreshAnimatorProtocol & LoyaltyUI.ESRefreshProtocol)
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+  @objc deinit
+  @objc override dynamic open func willMove(toSuperview newSuperview: UIKit.UIView?)
+  @objc override dynamic open func didMoveToSuperview()
+  final public func startRefreshing(isAuto: Swift.Bool = false)
+  final public func stopRefreshing()
+  public func start()
+  public func stop()
+  public func sizeChangeAction(object: Swift.AnyObject?, change: [Foundation.NSKeyValueChangeKey : Any]?)
+  public func offsetChangeAction(object: Swift.AnyObject?, change: [Foundation.NSKeyValueChangeKey : Any]?)
+}
+extension ESRefreshComponent {
+  public func ignoreObserver(_ ignore: Swift.Bool = false)
+  @objc override dynamic open func observeValue(forKeyPath keyPath: Swift.String?, of object: Any?, change: [Foundation.NSKeyValueChangeKey : Any]?, context: Swift.UnsafeMutableRawPointer?)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MemberCardView : LoyaltyUI.BaseXibView {
+  @objc @IBOutlet weak public var settingButton: UIKit.UIButton!
+  public var controller: LoyaltyUI.MemberCardControllerProtocol?
+  @objc override dynamic public func awakeFromNib()
+  @objc override dynamic public func willMove(toWindow newWindow: UIKit.UIWindow?)
+  @objc override dynamic public func didMoveToWindow()
+  @objc deinit
+}
+extension MemberCardView : LoyaltyUI.MemberCardViewProtocol {
+  public func fillMemberInfo()
+}
+@_hasMissingDesignatedInitializers public class DateUtil {
+  public static func dateToString(date: Foundation.Date, format: Swift.String, isUTC: Swift.Bool = false) -> Swift.String
+  @objc deinit
+}
+public protocol HistoryControllerProtocol {
+  var page: Swift.Int { get set }
+  var transactions: [LoyaltyModel.Transaction] { get set }
+  var noMoreData: Swift.Bool { get set }
+  var filterData: LoyaltyUI.FilterData { get set }
+  func reloadDataWithFilter(_ filterData: LoyaltyUI.FilterData)
+  func loadHistory(isLoadMore: Swift.Bool)
+  func reloadHistory()
+}
+public class HistoryController : LoyaltyUI.HistoryControllerProtocol {
+  public var transactions: [LoyaltyModel.Transaction]
+  public var filterData: LoyaltyUI.FilterData
+  public var page: Swift.Int
+  public var noMoreData: Swift.Bool
+  public init(terraApp: TerraInstancesManager.ITerraApp, view: LoyaltyUI.LoyaltyHistoryViewProtocol)
+  public func reloadDataWithFilter(_ filterData: LoyaltyUI.FilterData)
+  public func reloadHistory()
+  public func loadHistory(isLoadMore: Swift.Bool)
+  @objc deinit
+}
+extension UIScrollView {
+  public var header: LoyaltyUI.ESRefreshHeaderView? {
+    get
+    set(newValue)
+  }
+  public var footer: LoyaltyUI.ESRefreshFooterView? {
+    get
+    set(newValue)
+  }
+}
+extension ES where Base : UIKit.UIScrollView {
+  @discardableResult
+  public func addPullToRefresh(handler: @escaping LoyaltyUI.ESRefreshHandler) -> LoyaltyUI.ESRefreshHeaderView
+  @discardableResult
+  public func addPullToRefresh(animator: LoyaltyUI.ESRefreshAnimatorProtocol & LoyaltyUI.ESRefreshProtocol, handler: @escaping LoyaltyUI.ESRefreshHandler) -> LoyaltyUI.ESRefreshHeaderView
+  @discardableResult
+  public func addInfiniteScrolling(handler: @escaping LoyaltyUI.ESRefreshHandler) -> LoyaltyUI.ESRefreshFooterView
+  @discardableResult
+  public func addInfiniteScrolling(animator: LoyaltyUI.ESRefreshAnimatorProtocol & LoyaltyUI.ESRefreshProtocol, handler: @escaping LoyaltyUI.ESRefreshHandler) -> LoyaltyUI.ESRefreshFooterView
+  public func removeRefreshHeader()
+  public func removeRefreshFooter()
+  public func startPullToRefresh()
+  public func autoPullToRefresh()
+  public func stopPullToRefresh(ignoreDate: Swift.Bool = false, ignoreFooter: Swift.Bool = false)
+  public func noticeNoMoreData()
+  public func resetNoMoreData()
+  public func stopLoadingMore()
+}
+extension UIScrollView {
+  public var refreshIdentifier: Swift.String? {
+    get
+    set
+  }
+  public var expired: Swift.Bool {
+    get
+  }
+  public var expiredTimeInterval: Foundation.TimeInterval? {
+    get
+    set
+  }
+  public var lastRefreshDate: Foundation.Date? {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers open class ESRefreshHeaderView : LoyaltyUI.ESRefreshComponent {
+  open var lastRefreshTimestamp: Foundation.TimeInterval?
+  open var refreshIdentifier: Swift.String?
+  convenience public init(frame: CoreGraphics.CGRect, handler: @escaping LoyaltyUI.ESRefreshHandler)
+  @objc override dynamic open func didMoveToSuperview()
+  override open func offsetChangeAction(object: Swift.AnyObject?, change: [Foundation.NSKeyValueChangeKey : Any]?)
+  override open func start()
+  override open func stop()
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+}
+@objc @_inheritsConvenienceInitializers open class ESRefreshFooterView : LoyaltyUI.ESRefreshComponent {
+  open var noMoreData: Swift.Bool {
+    get
+    set
+  }
+  @objc override dynamic open var isHidden: Swift.Bool {
+    @objc get
+    @objc set
+  }
+  convenience public init(frame: CoreGraphics.CGRect, handler: @escaping LoyaltyUI.ESRefreshHandler)
+  @objc override dynamic open func didMoveToSuperview()
+  override open func sizeChangeAction(object: Swift.AnyObject?, change: [Foundation.NSKeyValueChangeKey : Any]?)
+  override open func offsetChangeAction(object: Swift.AnyObject?, change: [Foundation.NSKeyValueChangeKey : Any]?)
+  override open func start()
+  override open func stop()
+  open func noticeNoMoreData()
+  open func resetNoMoreData()
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder aDecoder: Foundation.NSCoder)
+}
+public protocol MembershipViewProtocol : AnyObject {
+  var controller: LoyaltyUI.MembershipControllerProtocol? { get set }
+  func fillMemberInfo()
+  func updateQrCode()
+  func didGetQrError()
+  func setLabel(for timeLeft: Foundation.TimeInterval)
+  func startRefresh()
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class MembershipView : LoyaltyUI.BaseXibView {
+  public var controller: LoyaltyUI.MembershipControllerProtocol?
+  @objc override dynamic public func awakeFromNib()
+  @objc override dynamic public func layoutSubviews()
+  @objc deinit
+}
+extension MembershipView : LoyaltyUI.MembershipViewProtocol {
+  public func fillMemberInfo()
+  public func updateQrCode()
+  public func setLabel(for timeLeft: Foundation.TimeInterval)
+  public func startRefresh()
+  public func didGetQrError()
+}
+public protocol MembershipControllerProtocol {
+  var config: LoyaltyModel.NetworkConfigResult? { get }
+  var memberInfo: LoyaltyModel.MemberInfo? { get }
+  var qrData: Swift.String? { get }
+  var remainingInterval: Foundation.TimeInterval { get }
+  var expireTime: Foundation.TimeInterval { get }
+  func loadMembership()
+  func reloadQr()
+  func loyaltyProgramButtonWasTapped()
+  func historyButtonWasTapped()
+}
+public protocol MembershipViewDelegate : AnyObject {
+  func onMembershipSuccess()
+  func onMembershipError(error: LoyaltyModel.LoyaltyError)
+  func loyaltyProgramButtonWasTapped(url: Swift.String)
+  func historyButtonWasTapped()
+  func didGetNetworkConfig()
+}
+public class MembershipController : LoyaltyUI.MembershipControllerProtocol {
+  public var config: LoyaltyModel.NetworkConfigResult? {
+    get
+  }
+  public var memberInfo: LoyaltyModel.MemberInfo? {
+    get
+  }
+  public var qrData: Swift.String? {
+    get
+  }
+  public var remainingInterval: Swift.Double
+  public var expireTime: Swift.Double
+  public init(terraApp: TerraInstancesManager.ITerraApp, view: LoyaltyUI.MembershipViewProtocol?, delegate: LoyaltyUI.MembershipViewDelegate?)
+  public func loadMembership()
+  public func reloadQr()
+  public func loyaltyProgramButtonWasTapped()
+  public func historyButtonWasTapped()
+  @objc deinit
+}
+public protocol ESExtensionsProvider : AnyObject {
+  associatedtype CompatibleType
+  var es: Self.CompatibleType { get }
+}
+extension ESExtensionsProvider {
+  public var es: LoyaltyUI.ES<Self> {
+    get
+  }
+}
+public struct ES<Base> {
+  public let base: Base
+}
+extension UIScrollView : LoyaltyUI.ESExtensionsProvider {
+  public typealias CompatibleType = LoyaltyUI.ES<UIKit.UIScrollView>
+}
+public protocol MemberCardViewProtocol : AnyObject {
+  var controller: LoyaltyUI.MemberCardControllerProtocol? { get set }
+  func fillMemberInfo()
+}
+@objc @_inheritsConvenienceInitializers public class FilterItem : UIKit.UICollectionViewCell {
+  @objc override dynamic public func awakeFromNib()
+  public var isActive: Swift.Bool {
+    get
+    set
+  }
+  @objc deinit
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+public protocol MemberCardViewDelegate : AnyObject {
+  func onSettingTapped()
+  func onRegisterTapped()
+  func onUseCardTapped()
+  func onMemberCardError(_ error: LoyaltyModel.LoyaltyError)
+}
+public protocol MemberCardControllerProtocol {
+  var config: LoyaltyModel.NetworkConfigResult? { get }
+  var memberInfo: LoyaltyModel.MemberInfo? { get }
+  var memberCard: LoyaltyUI.MemberCard { get }
+  func enable()
+  func reload()
+  func getAvatar() -> Swift.String?
+  func getBackgroundImage() -> Swift.String?
+  func getTierIcon() -> Swift.String?
+  func useCardWasTapped()
+  func registerButtonWasTapped()
+  func settingButtonWasTapped()
+}
+public class MemberCardController : LoyaltyUI.MemberCardControllerProtocol {
+  public var config: LoyaltyModel.NetworkConfigResult? {
+    get
+  }
+  public var memberInfo: LoyaltyModel.MemberInfo? {
+    get
+  }
+  public var memberCard: LoyaltyUI.MemberCard
+  public init(terraApp: TerraInstancesManager.ITerraApp, view: LoyaltyUI.MemberCardViewProtocol?, memberCard: LoyaltyUI.MemberCard, delegate: LoyaltyUI.MemberCardViewDelegate?)
+  public func reload()
+  public func enable()
+  public func getBackgroundImage() -> Swift.String?
+  public func getAvatar() -> Swift.String?
+  public func getTierIcon() -> Swift.String?
+  public func useCardWasTapped()
+  public func registerButtonWasTapped()
+  public func settingButtonWasTapped()
+  @objc deinit
+}
+public protocol LoyaltyHistoryViewProtocol : AnyObject {
+  var isLoading: Swift.Bool { get set }
+  var type: LoyaltyUI.HistoryTabType { get }
+  var controller: LoyaltyUI.HistoryControllerProtocol? { get set }
+  func didGetTransactions()
+  func didGetTransactionsError(error: LoyaltyModel.LoyaltyError)
+}
+open class ESRefreshAnimator : LoyaltyUI.ESRefreshProtocol, LoyaltyUI.ESRefreshAnimatorProtocol {
+  open var view: UIKit.UIView
+  open var insets: UIKit.UIEdgeInsets
+  open var trigger: CoreGraphics.CGFloat
+  open var executeIncremental: CoreGraphics.CGFloat
+  open var state: LoyaltyUI.ESRefreshViewState
+  public init()
+  open func refreshAnimationBegin(view: LoyaltyUI.ESRefreshComponent)
+  open func refreshAnimationWillEnd(view: LoyaltyUI.ESRefreshComponent)
+  open func refreshAnimationEnd(view: LoyaltyUI.ESRefreshComponent)
+  open func refresh(view: LoyaltyUI.ESRefreshComponent, progressDidChange progress: CoreGraphics.CGFloat)
+  open func refresh(view: LoyaltyUI.ESRefreshComponent, stateDidChange state: LoyaltyUI.ESRefreshViewState)
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class ErrorView : LoyaltyUI.BaseXibView {
+  @objc deinit
+}
+public struct FilterData {
+  public static let `default`: LoyaltyUI.FilterData
+}
+public enum HistoryTabType : Swift.String, Swift.CaseIterable {
+  case all, grant, spend
+  public typealias AllCases = [LoyaltyUI.HistoryTabType]
+  public static var allCases: [LoyaltyUI.HistoryTabType] {
+    get
+  }
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+@objc @_inheritsConvenienceInitializers open class ESRefreshHeaderAnimator : UIKit.UIView, LoyaltyUI.ESRefreshProtocol, LoyaltyUI.ESRefreshAnimatorProtocol, LoyaltyUI.ESRefreshImpactProtocol {
+  open var pullToRefreshDescription: Swift.String {
+    get
+    set
+  }
+  open var releaseToRefreshDescription: Swift.String
+  open var loadingDescription: Swift.String
+  open var view: UIKit.UIView {
+    get
+  }
+  open var insets: UIKit.UIEdgeInsets
+  open var trigger: CoreGraphics.CGFloat
+  open var executeIncremental: CoreGraphics.CGFloat
+  open var state: LoyaltyUI.ESRefreshViewState
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init(coder aDecoder: Foundation.NSCoder)
+  open func refreshAnimationBegin(view: LoyaltyUI.ESRefreshComponent)
+  open func refreshAnimationEnd(view: LoyaltyUI.ESRefreshComponent)
+  open func refresh(view: LoyaltyUI.ESRefreshComponent, progressDidChange progress: CoreGraphics.CGFloat)
+  open func refresh(view: LoyaltyUI.ESRefreshComponent, stateDidChange state: LoyaltyUI.ESRefreshViewState)
+  @objc override dynamic open func layoutSubviews()
+  @objc deinit
+}
+open class ESRefreshDataManager {
+  open var lastRefreshInfo: [Swift.String : Foundation.Date]
+  open var expiredTimeIntervalInfo: [Swift.String : Foundation.TimeInterval]
+  required public init()
+  open func date(forKey key: Swift.String) -> Foundation.Date?
+  open func setDate(_ date: Foundation.Date?, forKey key: Swift.String)
+  open func expiredTimeInterval(forKey key: Swift.String) -> Foundation.TimeInterval?
+  open func setExpiredTimeInterval(_ interval: Foundation.TimeInterval?, forKey key: Swift.String)
+  open func isExpired(forKey key: Swift.String) -> Swift.Bool
+  open func isExpired(forKey key: Swift.String, block: ((Swift.Bool) -> ())?)
+  public static func clearAll()
+  public static func clearLastRefreshInfo()
+  public static func clearExpiredTimeIntervalInfo()
+  @objc deinit
+}
+@objc @_inheritsConvenienceInitializers open class ESRefreshFooterAnimator : UIKit.UIView, LoyaltyUI.ESRefreshProtocol, LoyaltyUI.ESRefreshAnimatorProtocol {
+  open var loadingMoreDescription: Swift.String
+  open var noMoreDataDescription: Swift.String
+  open var loadingDescription: Swift.String
+  open var view: UIKit.UIView {
+    get
+  }
+  open var duration: Swift.Double
+  open var insets: UIKit.UIEdgeInsets
+  open var trigger: CoreGraphics.CGFloat
+  open var executeIncremental: CoreGraphics.CGFloat
+  open var state: LoyaltyUI.ESRefreshViewState
+  @objc override dynamic public init(frame: CoreGraphics.CGRect)
+  @objc required dynamic public init(coder aDecoder: Foundation.NSCoder)
+  open func refreshAnimationBegin(view: LoyaltyUI.ESRefreshComponent)
+  open func refreshAnimationEnd(view: LoyaltyUI.ESRefreshComponent)
+  open func refresh(view: LoyaltyUI.ESRefreshComponent, progressDidChange progress: CoreGraphics.CGFloat)
+  open func refresh(view: LoyaltyUI.ESRefreshComponent, stateDidChange state: LoyaltyUI.ESRefreshViewState)
+  @objc override dynamic open func layoutSubviews()
+  @objc deinit
+}
+@objc @_hasMissingDesignatedInitializers public class SingleWebViewController : LoyaltyUI.InAppWebBase {
+  public init(url: Swift.String)
+  @objc override dynamic public func viewDidLoad()
+  @objc override dynamic public func observeValue(forKeyPath keyPath: Swift.String?, of object: Any?, change: [Foundation.NSKeyValueChangeKey : Any]?, context: Swift.UnsafeMutableRawPointer?)
+  @objc deinit
+  @objc override dynamic public init(nibName nibNameOrNil: Swift.String?, bundle nibBundleOrNil: Foundation.Bundle?)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BaseXibView : UIKit.UIView {
+  @objc override dynamic open func prepareForInterfaceBuilder()
+  @objc deinit
+}
+extension UIColor {
+  public static let dino: UIKit.UIColor
+}
+public enum ESRefreshViewState {
+  case pullToRefresh
+  case releaseToRefresh
+  case refreshing
+  case autoRefreshing
+  case noMoreData
+  public static func == (a: LoyaltyUI.ESRefreshViewState, b: LoyaltyUI.ESRefreshViewState) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public protocol ESRefreshProtocol {
+  mutating func refreshAnimationBegin(view: LoyaltyUI.ESRefreshComponent)
+  mutating func refreshAnimationEnd(view: LoyaltyUI.ESRefreshComponent)
+  mutating func refresh(view: LoyaltyUI.ESRefreshComponent, progressDidChange progress: CoreGraphics.CGFloat)
+  mutating func refresh(view: LoyaltyUI.ESRefreshComponent, stateDidChange state: LoyaltyUI.ESRefreshViewState)
+}
+public protocol ESRefreshAnimatorProtocol {
+  var view: UIKit.UIView { get }
+  var insets: UIKit.UIEdgeInsets { get set }
+  var trigger: CoreGraphics.CGFloat { get set }
+  var executeIncremental: CoreGraphics.CGFloat { get set }
+  var state: LoyaltyUI.ESRefreshViewState { get set }
+}
+public protocol ESRefreshImpactProtocol {
+}
+extension ESRefreshImpactProtocol {
+  public func impact()
+}
+public struct MemberCard {
+  public init(name: Swift.String?, avatar: Swift.String?)
+}
+@objc @_inheritsConvenienceInitializers public class EmptyHeaderView : UIKit.UITableViewHeaderFooterView {
+  @objc override dynamic public func awakeFromNib()
+  @objc deinit
+  @objc override dynamic public init(reuseIdentifier: Swift.String?)
+  @objc required dynamic public init?(coder: Foundation.NSCoder)
+}
+extension LoyaltyUI.HistoryTabType : Swift.Equatable {}
+extension LoyaltyUI.HistoryTabType : Swift.Hashable {}
+extension LoyaltyUI.HistoryTabType : Swift.RawRepresentable {}
+extension LoyaltyUI.ESRefreshViewState : Swift.Equatable {}
+extension LoyaltyUI.ESRefreshViewState : Swift.Hashable {}

@@ -1,0 +1,11 @@
+framework module JanusGoogle {
+  umbrella header "JanusGoogle.h"
+
+  export *
+  module * { export * }
+}
+
+module JanusGoogle.Swift {
+    header "JanusGoogle-Swift.h"
+    requires objc
+}

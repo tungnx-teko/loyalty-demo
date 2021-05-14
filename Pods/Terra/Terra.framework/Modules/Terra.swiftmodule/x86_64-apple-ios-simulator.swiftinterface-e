@@ -1,0 +1,64 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name Terra
+import Codextended
+import CryptoSwift
+import Foundation
+import Swift
+import TekCoreNetwork
+import TekCoreService
+@_exported import Terra
+import TerraInstancesManager
+import UIKit
+public typealias ITerraApp = TerraInstancesManager.ITerraApp
+public typealias TerraInitializeHandler = (Swift.Bool, Terra.ITerraApp) -> Swift.Void
+public class TerraApp : Terra.ITerraApp {
+  public var bus: TerraInstancesManager.BusProtocol!
+  public var identity: Swift.String
+  public var clientId: Swift.String? {
+    get
+  }
+  public var terraURL: Foundation.URL? {
+    get
+  }
+  public var configGetter: TerraInstancesManager.PandoraConfigGettable?
+  public var servicesCredential: TekCoreService.ServicesCredential?
+  public var application: UIKit.UIApplication?
+  public var servicesErrorDelegation: TekCoreService.ServicesErrorDelegate?
+  public var env: TerraInstancesManager.TerraEnv
+  public var bundleId: Swift.String
+  public var extraConfig: [Swift.String : Any] {
+    get
+  }
+  public init(identity: Swift.String, bundleId: Swift.String)
+  public static let DEFAULT_VALUE: Swift.String
+  @objc deinit
+}
+extension TerraApp {
+  public static func configure(appName: Swift.String = DEFAULT_VALUE, bundleId: Swift.String = Bundle.main.bundleIdentifier ?? "", completion: @escaping Terra.TerraInitializeHandler)
+  public static func getInstance(appName: Swift.String = DEFAULT_VALUE) throws -> Terra.ITerraApp
+}
+public typealias TerraEnv = TerraInstancesManager.TerraEnv
+public enum TerraEnvironment : Swift.String {
+  case dev, staging, live
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum TerraError : Swift.Error {
+  case authNotInitialized
+  case paymentNotInitialized
+  case serviceNotInitialized
+  public static func == (a: Terra.TerraError, b: Terra.TerraError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+extension Terra.TerraEnvironment : Swift.Equatable {}
+extension Terra.TerraEnvironment : Swift.Hashable {}
+extension Terra.TerraEnvironment : Swift.RawRepresentable {}
+extension Terra.TerraError : Swift.Equatable {}
+extension Terra.TerraError : Swift.Hashable {}

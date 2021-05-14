@@ -1,0 +1,1504 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3 (swiftlang-1200.0.29.2 clang-1200.0.30.1)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name TekServiceInterfaces
+import Foundation
+import Swift
+@_exported import TekServiceInterfaces
+public struct SearchPagination : Swift.Encodable {
+  public var pageNumber: Swift.Int
+  public var itemsPerPage: Swift.Int
+  public init()
+  public init(pageNumber: Swift.Int, itemsPerPage: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol IWard : TekServiceInterfaces.IAddress {
+  var services: TekServiceInterfaces.IShippingService? { get }
+}
+public protocol IOrder {
+  var orderListItem: TekServiceInterfaces.IOrderListItem { get }
+  var latestUpdateTime: Swift.String? { get }
+  var stateChanges: [TekServiceInterfaces.IOrderStateHistory] { get }
+}
+public protocol IOrderExtraService {
+  var installation: Swift.Bool? { get }
+  var delivery: Swift.Bool? { get }
+  var technicalSupport: Swift.Bool? { get }
+  var handover: Swift.Bool? { get }
+}
+public protocol IProductCondition : TekServiceInterfaces.ICondition {
+}
+public protocol IPromotion {
+  var id: Swift.Int? { get }
+  var isDefault: Swift.Bool { get }
+  var applyOn: Swift.String? { get }
+  var description: Swift.String? { get }
+  var name: Swift.String? { get }
+}
+public protocol ICrmError {
+  var code: Swift.Int? { get }
+  var error: Swift.Bool? { get }
+  var customers: [TekServiceInterfaces.ICrmCustomer] { get }
+  var message: TekServiceInterfaces.ICrmResponseMessage? { get }
+}
+public protocol IInfo {
+  var sku: Swift.String? { get }
+  var skuId: Swift.String? { get }
+  var name: Swift.String? { get }
+  var imageUrl: Swift.String? { get }
+  var tags: [Swift.String]? { get }
+  var brand: TekServiceInterfaces.IBrand? { get }
+  var categories: [TekServiceInterfaces.IInfoCategory] { get }
+  var seller: TekServiceInterfaces.ISeller? { get }
+  var provider: TekServiceInterfaces.IProvider? { get }
+  var masterCategories: [TekServiceInterfaces.IInfoCategory] { get }
+  var tax: TekServiceInterfaces.ITax? { get }
+  var warranty: TekServiceInterfaces.IWarranty? { get }
+  var slug: Swift.String? { get }
+}
+public struct MarketOrderConfirmPaymentPayload : Swift.Encodable {
+  public init(payments: [TekServiceInterfaces.MarketOrderPaymentParam])
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct MarketOrderPaymentParam : Swift.Encodable {
+  public init(methodCode: Swift.String, amount: Swift.Double)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol IPolicyDetail {
+  var id: Swift.Int { get }
+  var name: Swift.String? { get }
+  var iconURL: Foundation.URL? { get }
+}
+public protocol IVariantAttribute {
+  var id: Swift.Int? { get }
+  var code: Swift.String? { get }
+  var value: Swift.String? { get }
+  var optionId: Swift.Int? { get }
+}
+public protocol IPageBuilderBanner {
+  var image: Swift.String? { get }
+  var priority: Swift.Int { get }
+  var campaignName: Swift.String? { get }
+  var startDate: Foundation.Date? { get }
+  var endDate: Foundation.Date? { get }
+}
+public protocol IPaymentTransactionResult {
+  var amount: Swift.Double? { get }
+  var message: Swift.String? { get }
+  var ref: Swift.String? { get }
+  var status: Swift.String? { get }
+  var transactionId: Swift.String? { get }
+}
+public protocol ISearchService : TekServiceInterfaces.IBannerService {
+}
+public struct TicketCreatePayload : Swift.Encodable {
+  public var ticketTypeId: Swift.Int
+  public var title: Swift.String?
+  public var refTicketId: Swift.Int?
+  public var priority: Swift.Int?
+  public var receiveChannelId: Swift.Int?
+  public var provinceId: Swift.Int?
+  public var saleChannelId: Swift.Int?
+  public var assignDepartmentId: Swift.Int?
+  public var orderCode: Swift.String
+  public var customerId: Swift.Int?
+  public var customerPhone: Swift.String
+  public var text: Swift.String
+  public var terminalCode: Swift.String?
+  public var filesId: [Swift.Int]
+  public init(orderCode: Swift.String, customerPhone: Swift.String, text: Swift.String)
+  public init(ticketTypeId: Swift.Int, title: Swift.String? = nil, refTicketId: Swift.Int? = nil, priority: Swift.Int? = nil, receiveChannelId: Swift.Int? = nil, provinceId: Swift.Int? = nil, saleChannelId: Swift.Int? = nil, assignDepartmentId: Swift.Int? = nil, orderCode: Swift.String, customerId: Swift.Int? = nil, customerPhone: Swift.String, text: Swift.String, terminalCode: Swift.String? = nil, filesId: [Swift.Int])
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class TicketCreatePayloadBuilder {
+  public init(orderCode: Swift.String, customerPhone: Swift.String, text: Swift.String)
+  public func append(ticketTypeId: Swift.Int) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(title: Swift.String) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(refTicketId: Swift.Int) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(priority: Swift.Int) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(receiveChannelId: Swift.Int) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(provinceId: Swift.Int) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(saleChannelId: Swift.Int) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(assignDepartmentId: Swift.Int) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(customerId: Swift.Int) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(terminalCode: Swift.String) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func append(filesId: [Swift.Int]) -> TekServiceInterfaces.TicketCreatePayloadBuilder
+  public func build() -> TekServiceInterfaces.TicketCreatePayload
+  @objc deinit
+}
+public protocol IProduct {
+  var productInfo: TekServiceInterfaces.IInfo? { get }
+  var promotions: [TekServiceInterfaces.IProductPromotion] { get }
+  var totalAvailable: Swift.Double? { get }
+  var prices: [TekServiceInterfaces.IPrice] { get }
+  var flashSales: [TekServiceInterfaces.IFlashSale] { get }
+  var productDetail: TekServiceInterfaces.IDetail? { get }
+  var provider: TekServiceInterfaces.IProvider? { get }
+}
+public protocol IPaymentObserver {
+  func observe(transactionCode: Swift.String, completion: @escaping (Swift.Result<TekServiceInterfaces.IPaymentTransactionResult, TekServiceInterfaces.PaymentError>) -> ())
+}
+public protocol IOrderPayment {
+  var transactionId: Swift.String? { get }
+  var paymentMethod: Swift.String? { get }
+  var amount: Swift.Double? { get }
+  var updatedAt: Swift.String? { get }
+  var partnerCode: Swift.String? { get }
+  var asiaPartnerId: Swift.String? { get }
+  var terminalCode: Swift.String? { get }
+  var paymentType: Swift.String? { get }
+  var merchantCode: Swift.String? { get }
+  var partnerTransactionCode: Swift.String? { get }
+}
+public protocol IBenefit {
+  var discount: TekServiceInterfaces.IMoney? { get }
+  var voucher: TekServiceInterfaces.IVoucher? { get }
+}
+public enum OTPVerifyType {
+  case phone(value: Swift.String)
+  case email(value: Swift.String)
+}
+public typealias IdentityResponseHandler = (TekServiceInterfaces.OTPVerifyType, Swift.Bool, Swift.Int?) -> Swift.Void
+public protocol IIdentityService {
+  func verify(_ info: TekServiceInterfaces.OTPVerifyType, completion: @escaping TekServiceInterfaces.IdentityResponseHandler)
+  func update(_ info: TekServiceInterfaces.OTPVerifyType, otp: Swift.String, completion: @escaping TekServiceInterfaces.IdentityResponseHandler)
+}
+extension Encodable {
+  public func asDictionary() throws -> [Swift.String : Any]
+  public func toDict() -> [Swift.String : Any]
+  public var dictValue: [Swift.String : Any]? {
+    get
+  }
+}
+public protocol ICondition {
+  var coupon: Swift.String? { get }
+  var orderValueMin: Swift.Double? { get }
+  var orderValueMax: Swift.Double? { get }
+  var blockSize: Swift.Int? { get }
+  var minQuantity: Swift.Int? { get }
+}
+public struct SearchSorting : Swift.Encodable {
+  public var sort: Swift.String?
+  public var order: Swift.String?
+  public init()
+  public init(sort: Swift.String? = nil, order: Swift.String? = nil)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol IPPMCampaign {
+  var id: Swift.Int? { get }
+  var name: Swift.String? { get }
+}
+public typealias OrderHandler = (TekServiceInterfaces.IOrder?, Swift.Bool) -> Swift.Void
+public typealias OrderListHandler = (TekServiceInterfaces.IOrderListResult?, Swift.Bool) -> Swift.Void
+public typealias CancelOrderHandler = (TekServiceInterfaces.IOrderResponse?, Swift.Bool) -> Swift.Void
+public typealias MarketOrderCreateHandler = (TekServiceInterfaces.IMarketOrderCreateResult?, TekServiceInterfaces.IMarketOrderError?) -> Swift.Void
+public typealias MarketOrderGetHandler = (TekServiceInterfaces.IOrderListItem?, TekServiceInterfaces.IMarketOrderError?) -> Swift.Void
+public typealias MarketOrderConfirmPaymentHandler = (TekServiceInterfaces.IMarketOrderCreateResult?, TekServiceInterfaces.IMarketOrderError?) -> Swift.Void
+public protocol IOrderService {
+  func getOrder(id: Swift.String, completion: @escaping TekServiceInterfaces.OrderHandler)
+  func queryOrder(id: Swift.String, completion: @escaping TekServiceInterfaces.OrderHandler)
+  func getOrderList(creatorId: Swift.String, orderCodes: [Swift.String], offset: Swift.Int, limit: Swift.Int, completion: @escaping TekServiceInterfaces.OrderListHandler)
+  func getMarketOrderList(creatorId: Swift.String, orderCodes: [Swift.String], offset: Swift.Int, limit: Swift.Int, completion: @escaping TekServiceInterfaces.OrderListHandler)
+  func cancelChildOrder(id: Swift.String, completion: @escaping TekServiceInterfaces.CancelOrderHandler)
+  func cancelMarketOrder(id: Swift.String, completion: @escaping TekServiceInterfaces.CancelOrderHandler)
+  func createMarketOrder(payload: TekServiceInterfaces.OrderCreatePayload, completion: @escaping TekServiceInterfaces.MarketOrderCreateHandler)
+  func getMarketOrder(id: Swift.String, completion: @escaping TekServiceInterfaces.MarketOrderGetHandler)
+  func confirmPayment(id: Swift.String, payload: TekServiceInterfaces.MarketOrderConfirmPaymentPayload, completion: @escaping TekServiceInterfaces.MarketOrderConfirmPaymentHandler)
+}
+public struct SearchAttribute : Swift.Encodable {
+  public var code: Swift.String?
+  public var optionIds: [Swift.String]?
+  public init()
+  public init(code: Swift.String? = nil, optionIds: [Swift.String]? = nil)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol ICrmVat {
+  var vatName: Swift.String? { get }
+  var vatAddress: Swift.String? { get }
+  var taxCode: Swift.String? { get }
+}
+public typealias GetNotificationHandler = ([TekServiceInterfaces.INotification], Swift.Int, Swift.Int) -> Swift.Void
+public typealias GetUnreadCountHandler = (Swift.Int) -> Swift.Void
+public typealias MarkAsReadHandler = (Swift.Bool) -> Swift.Void
+public protocol IStnService {
+  func register(userId: Swift.String, token: Swift.String)
+  func unregister(userId: Swift.String, token: Swift.String)
+  func getNotificationList(checkPoint: Swift.Int?, handler: @escaping TekServiceInterfaces.GetNotificationHandler)
+  func getUnreadCount(handler: @escaping TekServiceInterfaces.GetUnreadCountHandler)
+  func markAsRead(id: Swift.Int, handler: @escaping TekServiceInterfaces.MarkAsReadHandler)
+}
+public protocol PaymentRequestProtocol {
+  var orderId: Swift.String { get }
+  var orderCode: Swift.String { get }
+  var orderDescription: Swift.String { get }
+  var amount: Swift.Double { get }
+  var cancelUrl: Swift.String { get }
+  var returnUrl: Swift.String { get }
+}
+public enum PaymentError : Swift.Error {
+}
+public protocol IAttributeGroup {
+  var id: Swift.Int? { get }
+  var name: Swift.String? { get }
+  var value: Swift.String? { get }
+  var priority: Swift.Int? { get }
+  var parentId: Swift.Int? { get }
+}
+public protocol IOrderShippingInfo {
+  var name: Swift.String { get }
+  var phone: Swift.String { get }
+  var email: Swift.String? { get }
+  var expectedDate: Swift.String? { get }
+  var provinceId: Swift.String { get }
+  var wardId: Swift.String { get }
+  var districtId: Swift.String { get }
+  var address: Swift.String { get }
+  var fullAddress: Swift.String { get }
+  var country: Swift.String { get }
+  var type: Swift.Int? { get }
+  var note: Swift.String? { get }
+  var lat: Swift.Double? { get }
+  var lon: Swift.Double? { get }
+  var storeCode: Swift.String? { get }
+}
+public protocol ICrmCustomer {
+  var address: Swift.String? { get }
+  var ageFrom: Swift.Int { get }
+  var ageTo: Swift.Int { get }
+  var asiaCrmId: Swift.String { get }
+  var bankAccounts: [TekServiceInterfaces.ICrmBankAccount] { get }
+  var brandAwareness: [TekServiceInterfaces.ICrmBrandAwareness] { get }
+  var businessLicense: Swift.String? { get }
+  var businessType: Swift.Int { get }
+  var comment: Swift.String? { get }
+  var contacts: [TekServiceInterfaces.ICrmContact] { get }
+  var dateOfBirth: Swift.String? { get }
+  var debtLimit: Swift.Double { get }
+  var district: Swift.String? { get }
+  var districtId: Swift.String? { get }
+  var email: Swift.String? { get }
+  var extraInformation: [TekServiceInterfaces.ICrmInformation] { get }
+  var facebookLink: Swift.String? { get }
+  var fax: Swift.String? { get }
+  var gender: Swift.String? { get }
+  var id: Swift.Int { get }
+  var identification: Swift.String? { get }
+  var income: Swift.Int { get }
+  var isCompany: Swift.Bool { get }
+  var isDeleted: Swift.Bool { get }
+  var name: Swift.String? { get }
+  var optionalPhone1: Swift.String? { get }
+  var optionalPhone2: Swift.String? { get }
+  var paymentPeriod: Swift.Int { get }
+  var phone: Swift.String? { get }
+  var province: Swift.String? { get }
+  var provinceId: Swift.String? { get }
+  var referenceId: Swift.Int { get }
+  var scope: Swift.Int { get }
+  var source: Swift.String? { get }
+  var sourceId: Swift.String? { get }
+  var taxAddress: Swift.String? { get }
+  var taxCode: Swift.String? { get }
+  var taxName: Swift.String? { get }
+  var vats: [TekServiceInterfaces.ICrmVat] { get }
+  var ward: Swift.String? { get }
+  var wardId: Swift.String? { get }
+}
+public protocol IBlockParams {
+  var filter: TekServiceInterfaces.IBlockFilter? { get }
+  var sorting: TekServiceInterfaces.IBlockSorting? { get }
+}
+public protocol IProvider {
+  var id: Swift.Int? { get }
+  var name: Swift.String? { get }
+  var slogan: Swift.String? { get }
+  var logo: Swift.String? { get }
+}
+public protocol IUserInfo {
+  var userId: Swift.String? { get }
+  var name: Swift.String? { get }
+  var picture: Swift.String? { get }
+  var dob: Swift.String? { get }
+  var email: Swift.String? { get }
+  var telephone: Swift.String? { get }
+  var sex: Swift.String? { get }
+  var memberships: TekServiceInterfaces.IMemberShip? { get }
+  var contactAddress: TekServiceInterfaces.IContactAddress? { get }
+}
+public protocol IMemberShip {
+  var providerUserAddress: Swift.String? { get }
+  var clientCode: Swift.String? { get }
+  var userId: Swift.String? { get }
+  var providerMemberId: Swift.String? { get }
+  var providerName: Swift.String? { get }
+  var providerNationalId: Swift.String? { get }
+}
+public protocol IContactAddress {
+  var address: Swift.String? { get }
+  var wardCode: Swift.String? { get }
+  var wardName: Swift.String? { get }
+  var districtCode: Swift.String? { get }
+  var districtName: Swift.String? { get }
+  var provinceCode: Swift.String? { get }
+  var provinceName: Swift.String? { get }
+}
+public protocol IPPMBenefit : TekServiceInterfaces.IBenefit {
+  var gifts: [TekServiceInterfaces.IPPMItem] { get }
+}
+public protocol INotification {
+  var appId: Swift.String? { get }
+  var id: Swift.Int? { get }
+  var isRead: Swift.Bool? { get }
+  var link: Swift.String? { get }
+  var message: Swift.String? { get }
+  var receivedId: Swift.String? { get }
+  var sender: Swift.String? { get }
+  var senderId: Swift.String? { get }
+  var title: Swift.String? { get }
+  var createdAt: Swift.String? { get }
+  var imageUrl: Swift.String? { get }
+  var extraData: TekServiceInterfaces.IExtraDataNotification? { get }
+  var photoUrl: Swift.String? { get }
+}
+public protocol ICrmPayload {
+  var name: Swift.String? { get }
+  var phone: Swift.String? { get }
+  var province: Swift.String? { get }
+  var district: Swift.String? { get }
+  var ward: Swift.String? { get }
+  var contacts: [TekServiceInterfaces.ICrmContact] { get }
+  var payloadDict: [Swift.String : Any]? { get }
+}
+public protocol IKeyword {
+  var query: Swift.String { get }
+  var highlight: Swift.String? { get }
+  var brands: [Swift.String] { get }
+  var category: TekServiceInterfaces.IKeywordCategory? { get }
+  var providerId: Swift.Int? { get }
+  var sellerCategories: [Swift.Int] { get }
+}
+public protocol IBrand {
+  var code: Swift.String? { get }
+  var name: Swift.String? { get }
+}
+public protocol IDiscoveryKeyword {
+  var query: Swift.String { get }
+  var highlight: Swift.String? { get }
+  var categoryCode: Swift.String? { get }
+  var categoryName: Swift.String? { get }
+}
+public protocol IOrderStaff {
+  var id: Swift.String? { get }
+  var name: Swift.String? { get }
+  var phone: Swift.String? { get }
+  var email: Swift.String? { get }
+}
+public protocol IKeywordCategory {
+  var id: Swift.Int? { get }
+  var name: Swift.String? { get }
+}
+public protocol IFilter {
+  var attributes: [TekServiceInterfaces.IAttribute] { get }
+  var brands: [TekServiceInterfaces.IBrand] { get }
+  var priceLte: Swift.Int? { get }
+  var priceGte: Swift.Int? { get }
+}
+public protocol IBanner {
+  var action: TekServiceInterfaces.IBannerAction? { get }
+  var campaignName: Swift.String? { get }
+  var descriptionField: Swift.String? { get }
+  var displayPage: Swift.String? { get }
+  var endDate: Swift.Int? { get }
+  var id: Swift.Int? { get }
+  var image: Swift.String? { get }
+  var isActive: Swift.Bool? { get }
+  var priority: Swift.Int? { get }
+  var saleCategoryCodes: Swift.String? { get }
+  var saleCategoryIds: Swift.String? { get }
+  var startDate: Swift.Int? { get }
+  var terminals: [Swift.String] { get }
+  var zone: Swift.String? { get }
+  var targetPath: Swift.String? { get }
+  var urlType: Swift.String? { get }
+  var label: Swift.String? { get }
+  var url: Swift.String? { get }
+  var params: TekServiceInterfaces.IBlockParams? { get }
+}
+public protocol IOrderPromotion {
+  var id: Swift.Int? { get }
+  var promotionId: Swift.String? { get }
+  var originalDiscount: Swift.Double { get }
+  var discount: Swift.Double { get }
+  var gifts: [TekServiceInterfaces.IOrderGift] { get }
+  var quantity: Swift.Int { get }
+  var voucher: TekServiceInterfaces.IOrderVoucher? { get }
+  var vouchers: [Swift.String] { get }
+  var coupon: Swift.String? { get }
+  var applyOn: [TekServiceInterfaces.IOrderPromotionApply] { get }
+  var applyType: Swift.String? { get }
+  var type: Swift.String? { get }
+  var sellerId: Swift.Int? { get }
+}
+public protocol IItem {
+  var sku: Swift.String { get }
+  var name: Swift.String { get }
+  var quantity: Swift.Int { get }
+  var maxQuantityPerOrder: Swift.Int? { get }
+}
+public protocol IProductItem : TekServiceInterfaces.IItem {
+  var imageUrl: Swift.String? { get }
+}
+public protocol IPPMItem : TekServiceInterfaces.IItem {
+  var id: Swift.Int { get }
+  var budgetId: Swift.Int { get }
+  var budgetStatus: Swift.String { get }
+  var outOfBudget: Swift.Bool { get }
+}
+public protocol IBlockFilter {
+  var attributes: [TekServiceInterfaces.IBlockAttribute] { get }
+  var brands: [Swift.String] { get }
+  var categories: [Swift.String] { get }
+  var hasPromotions: Swift.Bool? { get }
+  var location: Swift.String? { get }
+  var providerIds: [Swift.String] { get }
+  var priceGte: Swift.Int? { get }
+  var priceLte: Swift.Int? { get }
+  var sellerIds: [Swift.String] { get }
+  var sellingCodes: [Swift.String] { get }
+  var skus: [Swift.String] { get }
+  var tags: [Swift.String] { get }
+  var terminalCode: Swift.String? { get }
+  var flashSaleType: Swift.String? { get }
+  var masterCategories: [Swift.String] { get }
+  var excludedSkus: [Swift.String] { get }
+  var masterCategoryIds: [Swift.Int] { get }
+}
+public enum TransactionError : Swift.Int {
+  case common
+  case processing
+  case paymentProcessed
+  case balanceNotEnough
+  case paymentCancelled
+  case paymentMethodNotSupported
+  case outOfStock
+  public init(code: Swift.Int)
+  public typealias RawValue = Swift.Int
+  public init?(rawValue: Swift.Int)
+  public var rawValue: Swift.Int {
+    get
+  }
+}
+public protocol IMarketChildOrder {
+  var id: Swift.String? { get }
+  var code: Swift.String? { get }
+  var grandTotal: Swift.Double { get }
+}
+public protocol ICrmContact {
+  var address: Swift.String? { get }
+  var comment: Swift.String? { get }
+  var contactRelation: Swift.String { get }
+  var district: Swift.String { get }
+  var email: Swift.String { get }
+  var facebookLink: Swift.String { get }
+  var fax: Swift.String { get }
+  var gender: Swift.String { get }
+  var id: Swift.Int { get }
+  var isDefault: Swift.Bool { get }
+  var name: Swift.String? { get }
+  var phone: Swift.String { get }
+  var province: Swift.String { get }
+  var updatedAt: Swift.String? { get }
+  var ward: Swift.String { get }
+  var payloadDict: [Swift.String : Any]? { get }
+}
+public enum CategoryZone : Swift.String {
+  case topBrand
+  case topCategory
+  case mobileCategory
+  case newSeller
+  case customCategory
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public typealias GetCategoriesResponseHandler = ([TekServiceInterfaces.ICategory], Swift.Bool) -> ()
+public protocol ICategoryService {
+  func getCategories(page: Swift.Int, limit: Swift.Int, sorts: [Swift.String], orders: [Swift.String], level: Swift.Int, parentId: Swift.Int?, completion: @escaping TekServiceInterfaces.GetCategoriesResponseHandler)
+  func getTopCategories(page: Swift.Int, limit: Swift.Int, sorts: [Swift.String], orders: [Swift.String], level: Swift.Int, parentId: Swift.Int?, zone: TekServiceInterfaces.CategoryZone?, completion: @escaping TekServiceInterfaces.GetCategoriesResponseHandler)
+}
+public protocol IOptionValue {
+  var value: Swift.String? { get }
+  var optionId: Swift.Int? { get }
+  var images: [TekServiceInterfaces.IOptionImage] { get }
+}
+public protocol IDefinition : TekServiceInterfaces.IPromotion {
+  var benefit: TekServiceInterfaces.IPPMBenefit? { get }
+  var condition: TekServiceInterfaces.IPPMCondition? { get }
+  var sellerId: Swift.Int? { get }
+  var type: Swift.String { get }
+  var isPrivate: Swift.Bool { get }
+  var partner: Swift.String? { get }
+  var govRegister: Swift.Bool { get }
+  var campaign: TekServiceInterfaces.IPPMCampaign? { get }
+  var startedAt: Swift.String? { get }
+  var endedAt: Swift.String? { get }
+  var timeRanges: [TekServiceInterfaces.ITimeRange] { get }
+}
+public protocol IPagination {
+  var totalItems: Swift.Int? { get }
+  var totalPages: Swift.Int? { get }
+}
+public protocol IWarranty {
+  var months: Swift.Int? { get }
+  var description: Swift.String? { get }
+}
+public protocol ITax {
+  var taxOut: Swift.Double? { get }
+  var taxOutCode: Swift.String? { get }
+}
+public protocol ISeoInfo {
+  var description: Swift.String? { get }
+  var shortDescription: Swift.String? { get }
+  var metaTitle: Swift.String? { get }
+  var metaKeyword: Swift.String? { get }
+  var metaDescription: Swift.String? { get }
+}
+public protocol ISeller {
+  var id: Swift.Int? { get }
+  var name: Swift.String? { get }
+  var displayName: Swift.String? { get }
+}
+public protocol IOrderResponse {
+  var statusCode: Swift.Int? { get }
+  var error: TekServiceInterfaces.IOrderError? { get }
+}
+public protocol ICrmInformation {
+  var type: Swift.String? { get }
+  var valueId: Swift.String? { get }
+}
+public protocol ICoreDefinition {
+  var id: Swift.Int? { get }
+  var startedAt: Swift.String? { get }
+  var endedAt: Swift.String? { get }
+  var name: Swift.String? { get }
+  var description: Swift.String? { get }
+  var timeRanges: [TekServiceInterfaces.ITimeRange] { get }
+  var paymentMethods: [Swift.String] { get }
+}
+public protocol IVoucher {
+  var name: Swift.String? { get }
+  var quantity: Swift.Int { get }
+  var maxQuantity: Swift.Int { get }
+  var outOfBudget: Swift.Bool { get }
+  var budgetStatus: Swift.String { get }
+}
+public protocol IOrderNotificationData {
+  var orderId: Swift.String? { get }
+  var orderState: Swift.Int? { get }
+  var orderItems: Swift.String? { get }
+  var deeplink: Swift.String? { get }
+}
+public protocol ICatalogSeller {
+  var id: Swift.Int { get }
+  var displayName: Swift.String? { get }
+  var enterpriseCode: Swift.String? { get }
+  var code: Swift.String? { get }
+  var address: Swift.String? { get }
+  var englishName: Swift.String? { get }
+  var contractNo: Swift.String? { get }
+  var name: Swift.String? { get }
+  var taxNumber: Swift.String? { get }
+  var status: Swift.Int { get }
+}
+public protocol IProductGroup {
+  var id: Swift.Int? { get }
+  var name: Swift.String? { get }
+  var visible: Swift.String? { get }
+  var configs: [TekServiceInterfaces.IGroupConfig] { get }
+  var variants: [TekServiceInterfaces.IVariant] { get }
+}
+public typealias GetBrandCategoriesResponseHandler = ([TekServiceInterfaces.IBrandCategory], Swift.Bool) -> ()
+public protocol ICategoryBrandService {
+  func getCategories(displayCategoryId: Swift.Int, sort: [Swift.String], completion: @escaping TekServiceInterfaces.GetBrandCategoriesResponseHandler)
+  func getCategories(sellerCategories: [Swift.Int], completion: @escaping TekServiceInterfaces.GetBrandCategoriesResponseHandler)
+}
+public protocol ICouponError {
+  var coupon: Swift.String? { get }
+  var code: Swift.String? { get }
+  var message: Swift.String? { get }
+}
+public protocol ICatalogService {
+  func getSellerList(completion: @escaping ([TekServiceInterfaces.ICatalogSeller]) -> ())
+}
+public protocol IAddress {
+  var code: Swift.String { get }
+  var name: Swift.String { get }
+}
+public protocol IAttributeValue {
+  var count: Swift.Int? { get }
+  var value: Swift.String? { get }
+  var optionId: Swift.String? { get }
+}
+public protocol ICrmBrandAwareness {
+  var source: Swift.String? { get }
+  var detail: Swift.String? { get }
+}
+public protocol IOrderListItem {
+  var billingInfo: TekServiceInterfaces.IOrderBillingInfo? { get }
+  var cancellationReason: Swift.String? { get }
+  var cancelledAt: Swift.String? { get }
+  var cancelledBy: TekServiceInterfaces.IOrderStaff? { get }
+  var cancelledType: Swift.Int? { get }
+  var childOrders: [TekServiceInterfaces.IMarketChildOrder] { get }
+  var code: Swift.String? { get }
+  var confirmAt: Swift.String? { get }
+  var confirmer: TekServiceInterfaces.IOrderStaff? { get }
+  var createdAt: Swift.String? { get }
+  var creator: TekServiceInterfaces.IOrderCreator? { get }
+  var customer: TekServiceInterfaces.IOrderCustomer? { get }
+  var grandTotal: Swift.Double { get }
+  var id: Swift.String { get }
+  var inventoryCode: Swift.String? { get }
+  var isCancellable: Swift.Bool { get }
+  var isPaid: Swift.Bool { get }
+  var items: [TekServiceInterfaces.IOrderItem] { get }
+  var memberCard: Swift.String? { get }
+  var note: Swift.String? { get }
+  var notes: [Swift.Int : Swift.String]? { get }
+  var originalId: Swift.String? { get }
+  var paymentConfirmer: TekServiceInterfaces.IOrderStaff? { get }
+  var payments: [TekServiceInterfaces.IOrderPayment] { get }
+  var predictCancelTime: Swift.String? { get }
+  var promotions: [TekServiceInterfaces.IOrderPromotion] { get }
+  var referralCode: Swift.String? { get }
+  var refOrderCode: Swift.String? { get }
+  var salesmanId: Swift.String? { get }
+  var seller: TekServiceInterfaces.ISeller? { get }
+  var sellerId: Swift.Int? { get }
+  var service: TekServiceInterfaces.IOrderExtraService? { get }
+  var shippingInfo: TekServiceInterfaces.IOrderShippingInfo? { get }
+  var state: Swift.Int? { get }
+  var tax: Swift.Double { get }
+  var terminalCode: Swift.String? { get }
+  var totalDiscount: Swift.Double { get }
+  var version: Swift.Int? { get }
+  var predictCancelAt: Swift.String? { get }
+  var stateChanges: [TekServiceInterfaces.IOrderStateHistory] { get }
+  var remainPayment: Swift.Double { get }
+  var serviceFee: TekServiceInterfaces.IServiceFee? { get }
+}
+public protocol IBlockItem {
+  var id: Swift.String? { get }
+  var label: Swift.String? { get }
+  var subLabel: Swift.String? { get }
+  var imageUrl: Swift.String? { get }
+  var params: TekServiceInterfaces.IBlockParams? { get }
+  var url: Swift.String? { get }
+  var startTime: Swift.String? { get }
+  var endTime: Swift.String? { get }
+  var backgroundColor: Swift.String? { get }
+}
+public protocol IOrderGift {
+  var sku: Swift.String? { get }
+  var name: Swift.String? { get }
+  var displayName: Swift.String? { get }
+  var quantity: Swift.Int { get }
+  var sellerId: Swift.Int? { get }
+  var unitPriceBeforeTax: Swift.Double? { get }
+  var lineItemId: Swift.String? { get }
+  var discountReason: Swift.String? { get }
+  var unitAdd: Swift.Double? { get }
+  var parentSku: Swift.String { get }
+}
+public protocol IBlockAttribute {
+  var code: Swift.String? { get }
+  var values: [Swift.String] { get }
+}
+public protocol LoyaltyMembershipCreateParamBuildable {
+  func append(name: Swift.String) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func append(dob: Foundation.Date?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func append(sex: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func append(address: Swift.String) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func append(wardCode: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func append(wardName: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func append(districtCode: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func append(districtName: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func append(provinceCode: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func append(provinceName: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  func build() -> TekServiceInterfaces.LoyaltyMembershipCreateParam
+}
+public struct LoyaltyMembershipCreateParam {
+  public var name: Swift.String
+  public var dob: Foundation.Date?
+  public var sex: Swift.String?
+  public var address: Swift.String
+  public var wardCode: Swift.String?
+  public var wardName: Swift.String?
+  public var districtCode: Swift.String?
+  public var districtName: Swift.String?
+  public var provinceCode: Swift.String?
+  public var provinceName: Swift.String?
+  public init()
+  public init(name: Swift.String, dob: Foundation.Date?, sex: Swift.String?, address: Swift.String, wardCode: Swift.String?, wardName: Swift.String?, districtCode: Swift.String?, districtName: Swift.String?, provinceCode: Swift.String?, provinceName: Swift.String?)
+  public var payloadDict: [Swift.String : Any] {
+    get
+  }
+}
+public class LoyaltyMembershipCreateParamBuilder : TekServiceInterfaces.LoyaltyMembershipCreateParamBuildable {
+  public var name: Swift.String
+  public var dob: Foundation.Date?
+  public var sex: Swift.String?
+  public var address: Swift.String
+  public var wardCode: Swift.String?
+  public var wardName: Swift.String?
+  public var districtCode: Swift.String?
+  public var districtName: Swift.String?
+  public var provinceCode: Swift.String?
+  public var provinceName: Swift.String?
+  public init()
+  public func append(name: Swift.String) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func append(dob: Foundation.Date?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func append(sex: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func append(address: Swift.String) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func append(wardCode: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func append(wardName: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func append(districtCode: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func append(districtName: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func append(provinceCode: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func append(provinceName: Swift.String?) -> TekServiceInterfaces.LoyaltyMembershipCreateParamBuilder
+  public func build() -> TekServiceInterfaces.LoyaltyMembershipCreateParam
+  @objc deinit
+}
+public protocol IPageResponse {
+  var currentPage: Swift.Int? { get }
+  var pageSize: Swift.Int? { get }
+  var totalItems: Swift.Int { get }
+  var totalPage: Swift.Int { get }
+}
+public typealias KeywordsResponseHandler = ([TekServiceInterfaces.IKeyword], Swift.Bool, Swift.Error?) -> Swift.Void
+public protocol IPopularKeywordsService {
+  func getPopularKeywords(visitorId: Swift.String?, completion: @escaping TekServiceInterfaces.KeywordsResponseHandler)
+}
+public protocol ISearchKeywordsService {
+  func searchKeywords(query: Swift.String, page: Swift.Int, visitorId: Swift.String?, completion: @escaping TekServiceInterfaces.KeywordsResponseHandler)
+}
+public protocol IKeywordsService : TekServiceInterfaces.IPopularKeywordsService, TekServiceInterfaces.ISearchKeywordsService {
+}
+public protocol IVariant {
+  var sku: Swift.String? { get }
+  var attributeValues: [TekServiceInterfaces.IVariantAttribute] { get }
+}
+public protocol IBannerAction {
+  var extra: [TekServiceInterfaces.IBannerExtra] { get }
+  var target: Swift.String? { get }
+  var trigger: Swift.String? { get }
+  var type: Swift.String? { get }
+}
+public enum NotificationType : Swift.String {
+  case order
+  case noti
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public protocol IExtraDataNotification {
+  var type: TekServiceInterfaces.NotificationType? { get }
+  var data: TekServiceInterfaces.IOrderNotificationData? { get }
+}
+public protocol IOrderBillingInfo {
+  var name: Swift.String? { get }
+  var email: Swift.String? { get }
+  var address: Swift.String? { get }
+  var taxCode: Swift.String? { get }
+  var type: Swift.String? { get }
+  var phone: Swift.String? { get }
+}
+public protocol IMarketOrderCreateResult {
+  var id: Swift.String? { get }
+  var code: Swift.String? { get }
+  var state: Swift.String? { get }
+  var childOrders: [TekServiceInterfaces.IMarketChildOrder] { get }
+  var items: [TekServiceInterfaces.IOrderItem] { get }
+  var grandTotal: Swift.Double? { get }
+}
+public protocol IBlockSorting {
+  var sort: Swift.String? { get }
+  var order: Swift.String? { get }
+}
+public protocol ICrmBankAccount {
+  var bankCode: Swift.String? { get }
+  var accNumber: Swift.String? { get }
+  var accName: Swift.String? { get }
+  var branchCode: Swift.String? { get }
+}
+public typealias CrmResponseHandler = (TekServiceInterfaces.ICrmCustomer?, TekServiceInterfaces.ICrmError?) -> ()
+public protocol ICrmService {
+  func getCustomer(id: Swift.String, completion: @escaping TekServiceInterfaces.CrmResponseHandler)
+  func addAddressToCustomer(id: Swift.String, contact: TekServiceInterfaces.ICrmContact, completion: @escaping TekServiceInterfaces.CrmResponseHandler)
+  func create(payload: TekServiceInterfaces.ICrmPayload, completion: @escaping TekServiceInterfaces.CrmResponseHandler)
+  func deleteContact(id: Swift.String, contact: TekServiceInterfaces.ICrmContact, completion: @escaping (Swift.Bool) -> ())
+}
+public typealias BannerResponseHandler = (TekServiceInterfaces.IBannerResult?, Swift.Bool) -> ()
+public protocol IPageBuilderService {
+  func getBanners(page: Swift.Int, handler: @escaping TekServiceInterfaces.BannerResponseHandler)
+}
+public protocol IBlockResult {
+  var blocks: [TekServiceInterfaces.IBlock] { get }
+}
+public protocol BannerParamBuildable {
+  func append(sorts: [[Swift.String : Any]]) -> TekServiceInterfaces.BannerParamBuildable
+  func append(filters: [[Swift.String : Any]]) -> TekServiceInterfaces.BannerParamBuildable
+  func append(pageSize: Swift.Int) -> TekServiceInterfaces.BannerParamBuildable
+  func build() -> TekServiceInterfaces.BannerParam
+}
+public struct BannerParam {
+  public var sorts: [[Swift.String : Any]]
+  public var filters: [[Swift.String : Any]]
+  public var pageSize: Swift.Int?
+  public init()
+  public init(campaignKey: Swift.String = "", sorts: [[Swift.String : Any]] = [], filters: [[Swift.String : Any]] = [], pageSize: Swift.Int? = nil)
+  public func toDict() -> [Swift.String : Any]
+}
+public class BannerParamBuilder : TekServiceInterfaces.BannerParamBuildable {
+  public var sorts: [[Swift.String : Any]]
+  public var filters: [[Swift.String : Any]]
+  public var pageSize: Swift.Int?
+  public init()
+  public func append(sorts: [[Swift.String : Any]]) -> TekServiceInterfaces.BannerParamBuildable
+  public func append(filters: [[Swift.String : Any]]) -> TekServiceInterfaces.BannerParamBuildable
+  public func append(pageSize: Swift.Int) -> TekServiceInterfaces.BannerParamBuildable
+  public func build() -> TekServiceInterfaces.BannerParam
+  @objc deinit
+}
+public protocol TransactionProtocol {
+  var code: Swift.String { get }
+}
+public typealias GetAddressListHandler = ([TekServiceInterfaces.IAddress]) -> ()
+public typealias GetWardDetailHandler = (TekServiceInterfaces.IWard?) -> ()
+public protocol ILocationService {
+  func getProvinceList(handler: @escaping TekServiceInterfaces.GetAddressListHandler)
+  func getDistrictList(provinceCode: Swift.String, handler: @escaping TekServiceInterfaces.GetAddressListHandler)
+  func getWardList(districtCode: Swift.String, handler: @escaping TekServiceInterfaces.GetAddressListHandler)
+  func getWardDetail(wardCode: Swift.String, handler: @escaping TekServiceInterfaces.GetWardDetailHandler)
+}
+public typealias PaymentPayload = [Swift.String : Any]
+public protocol IPaymentService {
+  func pay<T>(method: T, request: T.Request, completion: @escaping (Swift.Result<T.Transaction, TekServiceInterfaces.PaymentError>) -> ()) where T : TekServiceInterfaces.PaymentMethod
+}
+public typealias TicketHandler = (TekServiceInterfaces.ITicketResult?, Swift.Bool, Swift.Error?) -> ()
+public typealias TicketPageHandler = (TekServiceInterfaces.ITicketPageResult?, Swift.Bool, Swift.Error?) -> ()
+public protocol ITicketService {
+  func createTicket(payload: TekServiceInterfaces.TicketCreatePayload, completion: @escaping TekServiceInterfaces.TicketHandler)
+  func searchTicket(ticketCode: Swift.String?, orderCodes: [Swift.String], status: Swift.Int?, createdFrom: Foundation.Date?, createdTo: Foundation.Date?, page: Swift.Int?, size: Swift.Int?, completion: @escaping TekServiceInterfaces.TicketPageHandler)
+  func updateTicket(ticketId: Swift.Int, payload: TekServiceInterfaces.TicketUpdatePayload, completion: @escaping TekServiceInterfaces.TicketHandler)
+  func searchTicketById(_ ticketId: Swift.Int, completion: @escaping TekServiceInterfaces.TicketHandler)
+}
+public protocol IOptionImage {
+  var url: Swift.String? { get }
+  var priority: Swift.Int? { get }
+  var path: Swift.String? { get }
+}
+public protocol INotificationResult {
+  var notifications: [TekServiceInterfaces.INotification] { get }
+  var checkPoint: Swift.Int? { get }
+  var count: Swift.Int? { get }
+  var unread: Swift.Int? { get }
+}
+public struct SearchFilter : Swift.Encodable {
+  public var sellingCodes: [Swift.String]?
+  public var priceGte: Swift.Int?
+  public var priceLte: Swift.Int?
+  public var brands: [Swift.String]?
+  public var categories: [Swift.String]?
+  public var tags: [Swift.String]?
+  public var hasPromotions: Swift.Bool?
+  public var attributes: [TekServiceInterfaces.SearchAttribute]?
+  public var providerIds: [Swift.String]?
+  public var sellerIds: [Swift.String]?
+  public var skus: [Swift.String]?
+  public var flashSaleType: Swift.String?
+  public var masterCategories: [Swift.String]?
+  public var excludedSkus: [Swift.String]?
+  public var masterCategoryIds: [Swift.String]?
+  public init()
+  public init(sellingCodes: [Swift.String]? = nil, priceGte: Swift.Int? = nil, priceLte: Swift.Int? = nil, brands: [Swift.String]? = nil, categories: [Swift.String]? = nil, tags: [Swift.String]? = nil, hasPromotions: Swift.Bool? = nil, attributes: [TekServiceInterfaces.SearchAttribute]? = nil, providerIds: [Swift.String]? = nil, sellerIds: [Swift.String]? = nil, skus: [Swift.String]? = nil, flashSaleType: Swift.String? = nil, masterCategories: [Swift.String]? = nil, masterCategoryIds: [Swift.String]? = nil, excludedSkus: [Swift.String]? = nil)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol IOrderVoucher {
+  var quantity: Swift.Int { get }
+}
+public struct OrderCreatePayload : Swift.Encodable {
+  public var customer: TekServiceInterfaces.OrderCustomerParam?
+  public var items: [TekServiceInterfaces.OrderLineItemParam]
+  public var notes: [Swift.Int : Swift.String]
+  public var discountInfo: [TekServiceInterfaces.OrderDiscountParam]
+  public var billingInfo: TekServiceInterfaces.OrderBillingParam?
+  public var shippingInfo: TekServiceInterfaces.OrderShippingParam?
+  public var grandTotal: Swift.Double?
+  public var promotions: [TekServiceInterfaces.OrderPromotionParam]
+  public var delivery: Swift.Bool?
+  public init()
+  public init(customer: TekServiceInterfaces.OrderCustomerParam, items: [TekServiceInterfaces.OrderLineItemParam], notes: [Swift.Int : Swift.String], discountInfo: [TekServiceInterfaces.OrderDiscountParam] = [], billingInfo: TekServiceInterfaces.OrderBillingParam? = nil, shippingInfo: TekServiceInterfaces.OrderShippingParam, grandTotal: Swift.Double, promotions: [TekServiceInterfaces.OrderPromotionParam], delivery: Swift.Bool?)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderCustomerParam : Swift.Encodable {
+  public var id: Swift.Int
+  public var asiaCrmId: Swift.String
+  public var name: Swift.String
+  public var phone: Swift.String
+  public var email: Swift.String
+  public var fullAddress: Swift.String
+  public init(id: Swift.Int, asiaCrmId: Swift.String, name: Swift.String, phone: Swift.String, email: Swift.String, fullAddress: Swift.String)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderLineItemParam : Swift.Encodable {
+  public var lineItemId: Swift.String?, name: Swift.String?, displayName: Swift.String?, sku: Swift.String?, parentSku: Swift.String?
+  public var quantity: Swift.Int?
+  public var warranty: Swift.Int?
+  public var bizType: Swift.String?, price: Swift.String?, unitPrice: Swift.String?
+  public var vatRate: Swift.Double?
+  public var unitPriceBeforeTax: Swift.String?, rowTotal: Swift.String?
+  public var sellerId: Swift.Int?
+  public var unitDiscount: Swift.Double?
+  public var taxOutCode: Swift.String?
+  public init(lineItemId: Swift.String?, name: Swift.String?, displayName: Swift.String?, sku: Swift.String?, parentSku: Swift.String?, quantity: Swift.Int?, warranty: Swift.Int?, bizType: Swift.String?, price: Swift.String?, unitPrice: Swift.String?, vatRate: Swift.Double?, unitPriceBeforeTax: Swift.String?, rowTotal: Swift.String?, sellerId: Swift.Int?, unitDiscount: Swift.Double?, taxOutCode: Swift.String?)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderDiscountParam : Swift.Encodable {
+  public var amount: Swift.String
+  public var sellerId: Swift.Int
+  public init(amount: Swift.String, sellerId: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderBillingParam : Swift.Encodable {
+  public var name: Swift.String, email: Swift.String, address: Swift.String, taxCode: Swift.String, type: Swift.String
+  public var phone: Swift.String?
+  public var printAfter: Swift.Int?
+  public var printPretaxPrice: Swift.Bool?
+  public init(name: Swift.String, email: Swift.String, address: Swift.String, taxCode: Swift.String, type: Swift.String, phone: Swift.String?, printAfter: Swift.Int?, printPretaxPrice: Swift.Bool?)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderShippingParam : Swift.Encodable {
+  public var name: Swift.String, phone: Swift.String
+  public var email: Swift.String?
+  public var expectedDate: Swift.String?
+  public var provinceId: Swift.String, address: Swift.String, fullAddress: Swift.String, wardId: Swift.String, districtId: Swift.String
+  public var country: Swift.String?
+  public var type: Swift.Int?
+  public var note: Swift.String?
+  public var lat: Swift.Double?, lon: Swift.Double?
+  public init(name: Swift.String, phone: Swift.String, email: Swift.String?, expectedDate: Swift.String?, provinceId: Swift.String, address: Swift.String, fullAddress: Swift.String, wardId: Swift.String, districtId: Swift.String, country: Swift.String?, type: Swift.Int?, note: Swift.String?, lat: Swift.Double?, lon: Swift.Double?)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderPromotionParam : Swift.Encodable {
+  public var id: Swift.String
+  public var promotionId: Swift.String
+  public var type: Swift.String
+  public var applyType: Swift.String
+  public var quantity: Swift.Int
+  public var sellerId: Swift.Int
+  public var gifts: [TekServiceInterfaces.OrderGiftParam]
+  public var applyOn: [TekServiceInterfaces.OrderApplyOnParam]
+  public var discount: Swift.Double
+  public var coupon: Swift.String?
+  public var voucher: TekServiceInterfaces.OrderVoucherParam?
+  public init(id: Swift.String, promotionId: Swift.String, type: Swift.String, applyType: Swift.String, quantity: Swift.Int, sellerId: Swift.Int, gifts: [TekServiceInterfaces.OrderGiftParam], applyOn: [TekServiceInterfaces.OrderApplyOnParam], discount: Swift.Double, coupon: Swift.String?, voucher: TekServiceInterfaces.OrderVoucherParam?)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderGiftParam : Swift.Encodable {
+  public var lineItemId: Swift.String
+  public var sku: Swift.String
+  public var name: Swift.String
+  public var quantity: Swift.Int
+  public init(lineItemId: Swift.String, sku: Swift.String, name: Swift.String, quantity: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderApplyOnParam : Swift.Encodable {
+  public var lineItemId: Swift.String
+  public var quantity: Swift.Int
+  public init(lineItemId: Swift.String, quantity: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct OrderVoucherParam : Swift.Encodable {
+  public var quantity: Swift.Int
+  public init(quantity: Swift.Int)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public class TicketUpdatePayload : Swift.Encodable {
+  public var text: Swift.String?
+  public var filesId: [Swift.Int]
+  public init(text: Swift.String? = nil, filesId: [Swift.Int] = [])
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol IListing {
+  var products: [TekServiceInterfaces.IProduct] { get }
+  var filter: TekServiceInterfaces.IFilter? { get }
+  var pagination: TekServiceInterfaces.IPagination? { get }
+}
+public protocol IProductLine {
+  var code: Swift.String? { get }
+  var name: Swift.String? { get }
+}
+public enum ReturnFilterable : Swift.String {
+  case unspecified
+  case attribule
+  case brand
+  case price
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public protocol IPaymentServiceConfig {
+  var clientCode: Swift.String { get }
+  var terminalCode: Swift.String { get }
+  var serviceCode: Swift.String { get }
+  var secretKey: Swift.String { get }
+  var baseUrl: Swift.String { get }
+}
+public protocol IGroupConfig {
+  var id: Swift.Int? { get }
+  var code: Swift.String? { get }
+  var name: Swift.String? { get }
+  var optionType: Swift.String? { get }
+  var options: [TekServiceInterfaces.IOptionValue] { get }
+}
+public protocol IMoney {
+  var id: Swift.Int { get }
+  var flat: Swift.Double? { get }
+  var percent: Swift.Double? { get }
+  var maxAmount: Swift.Double? { get }
+  var maxAmountPerOrder: Swift.Double? { get }
+}
+public protocol IProductImage {
+  var url: Swift.String? { get }
+  var priority: Swift.Int? { get }
+  var label: Swift.String? { get }
+}
+public protocol IStorage {
+  var id: Swift.Int? { get }
+  var originalName: Swift.String? { get }
+  var replacementName: Swift.String? { get }
+  var contentType: Swift.String? { get }
+  var extensionType: Swift.String? { get }
+  var url: Swift.String? { get }
+}
+public protocol ITicketPage : TekServiceInterfaces.IBasePage {
+  var content: [TekServiceInterfaces.ITicket] { get }
+}
+public typealias BlockResponseHandler = (TekServiceInterfaces.IBlockResult?, Swift.Bool) -> ()
+public typealias SearchProductHandler = (TekServiceInterfaces.IListing?, Swift.Bool) -> ()
+public typealias GetProductDetailHandler = (TekServiceInterfaces.IProduct?, Swift.Bool) -> ()
+public typealias GetListProductDetailHandler = ([TekServiceInterfaces.IProduct], Swift.Bool) -> ()
+public typealias DiscoveryKeywordsResponseHandler = ([TekServiceInterfaces.IDiscoveryKeyword], Swift.Bool, Swift.Error?) -> Swift.Void
+public protocol IDiscoverySearchKeywordsService {
+  func searchKeywords(query: Swift.String, completion: @escaping TekServiceInterfaces.DiscoveryKeywordsResponseHandler)
+}
+public protocol IDiscoveryService : TekServiceInterfaces.IDiscoverySearchKeywordsService {
+  func blocks(userId: Swift.String?, phone: Swift.String?, pageType: Swift.String?, completion: @escaping TekServiceInterfaces.BlockResponseHandler)
+  func blocks(userId: Swift.String?, phone: Swift.String?, pageType: Swift.String?, category: Swift.String?, completion: @escaping TekServiceInterfaces.BlockResponseHandler)
+  func searchProducts(query: Swift.String, block: TekServiceInterfaces.SearchBlock, filter: TekServiceInterfaces.SearchFilter?, sorting: TekServiceInterfaces.SearchSorting?, pagination: TekServiceInterfaces.SearchPagination?, location: Swift.String?, returnFilterable: [TekServiceInterfaces.ReturnFilterable], userId: Swift.String?, phone: Swift.String?, handler: @escaping TekServiceInterfaces.SearchProductHandler)
+  func getProductDetail(sku: Swift.String, location: Swift.String?, handler: @escaping TekServiceInterfaces.GetProductDetailHandler)
+  func getListProductDetail(skus: [Swift.String], location: Swift.String?, handler: @escaping TekServiceInterfaces.GetListProductDetailHandler)
+}
+extension IDiscoveryService {
+  public func getProductList(for block: TekServiceInterfaces.SearchBlock, filter: TekServiceInterfaces.SearchFilter?, sorting: TekServiceInterfaces.SearchSorting?, pagination: TekServiceInterfaces.SearchPagination?, userId: Swift.String? = nil, phone: Swift.String? = nil, handler: @escaping TekServiceInterfaces.SearchProductHandler)
+  public func searchByKeyword(query: Swift.String, for block: TekServiceInterfaces.SearchBlock, filter: TekServiceInterfaces.SearchFilter?, sorting: TekServiceInterfaces.SearchSorting?, pagination: TekServiceInterfaces.SearchPagination?, userId: Swift.String? = nil, phone: Swift.String? = nil, handler: @escaping TekServiceInterfaces.SearchProductHandler)
+}
+public enum BannerZone {
+  case home
+  case landingPage
+  public static func == (a: TekServiceInterfaces.BannerZone, b: TekServiceInterfaces.BannerZone) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public typealias BannerResultHandler = ([TekServiceInterfaces.IBanner], TekServiceInterfaces.IPageResponse?, Swift.Bool, Swift.Error?) -> Swift.Void
+public protocol IBannerService {
+  func getBannerItems(with zone: TekServiceInterfaces.BannerZone, campaignKey: Swift.String, completion: @escaping TekServiceInterfaces.BannerResultHandler)
+}
+public protocol IOrderCreator {
+  var id: Swift.String? { get }
+  var name: Swift.String? { get }
+  var email: Swift.String? { get }
+  var phone: Swift.String? { get }
+  var asiaUserName: Swift.String? { get }
+}
+public protocol IMarketOrderError {
+  var message: Swift.String? { get }
+  var detail: Swift.String? { get }
+  var details: [TekServiceInterfaces.IMarketOrderErrorDetail] { get }
+}
+public protocol IMarketOrderErrorDetail {
+  var code: Swift.String? { get }
+  var message: Swift.String? { get }
+  var orderId: Swift.String? { get }
+}
+public protocol IPPMCondition : TekServiceInterfaces.ICondition {
+  var paymentMethods: [Swift.String] { get }
+  var skus: [TekServiceInterfaces.ISkuCondition] { get }
+  var exclusions: [TekServiceInterfaces.IExclusion] { get }
+}
+public protocol ICategory {
+  var code: Swift.String? { get }
+  var name: Swift.String? { get }
+  var id: Swift.Int { get }
+  var parentId: Swift.Int? { get }
+  var icon: Swift.String? { get }
+  var configs: [Swift.String : Any]? { get }
+  var level: Swift.Int? { get }
+  var sellerCategories: [Swift.Int] { get }
+  var urlType: Swift.String? { get }
+  var targetPath: Swift.String? { get }
+  var url: Swift.String? { get }
+  var blockParams: TekServiceInterfaces.IBlockParams? { get }
+}
+public protocol IPolicy {
+  var icon: Swift.String? { get }
+  var text: Swift.String? { get }
+  var type: Swift.String? { get }
+}
+public protocol ITicket {
+  var id: Swift.Int? { get }
+  var ticketCode: Swift.String? { get }
+  var code: Swift.String? { get }
+  var orderCode: Swift.String? { get }
+  var status: Swift.Int? { get }
+  var statusName: Swift.String? { get }
+  var receiveTime: Swift.String? { get }
+  var receiveChannelId: Swift.Int? { get }
+  var receiveChannelName: Swift.String? { get }
+  var ticketPriorityTypeId: Swift.Int? { get }
+  var ticketPriorityTypeName: Swift.String? { get }
+  var ticketPriorityTypeColor: Swift.String? { get }
+  var ticketTypeId: Swift.Int? { get }
+  var ticketTypeName: Swift.String? { get }
+  var title: Swift.String? { get }
+  var note: Swift.String? { get }
+  var text: Swift.String? { get }
+  var iamUserId: Swift.String? { get }
+  var terminal: Swift.String? { get }
+  var platform: Swift.String? { get }
+  var createdFullName: Swift.String? { get }
+  var createdEmail: Swift.String? { get }
+  var createdPhone: Swift.String? { get }
+  var assignDepartmentName: Swift.String? { get }
+  var phone: Swift.String? { get }
+  var responseTime: Swift.String? { get }
+  var lastNote: Swift.String? { get }
+  var result: Swift.String? { get }
+  var files: [TekServiceInterfaces.IStorage] { get }
+}
+public protocol ILoyaltyBalance {
+  var status: Swift.Int { get }
+  var statusDesc: Swift.String { get }
+  var tokenBalance: Swift.Int { get }
+}
+public protocol IAttribute {
+  var code: Swift.String? { get }
+  var name: Swift.String? { get }
+  var values: [TekServiceInterfaces.IAttributeValue] { get }
+}
+public protocol IOrderError {
+  var detail: Swift.String { get }
+  var message: Swift.String { get }
+}
+public protocol ICrmResponseMessage {
+  var name: [Swift.String] { get }
+  var contacts: [Swift.String : TekServiceInterfaces.ICrmResponseMessage] { get }
+}
+public typealias GetOrderPromotionsHandler = ([TekServiceInterfaces.IDefinition], Swift.Bool) -> Swift.Void
+public typealias ValidateCouponHandler = ([TekServiceInterfaces.IDefinition], [TekServiceInterfaces.ICouponError], Swift.Bool, Swift.Error?) -> Swift.Void
+public protocol IPpmService {
+  func getOrderPromotions(completion: @escaping TekServiceInterfaces.GetOrderPromotionsHandler)
+  func validateCoupon(_ coupon: Swift.String, skus: [Swift.String], completion: @escaping TekServiceInterfaces.ValidateCouponHandler)
+}
+public protocol IBundleProduct {
+  var finalBundleItemPrice: Swift.Double? { get }
+}
+public protocol IDetail {
+  var description: Swift.String? { get }
+  var shortDescription: Swift.String? { get }
+  var attributeSet: TekServiceInterfaces.IAttributeSet? { get }
+  var productLine: TekServiceInterfaces.IProductLine? { get }
+  var seoInfo: TekServiceInterfaces.ISeoInfo? { get }
+  var attributeGroups: [TekServiceInterfaces.IAttributeGroup] { get }
+  var images: [TekServiceInterfaces.IProductImage] { get }
+  var productGroup: TekServiceInterfaces.IProductGroup? { get }
+}
+public struct UserAddressParam : Swift.Encodable {
+  public var address: Swift.String
+  public var addressNote: Swift.String?
+  public var isDefault: Swift.Bool
+  public var email: Swift.String?
+  public var name: Swift.String
+  public var telephone: Swift.String
+  public var longitude: Swift.String?
+  public var latitude: Swift.String?
+  public var clientCode: Swift.String?
+  public var provinceCode: Swift.String?
+  public var districtCode: Swift.String?
+  public var wardCode: Swift.String?
+  public var provinceName: Swift.String?
+  public var districtName: Swift.String?
+  public var wardName: Swift.String?
+  public var userId: Swift.String?
+  public var id: Swift.String?
+  public func encode(to encoder: Swift.Encoder) throws
+  public init()
+  public init(address: Swift.String = "", addressNote: Swift.String?, isDefault: Swift.Bool = false, email: Swift.String?, name: Swift.String = "", telephone: Swift.String = "", longitude: Swift.String?, latitude: Swift.String?, clientCode: Swift.String?, provinceCode: Swift.String?, districtCode: Swift.String?, wardCode: Swift.String?, provinceName: Swift.String?, districtName: Swift.String?, wardName: Swift.String?, userId: Swift.String?, id: Swift.String?)
+  public var payloadDict: [Swift.String : Any] {
+    get
+  }
+}
+public protocol IBannerResult {
+  var currentPage: Swift.Int { get }
+  var pageSize: Swift.Int { get }
+  var totalItems: Swift.Int { get }
+  var banners: [TekServiceInterfaces.IPageBuilderBanner] { get }
+}
+public protocol IOrderPromotionApply {
+  var id: Swift.String? { get }
+  var quantity: Swift.Int { get }
+}
+public protocol IProductBenefit : TekServiceInterfaces.IBenefit {
+  var gifts: [TekServiceInterfaces.IProductItem] { get }
+}
+public protocol ITicketPageResult {
+  var message: Swift.String? { get }
+  var data: TekServiceInterfaces.ITicketPage? { get }
+}
+public struct SearchBlock : Swift.Encodable {
+  public var blockId: Swift.String?
+  public var itemId: Swift.String?
+  public init()
+  public init(blockId: Swift.String? = nil, itemId: Swift.String? = nil)
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public protocol ISkuCondition {
+  var sku: Swift.String? { get }
+}
+public protocol IBannerExtra {
+  var configName: Swift.String? { get }
+  var id: Swift.Int? { get }
+  var values: [Swift.String] { get }
+}
+public protocol ITicketResult {
+  var message: Swift.String? { get }
+  var data: TekServiceInterfaces.ITicket? { get }
+}
+public protocol IServiceFee {
+  var delivery: [TekServiceInterfaces.IDeliveryFee] { get }
+}
+public protocol IDeliveryFee {
+  var discountAmount: Swift.Double { get }
+  var sellerId: Swift.Int? { get }
+  var name: Swift.String { get }
+  var price: Swift.Double { get }
+  var rowTotal: Swift.Double { get }
+}
+public protocol IBrandCategory {
+  var id: Swift.Int { get }
+  var name: Swift.String? { get }
+  var codes: [Swift.String] { get }
+  var configs: [Swift.String : Any]? { get }
+}
+public protocol IOrderItem {
+  var sku: Swift.String? { get }
+  var name: Swift.String? { get }
+  var displayName: Swift.String? { get }
+  var quantity: Swift.Int { get }
+  var unitPrice: Swift.Double? { get }
+  var price: Swift.Double? { get }
+  var sellerId: Swift.Int? { get }
+  var unitPriceBeforeTax: Swift.Double? { get }
+  var rowTotal: Swift.Double? { get }
+  var lineItemId: Swift.String? { get }
+  var unitDiscount: Swift.Double? { get }
+  var discountReason: Swift.String? { get }
+  var unitAdd: Swift.Double? { get }
+  var parentSku: Swift.String { get }
+}
+public protocol IBasePage {
+  var number: Swift.Int? { get }
+  var size: Swift.Int? { get }
+  var totalPages: Swift.Int? { get }
+  var numberOfElements: Swift.Int? { get }
+  var totalElements: Swift.Int? { get }
+  var first: Swift.Bool { get }
+  var last: Swift.Bool { get }
+}
+public protocol ITimeRange {
+  var start: Swift.String { get }
+  var end: Swift.String { get }
+}
+public protocol IProductPromotion : TekServiceInterfaces.IPromotion {
+  var benefit: TekServiceInterfaces.IProductBenefit? { get }
+  var condition: TekServiceInterfaces.IProductCondition? { get }
+  var endTimestampSec: Swift.String? { get }
+}
+public protocol IMarketOrderConfirmPaymentPayload {
+  func asDictionary() -> [Swift.String : Any]
+}
+public protocol IOrderStateHistory {
+  var state: Swift.Int? { get }
+  var action: Swift.String? { get }
+  var actor: TekServiceInterfaces.IOrderItemCreator? { get }
+  var updatedAt: Swift.String? { get }
+}
+public typealias LandingPageItemResponseHandler = ([TekServiceInterfaces.ICategory], Swift.Bool) -> Swift.Void
+public protocol ILandingPageCategoryService {
+  func getItemsForTopBanner(campaignKey: Swift.String, handler: @escaping TekServiceInterfaces.LandingPageItemResponseHandler)
+  func getItemsForDiscount(campaignKey: Swift.String, handler: @escaping TekServiceInterfaces.LandingPageItemResponseHandler)
+  func getItemsForBannerProducts(campaignKey: Swift.String, handler: @escaping TekServiceInterfaces.LandingPageItemResponseHandler)
+  func getItemsForAllProducts(campaignKey: Swift.String, handler: @escaping TekServiceInterfaces.LandingPageItemResponseHandler)
+}
+public protocol UserInfoParamBuildable {
+  func append(dob: Foundation.Date?) -> TekServiceInterfaces.UserInfoParamBuilder
+  func append(sex: Swift.String?) -> TekServiceInterfaces.UserInfoParamBuilder
+  func append(phone: Swift.String?) -> TekServiceInterfaces.UserInfoParamBuilder
+  func append(email: Swift.String?) -> TekServiceInterfaces.UserInfoParamBuilder
+  func append(name: Swift.String?) -> TekServiceInterfaces.UserInfoParamBuilder
+  func build() -> TekServiceInterfaces.UserInfoParam
+}
+public struct UserInfoParam {
+  public var dob: Foundation.Date?
+  public var sex: Swift.String?
+  public var phone: Swift.String?
+  public var email: Swift.String?
+  public var name: Swift.String?
+  public init()
+  public init(dob: Foundation.Date?, sex: Swift.String?, phone: Swift.String?, email: Swift.String?, name: Swift.String?)
+  public var payloadDict: [Swift.String : Any] {
+    get
+  }
+}
+public class UserInfoParamBuilder : TekServiceInterfaces.UserInfoParamBuildable {
+  public init()
+  public func append(dob: Foundation.Date?) -> TekServiceInterfaces.UserInfoParamBuilder
+  public func append(sex: Swift.String?) -> TekServiceInterfaces.UserInfoParamBuilder
+  public func append(phone: Swift.String?) -> TekServiceInterfaces.UserInfoParamBuilder
+  public func append(email: Swift.String?) -> TekServiceInterfaces.UserInfoParamBuilder
+  public func append(name: Swift.String?) -> TekServiceInterfaces.UserInfoParamBuilder
+  public func build() -> TekServiceInterfaces.UserInfoParam
+  @objc deinit
+}
+public protocol IOrderItemCreator {
+  var id: Swift.String? { get }
+  var name: Swift.String? { get }
+  var email: Swift.String? { get }
+  var phone: Swift.String? { get }
+  var asiaUserName: Swift.String? { get }
+}
+public protocol IUserAddress {
+  var address: Swift.String { get }
+  var addressNote: Swift.String? { get }
+  var clientCode: Swift.String? { get }
+  var districtCode: Swift.String? { get }
+  var districtName: Swift.String? { get }
+  var email: Swift.String? { get }
+  var id: Swift.String? { get }
+  var isDefault: Swift.Bool { get }
+  var latitude: Swift.String? { get }
+  var longitude: Swift.String? { get }
+  var name: Swift.String { get }
+  var provinceCode: Swift.String? { get }
+  var provinceName: Swift.String? { get }
+  var telephone: Swift.String { get }
+  var userId: Swift.String? { get }
+  var wardCode: Swift.String? { get }
+  var wardName: Swift.String? { get }
+}
+public protocol IListingService : TekServiceInterfaces.ICategoryBrandService, TekServiceInterfaces.ICategoryService, TekServiceInterfaces.IKeywordsService, TekServiceInterfaces.ILandingPageCategoryService {
+}
+public protocol IAttributeSet {
+  var id: Swift.Int? { get }
+  var name: Swift.String? { get }
+}
+public protocol IOrderListResult {
+  var total: Swift.Int { get }
+  var orders: [TekServiceInterfaces.IOrderListItem] { get }
+}
+public typealias GetPoliciesHandler = ([TekServiceInterfaces.IPolicyDetail], Swift.Bool, Swift.Error?) -> Swift.Void
+public protocol IPolicyService {
+  func getPolicy(sku: Swift.String, completion: @escaping TekServiceInterfaces.GetPoliciesHandler)
+}
+public protocol IOrderCustomer {
+  var id: Swift.Int? { get }
+  var name: Swift.String? { get }
+  var phone: Swift.String? { get }
+  var address: Swift.String? { get }
+  var fullAddress: Swift.String? { get }
+  var email: Swift.String? { get }
+  var asiaCrmId: Swift.String? { get }
+  var wardId: Swift.String? { get }
+  var districtId: Swift.String? { get }
+  var provinceId: Swift.String? { get }
+}
+public protocol IBlock {
+  var id: Swift.String? { get }
+  var name: Swift.String? { get }
+  var label: Swift.String? { get }
+  var type: Swift.String? { get }
+  var itemType: Swift.String? { get }
+  var backgroundImageUrl: Swift.String? { get }
+  var content: TekServiceInterfaces.IBlockContent? { get }
+  var subLabel: Swift.String? { get }
+  var backgroundColor: Swift.String? { get }
+}
+public protocol IInfoCategory {
+  var code: Swift.String? { get }
+  var name: Swift.String? { get }
+}
+public protocol IExclusion {
+  var applyOn: [Swift.String] { get }
+  var isDefault: [Swift.Bool] { get }
+}
+public protocol IBlockContent {
+  var items: [TekServiceInterfaces.IBlockItem] { get }
+  var fetchParams: TekServiceInterfaces.IBlockParams? { get }
+}
+public protocol PaymentMethod {
+  associatedtype Request : TekServiceInterfaces.PaymentRequestProtocol
+  associatedtype Transaction : TekServiceInterfaces.TransactionProtocol
+  var methodCode: Swift.String { get }
+  var partnerCode: Swift.String { get }
+  var bankCode: Swift.String { get }
+}
+public protocol IPrice {
+  var supplierRetailPrice: Swift.Double? { get }
+  var terminalPrice: Swift.Double? { get }
+  var latestPrice: Swift.Double? { get }
+  var discountAmount: Swift.Double? { get }
+  var discountPercent: Swift.Double? { get }
+  var sellPrice: Swift.Double? { get }
+}
+public protocol IFlashSale {
+  var id: Swift.Int? { get }
+  var type: Swift.String? { get }
+  var discountPercent: Swift.Double? { get }
+  var usedCount: Swift.Int? { get }
+  var totalCount: Swift.Int? { get }
+  var startTimestampSec: Swift.Double? { get }
+  var endTimestampSec: Swift.Double? { get }
+}
+public protocol IUserService {
+  func addAddress(address: TekServiceInterfaces.UserAddressParam, completion: @escaping (TekServiceInterfaces.IUserAddress?) -> ())
+  func updateAddress(address: TekServiceInterfaces.UserAddressParam, completion: @escaping (Swift.Bool) -> ())
+  func getListAddress(completion: @escaping ([TekServiceInterfaces.IUserAddress]) -> ())
+  func deleteAddress(id: Swift.String, completion: @escaping (Swift.Bool) -> ())
+  func getUserInfo(completion: @escaping (TekServiceInterfaces.IUserInfo?) -> ())
+  func updateUserInfo(userInfo: TekServiceInterfaces.UserInfoParam, completion: @escaping (TekServiceInterfaces.IUserInfo?) -> ())
+  func getLoyaltyBalance(completion: @escaping (TekServiceInterfaces.ILoyaltyBalance?) -> ())
+  func registerLoyaltyMembership(membership: TekServiceInterfaces.LoyaltyMembershipCreateParam, completion: @escaping (TekServiceInterfaces.IUserInfo?) -> ())
+}
+public protocol IShippingService {
+  var supportFastDelivery: Swift.Bool { get }
+  var supportInstall: Swift.Bool { get }
+}

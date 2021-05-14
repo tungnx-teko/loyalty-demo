@@ -1,0 +1,87 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name LoyaltyComponent
+import Apollo
+import ApolloTheme
+import FittedSheets
+import Foundation
+import Kingfisher
+@_exported import LoyaltyComponent
+import LoyaltyModel
+import Swift
+import TerraInstancesManager
+import UIKit
+public enum RedeemPointError : Foundation.LocalizedError, Swift.Equatable {
+  case balanceIsNotEnough
+  case greaterThanOrderAmount
+  case loyalty(error: LoyaltyModel.LoyaltyError)
+  case unexpected
+  public static func == (lhs: LoyaltyComponent.RedeemPointError, rhs: LoyaltyComponent.RedeemPointError) -> Swift.Bool
+}
+public protocol LoyaltyRedeemPointDelegate : AnyObject {
+  func onRedeemPointChange(data: LoyaltyComponent.RedeemPointData?)
+  func onRedeemPointError(_ error: LoyaltyComponent.RedeemPointError)
+}
+public class LoyaltyRedeemPointController {
+  public init(terraApp: TerraInstancesManager.ITerraApp, orderAmount: Swift.Int, points: Swift.Int = 0, delegate: LoyaltyComponent.LoyaltyRedeemPointDelegate)
+  @objc deinit
+}
+extension LoyaltyRedeemPointController {
+  public func enable()
+  public func reload()
+  public func setOrderAmount(_ amount: Swift.Int)
+  public func setPoints(_ points: Swift.Int)
+}
+extension LoyaltyRedeemPointController : LoyaltyComponent.RedeemPointPopupDelegate {
+  public func onError(error: LoyaltyModel.LoyaltyError)
+  public func onUsePoints(data: LoyaltyComponent.RedeemPointData)
+  public func onMemberInfoUpdate(memberInfo: LoyaltyModel.MemberInfo)
+}
+extension UIColor {
+  public static let dino: UIKit.UIColor
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class LoyaltyRedeemPointView : LoyaltyComponent.BaseXibView {
+  public var controller: LoyaltyComponent.LoyaltyRedeemPointController?
+  @objc override dynamic public func awakeFromNib()
+  @objc override dynamic public func didMoveToWindow()
+  @objc deinit
+}
+extension LoyaltyRedeemPointView : LoyaltyComponent.LoyaltyRedeemViewProtocol {
+  public func onRedeemPointChange(data: LoyaltyComponent.RedeemPointData)
+  public func didGetNetworkConfig(config: LoyaltyModel.NetworkConfigResult)
+  public func onUpdateOrderAmount()
+  public func didGetMemberInfo(memberInfo: LoyaltyModel.MemberInfo?)
+  public func onPrepareLoading()
+}
+extension LoyaltyRedeemPointView {
+  @objc override dynamic public func willMove(toSuperview newSuperview: UIKit.UIView?)
+}
+@objc @_inheritsConvenienceInitializers @_hasMissingDesignatedInitializers public class BaseXibView : UIKit.UIView {
+  @objc override dynamic open func prepareForInterfaceBuilder()
+  @objc deinit
+}
+public struct RedeemPointData {
+  public var points: Swift.Int
+  public var amount: Swift.Int
+  public var exchangeRate: Swift.Int
+}
+public protocol RedeemPointPopupDelegate : AnyObject {
+  func onError(error: LoyaltyModel.LoyaltyError)
+  func onUsePoints(data: LoyaltyComponent.RedeemPointData)
+  func onMemberInfoUpdate(memberInfo: LoyaltyModel.MemberInfo)
+}
+@_hasMissingDesignatedInitializers public class LoyaltyRedeemPointPopupModule {
+  public static func build(terraApp: TerraInstancesManager.ITerraApp, orderAmount: Swift.Int, memberInfo: LoyaltyModel.MemberInfo, config: LoyaltyModel.NetworkConfigResult, delegate: LoyaltyComponent.RedeemPointPopupDelegate?) -> UIKit.UIViewController
+  @objc deinit
+}
+public protocol LoyaltyRedeemViewProtocol : AnyObject {
+  var controller: LoyaltyComponent.LoyaltyRedeemPointController? { get set }
+  func onPrepareLoading()
+  func onRedeemPointChange(data: LoyaltyComponent.RedeemPointData)
+  func didGetNetworkConfig(config: LoyaltyModel.NetworkConfigResult)
+  func didGetMemberInfo(memberInfo: LoyaltyModel.MemberInfo?)
+  func onUpdateOrderAmount()
+}
+extension LoyaltyRedeemViewProtocol {
+  public func setController(_ controller: LoyaltyComponent.LoyaltyRedeemPointController)
+}

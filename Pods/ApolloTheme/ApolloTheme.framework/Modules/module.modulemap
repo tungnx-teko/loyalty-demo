@@ -1,0 +1,11 @@
+framework module ApolloTheme {
+  umbrella header "ApolloTheme.h"
+
+  export *
+  module * { export * }
+}
+
+module ApolloTheme.Swift {
+    header "ApolloTheme-Swift.h"
+    requires objc
+}

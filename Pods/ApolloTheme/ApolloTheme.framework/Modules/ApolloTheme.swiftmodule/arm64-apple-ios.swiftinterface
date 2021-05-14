@@ -1,0 +1,149 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target arm64-apple-ios10.0 -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name ApolloTheme
+import Apollo
+@_exported import ApolloTheme
+import Foundation
+import Logging
+import Swift
+import TerraInstancesManager
+import UIKit
+public struct ColorConfig : Swift.Decodable {
+  public let primary: ApolloTheme.ColorSetConfig
+  public let pending: ApolloTheme.ColorSetConfig
+  public let link: ApolloTheme.ColorSetConfig
+  public let success: ApolloTheme.ColorSetConfig
+  public let error: ApolloTheme.ColorSetConfig
+  public let neutral: ApolloTheme.NeutralColorSetConfig
+  public init(from decoder: Swift.Decoder) throws
+}
+public struct NeutralColorSetConfig : Swift.Decodable {
+  public let white: Swift.String
+  public let tableHeader: Swift.String
+  public let background: Swift.String
+  public let divider: Swift.String
+  public let disable: Swift.String
+  public let border: Swift.String
+  public let placeholder: Swift.String
+  public let secondaryText: Swift.String
+  public let primaryText: Swift.String
+  public let titleText: Swift.String
+  public init(from decoder: Swift.Decoder) throws
+}
+@_hasMissingDesignatedInitializers public class Color {
+  final public let primary: ApolloTheme.ColorSet
+  final public let pending: ApolloTheme.ColorSet
+  final public let link: ApolloTheme.ColorSet
+  final public let success: ApolloTheme.ColorSet
+  final public let error: ApolloTheme.ColorSet
+  final public let neutral: ApolloTheme.NeutralColorSet
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class ColorSet {
+  final public let color50: UIKit.UIColor?
+  final public let color100: UIKit.UIColor?
+  final public let color200: UIKit.UIColor?
+  final public let color300: UIKit.UIColor?
+  final public let color400: UIKit.UIColor?
+  final public let color500: UIKit.UIColor?
+  final public let color600: UIKit.UIColor?
+  final public let color700: UIKit.UIColor?
+  final public let color800: UIKit.UIColor?
+  final public let color900: UIKit.UIColor?
+  @objc deinit
+}
+public class ThemeGenerator : TerraInstancesManager.InstanceGeneratable {
+  public typealias InstanceType = ApolloTheme.Theme
+  required public init()
+  public func generateInstance(app: TerraInstancesManager.ITerraApp) -> ApolloTheme.Theme?
+  public func generateDefaultInstance(config: ApolloTheme.ThemeConfig) -> ApolloTheme.Theme
+  public func generateDefaultInstance(config: [Swift.String : Any]) -> ApolloTheme.Theme
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class ThemeSingleton : TerraInstancesManager.InstancesManageable {
+  public typealias Generator = ApolloTheme.ThemeGenerator
+  public static var shared: ApolloTheme.ThemeSingleton
+  public var instances: [Swift.String : ApolloTheme.Theme]
+  public static let DEFAULT_VALUE: Swift.String
+  public var `default`: ApolloTheme.Theme {
+    get
+  }
+  public func configureWith(config: ApolloTheme.ThemeConfig)
+  public func configureWith(config: [Swift.String : Any])
+  public func configureWith(app: TerraInstancesManager.ITerraApp)
+  @objc deinit
+}
+public var TerraTheme: ApolloTheme.ThemeSingleton
+public struct ColorSetConfig : Swift.Decodable {
+  public let color50: Swift.String
+  public let color100: Swift.String
+  public let color200: Swift.String
+  public let color300: Swift.String
+  public let color400: Swift.String
+  public let color500: Swift.String
+  public let color600: Swift.String
+  public let color700: Swift.String
+  public let color800: Swift.String
+  public let color900: Swift.String
+  public init(from decoder: Swift.Decoder) throws
+}
+extension ApolloButton : ApolloTheme.Themeable {
+  public func applyTheme()
+}
+@_hasMissingDesignatedInitializers public class NeutralColorSet {
+  final public let white: UIKit.UIColor?
+  final public let tableHeader: UIKit.UIColor?
+  final public let background: UIKit.UIColor?
+  final public let divider: UIKit.UIColor?
+  final public let disable: UIKit.UIColor?
+  final public let border: UIKit.UIColor?
+  final public let placeholder: UIKit.UIColor?
+  final public let secondaryText: UIKit.UIColor?
+  final public let primaryText: UIKit.UIColor?
+  final public let titleText: UIKit.UIColor?
+  @objc deinit
+}
+extension UIViewController {
+  @objc dynamic public var appName: Swift.String {
+    @objc get
+    @objc set
+  }
+}
+extension UIViewController {
+  public static func swizzleMethod(originalSelector: ObjectiveC.Selector, swizzledSelector: ObjectiveC.Selector)
+  public static func swizzleViewDidLoad()
+  @objc dynamic public func theme_viewDidLoad()
+}
+@objc public class Theme : ObjectiveC.NSObject {
+  public static let moduleName: Swift.String
+  public var color: ApolloTheme.Color?
+  public static let DEFAULT_VALUE: Swift.String
+  public init(config: ApolloTheme.ThemeConfig)
+  public static func configure(app: TerraInstancesManager.ITerraApp) -> ApolloTheme.Theme
+  @objc deinit
+  @objc override dynamic public init()
+}
+@_hasMissingDesignatedInitializers public class ThemeManager {
+  public static let shared: ApolloTheme.ThemeManager
+  public func configure(_ theme: ApolloTheme.Theme, forAppName appName: Swift.String)
+  @objc deinit
+}
+public struct ThemeConfig : Swift.Decodable {
+  public var color: ApolloTheme.ColorConfig?
+  public init(color: ApolloTheme.ColorConfig?)
+  public init(from decoder: Swift.Decoder) throws
+}
+public protocol Themeable {
+  func applyTheme()
+}
+extension UIView {
+  @objc dynamic public var appName: Swift.String {
+    @objc get
+    @objc set
+  }
+  public var theme: ApolloTheme.Theme? {
+    get
+    set
+  }
+  @objc dynamic open func applyTheme(_ theme: ApolloTheme.Theme)
+}

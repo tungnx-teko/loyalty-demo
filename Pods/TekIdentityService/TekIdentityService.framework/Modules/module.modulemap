@@ -1,0 +1,11 @@
+framework module TekIdentityService {
+  umbrella header "TekIdentityService.h"
+
+  export *
+  module * { export * }
+}
+
+module TekIdentityService.Swift {
+    header "TekIdentityService-Swift.h"
+    requires objc
+}

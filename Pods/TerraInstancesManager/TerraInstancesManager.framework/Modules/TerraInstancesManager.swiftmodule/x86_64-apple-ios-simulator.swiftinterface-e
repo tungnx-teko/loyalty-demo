@@ -1,0 +1,295 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3 (swiftlang-1200.0.29.2 clang-1200.0.30.1)
+// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -Onone -module-name TerraInstancesManager
+import Foundation
+import Logging
+import Swift
+import TekCoreService
+@_exported import TerraInstancesManager
+import UIKit
+public struct AnyDecodable : Swift.Decodable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+@usableFromInline
+internal protocol _AnyDecodable {
+  var value: Any { get }
+  init<T>(_ value: T?)
+}
+extension AnyDecodable : TerraInstancesManager._AnyDecodable {
+}
+extension _AnyDecodable {
+  public init(from decoder: Swift.Decoder) throws
+}
+extension AnyDecodable : Swift.Equatable {
+  public static func == (lhs: TerraInstancesManager.AnyDecodable, rhs: TerraInstancesManager.AnyDecodable) -> Swift.Bool
+}
+extension AnyDecodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AnyDecodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class Bus : TerraInstancesManager.BusProtocol {
+  final public let id: Swift.String
+  public func subscribe<T>(eventName: Swift.String, subscriber: T, options: TerraInstancesManager.SubscriberOptions) where T : TerraInstancesManager.Subscribable
+  public func unsubscribe<T>(eventName: Swift.String, subscriber: T) where T : TerraInstancesManager.Subscribable
+  @objc deinit
+}
+extension Bus {
+  public func publish<RequestModel>(eventName: Swift.String, data: RequestModel, options: TerraInstancesManager.EventOptions? = nil) where RequestModel : Swift.Encodable
+  @discardableResult
+  public func request<RequestModel, ResponseModel>(eventName: Swift.String, data: RequestModel, options: TerraInstancesManager.EventOptions?, onResult: @escaping (Swift.Result<ResponseModel, TerraInstancesManager.BusError>) -> ()) -> TerraInstancesManager.CancellableRequest? where RequestModel : Swift.Encodable, ResponseModel : Swift.Decodable
+}
+open class CommonEvent : Swift.Codable {
+  public init()
+  @objc deinit
+  required public init(from decoder: Swift.Decoder) throws
+  open func encode(to encoder: Swift.Encoder) throws
+}
+public enum TerraEnv {
+  case dev
+  case staging
+  case live
+  public static func == (a: TerraInstancesManager.TerraEnv, b: TerraInstancesManager.TerraEnv) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public protocol CancellableRequest {
+  func cancel()
+}
+public struct SubscriberOptions {
+  public init(allowHandleExternalEvent: Swift.Bool = false)
+}
+extension Result where Success : Swift.Decodable {
+  public func get() -> Success?
+}
+public protocol PandoraConfigGettable {
+  func getConfig(key: Swift.String) -> [Swift.String : Any]?
+}
+public protocol ITerraApp : AnyObject {
+  var identity: Swift.String { get }
+  var clientId: Swift.String? { get }
+  var bundleId: Swift.String { get }
+  var terraURL: Foundation.URL? { get }
+  var configGetter: TerraInstancesManager.PandoraConfigGettable? { get }
+  var application: UIKit.UIApplication? { get set }
+  var servicesCredential: TekCoreService.ServicesCredential? { get set }
+  var servicesErrorDelegation: TekCoreService.ServicesErrorDelegate? { get set }
+  var env: TerraInstancesManager.TerraEnv { get }
+  var bus: TerraInstancesManager.BusProtocol! { get set }
+}
+extension ITerraApp {
+  public func setServicesCredential(_ credential: TekCoreService.ServicesCredential)
+  public func setApplication(_ app: UIKit.UIApplication)
+  public func setServicesErrorDelegation(_ delegation: TekCoreService.ServicesErrorDelegate)
+  public func setBus(_ bus: TerraInstancesManager.BusProtocol)
+}
+public typealias BusEvent = Swift.Result<Foundation.Data?, TerraInstancesManager.BusError>
+public typealias BusEventHandler = (TerraInstancesManager.BusEvent) -> ()
+public struct AnyEncodable : Swift.Encodable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+@usableFromInline
+internal protocol _AnyEncodable {
+  var value: Any { get }
+  init<T>(_ value: T?)
+}
+extension AnyEncodable : TerraInstancesManager._AnyEncodable {
+}
+extension _AnyEncodable {
+  public func encode(to encoder: Swift.Encoder) throws
+}
+extension AnyEncodable : Swift.Equatable {
+  public static func == (lhs: TerraInstancesManager.AnyEncodable, rhs: TerraInstancesManager.AnyEncodable) -> Swift.Bool
+}
+extension AnyEncodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AnyEncodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension AnyEncodable : Swift.ExpressibleByNilLiteral {
+}
+extension AnyEncodable : Swift.ExpressibleByBooleanLiteral {
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension AnyEncodable : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension AnyEncodable : Swift.ExpressibleByFloatLiteral {
+  public typealias FloatLiteralType = Swift.Double
+}
+extension AnyEncodable : Swift.ExpressibleByStringLiteral {
+  public typealias StringLiteralType = Swift.String
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension AnyEncodable : Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = Any
+}
+extension AnyEncodable : Swift.ExpressibleByDictionaryLiteral {
+  public typealias Key = Swift.AnyHashable
+  public typealias Value = Any
+}
+extension _AnyEncodable {
+  public init(nilLiteral _: ())
+  public init(booleanLiteral value: Swift.Bool)
+  public init(integerLiteral value: Swift.Int)
+  public init(floatLiteral value: Swift.Double)
+  public init(extendedGraphemeClusterLiteral value: Swift.String)
+  public init(stringLiteral value: Swift.String)
+  public init(arrayLiteral elements: Any...)
+  public init(dictionaryLiteral elements: (Swift.AnyHashable, Any)...)
+}
+public protocol ServiceInstanceGeneratable : TerraInstancesManager.InstanceGeneratable where Self.InstanceType : TekCoreService.CoreService {
+  associatedtype ServiceFactory : TekCoreService.ServiceBuildable
+}
+extension ServiceInstanceGeneratable {
+  public func generateInstance(app: TerraInstancesManager.ITerraApp) -> Self.InstanceType?
+}
+public protocol InstancesManageable {
+  associatedtype Generator : TerraInstancesManager.InstanceGeneratable
+  var instances: [Swift.String : Self.Generator.InstanceType] { get set }
+}
+extension InstancesManageable {
+  public mutating func getInstance(by name: Swift.String) -> Self.Generator.InstanceType?
+  public mutating func revokeInstance(by name: Swift.String)
+}
+extension InstancesManageable {
+  public mutating func getInstance(by app: TerraInstancesManager.ITerraApp) -> Self.Generator.InstanceType?
+  public mutating func revokeInstance(by app: TerraInstancesManager.ITerraApp)
+}
+@_hasMissingDesignatedInitializers public class CoupleDataEvent : Swift.Encodable {
+  public func encode(to encoder: Swift.Encoder) throws
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class CoupleDataEventInput<KeepingTypeInput, NotKeepingTypeInput> : Swift.Decodable where NotKeepingTypeInput : Swift.Decodable {
+  required public init(from decoder: Swift.Decoder) throws
+  public func encode(to encoder: Swift.Encoder) throws
+  @objc deinit
+}
+public class CoupleDataEventSubscriber<KeepingTypeInput, NotKeepingTypeInput, Output> : TerraInstancesManager.Subscribable where NotKeepingTypeInput : Swift.Decodable, Output : Swift.Encodable {
+  public typealias Input = TerraInstancesManager.CoupleDataEventInput<KeepingTypeInput, NotKeepingTypeInput>
+  public typealias Output = Output
+  public typealias CoupleDataEventHandler = (KeepingTypeInput, NotKeepingTypeInput, (Swift.Result<Output, TerraInstancesManager.BusError>) -> ()) -> ()
+  public var id: Swift.String
+  public var handle: TerraInstancesManager.CoupleDataEventSubscriber<KeepingTypeInput, NotKeepingTypeInput, Output>.CoupleDataEventHandler
+  public init(handle: @escaping TerraInstancesManager.CoupleDataEventSubscriber<KeepingTypeInput, NotKeepingTypeInput, Output>.CoupleDataEventHandler)
+  public func handle(eventName: Swift.String, eventId: Swift.String, input: TerraInstancesManager.CoupleDataEventSubscriber<KeepingTypeInput, NotKeepingTypeInput, Output>.Input, completion: (Swift.Result<Output, TerraInstancesManager.BusError>) -> ())
+  public func convertEventData(data: Swift.Encodable) throws -> TerraInstancesManager.CoupleDataEventSubscriber<KeepingTypeInput, NotKeepingTypeInput, Output>.Input
+  @objc deinit
+}
+public protocol BusProtocol {
+  var id: Swift.String { get }
+  func subscribe<T>(eventName: Swift.String, subscriber: T, options: TerraInstancesManager.SubscriberOptions) where T : TerraInstancesManager.Subscribable
+  func unsubscribe<T>(eventName: Swift.String, subscriber: T) where T : TerraInstancesManager.Subscribable
+  func publish<RequestModel>(eventName: Swift.String, data: RequestModel, options: TerraInstancesManager.EventOptions?) where RequestModel : Swift.Encodable
+  @discardableResult
+  func request<RequestModel, ResponseModel>(eventName: Swift.String, data: RequestModel, options: TerraInstancesManager.EventOptions?, onResult: @escaping (Swift.Result<ResponseModel, TerraInstancesManager.BusError>) -> ()) -> TerraInstancesManager.CancellableRequest? where RequestModel : Swift.Encodable, ResponseModel : Swift.Decodable
+}
+@_hasMissingDesignatedInitializers public class BusInstancesManager {
+  public static var shared: TerraInstancesManager.BusInstancesManager
+  public var instances: [Swift.String : TerraInstancesManager.BusProtocol]
+  public func getBus(id: Swift.String) throws -> TerraInstancesManager.BusProtocol
+  public func getBus(app: TerraInstancesManager.ITerraApp) -> TerraInstancesManager.BusProtocol
+  public func configureWith(app: TerraInstancesManager.ITerraApp)
+  @objc deinit
+}
+public var TerraBus: TerraInstancesManager.BusInstancesManager
+public enum BusError : Swift.Error {
+  case notExisted
+  case noSubscriberFound
+  case undefinedEvent
+  case cannotDecode
+  case cannotEncode
+  case notAllowedExternalEvent
+  case cannotMapEventData
+  public static func == (a: TerraInstancesManager.BusError, b: TerraInstancesManager.BusError) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+  public func hash(into hasher: inout Swift.Hasher)
+}
+public struct AnyCodable : Swift.Codable {
+  public let value: Any
+  public init<T>(_ value: T?)
+}
+extension AnyCodable : TerraInstancesManager._AnyEncodable, TerraInstancesManager._AnyDecodable {
+}
+extension AnyCodable : Swift.Equatable {
+  public static func == (lhs: TerraInstancesManager.AnyCodable, rhs: TerraInstancesManager.AnyCodable) -> Swift.Bool
+}
+extension AnyCodable : Swift.CustomStringConvertible {
+  public var description: Swift.String {
+    get
+  }
+}
+extension AnyCodable : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension AnyCodable : Swift.ExpressibleByNilLiteral {
+}
+extension AnyCodable : Swift.ExpressibleByBooleanLiteral {
+  public typealias BooleanLiteralType = Swift.Bool
+}
+extension AnyCodable : Swift.ExpressibleByIntegerLiteral {
+  public typealias IntegerLiteralType = Swift.Int
+}
+extension AnyCodable : Swift.ExpressibleByFloatLiteral {
+  public typealias FloatLiteralType = Swift.Double
+}
+extension AnyCodable : Swift.ExpressibleByStringLiteral {
+  public typealias StringLiteralType = Swift.String
+  public typealias ExtendedGraphemeClusterLiteralType = Swift.String
+  public typealias UnicodeScalarLiteralType = Swift.String
+}
+extension AnyCodable : Swift.ExpressibleByArrayLiteral {
+  public typealias ArrayLiteralElement = Any
+}
+extension AnyCodable : Swift.ExpressibleByDictionaryLiteral {
+  public typealias Key = Swift.AnyHashable
+  public typealias Value = Any
+}
+public struct EventOptions {
+  public init(destinationBusId: Swift.String)
+}
+public protocol Subscribable {
+  associatedtype Input : Swift.Decodable
+  associatedtype Output : Swift.Encodable
+  typealias Completion = (Swift.Result<Self.Output, TerraInstancesManager.BusError>) -> ()
+  var id: Swift.String { get }
+  func handle(eventName: Swift.String, eventId: Swift.String, input: Self.Input, completion: @escaping Self.Completion)
+  func convertEventData(data: Swift.Encodable) throws -> Self.Input
+}
+public class Subscriber<Input, Output> : TerraInstancesManager.Subscribable where Input : Swift.Decodable, Output : Swift.Encodable {
+  public typealias Input = Input
+  public typealias Output = Output
+  public typealias Handler = (Input, @escaping TerraInstancesManager.Subscriber<Input, Output>.Completion) -> ()
+  public var id: Swift.String
+  public var handler: TerraInstancesManager.Subscriber<Input, Output>.Handler
+  public init(handler: @escaping TerraInstancesManager.Subscriber<Input, Output>.Handler)
+  public func handle(eventName: Swift.String, eventId: Swift.String, input: Input, completion: @escaping TerraInstancesManager.Subscriber<Input, Output>.Completion)
+  public func convertEventData(data: Swift.Encodable) throws -> Input
+  @objc deinit
+}
+public protocol InstanceGeneratable {
+  associatedtype InstanceType
+  init()
+  func generateInstance(app: TerraInstancesManager.ITerraApp) -> Self.InstanceType?
+}
+public typealias BusResult = Swift.Result<Foundation.Data, TerraInstancesManager.BusError>
+public typealias BusResultHandler = (TerraInstancesManager.BusResult) -> ()

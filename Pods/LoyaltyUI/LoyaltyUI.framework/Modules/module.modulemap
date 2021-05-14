@@ -1,0 +1,11 @@
+framework module LoyaltyUI {
+  umbrella header "LoyaltyUI.h"
+
+  export *
+  module * { export * }
+}
+
+module LoyaltyUI.Swift {
+    header "LoyaltyUI-Swift.h"
+    requires objc
+}

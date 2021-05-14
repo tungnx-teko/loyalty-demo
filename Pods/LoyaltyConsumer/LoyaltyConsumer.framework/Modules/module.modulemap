@@ -1,0 +1,11 @@
+framework module LoyaltyConsumer {
+  umbrella header "LoyaltyConsumer.h"
+
+  export *
+  module * { export * }
+}
+
+module LoyaltyConsumer.Swift {
+    header "LoyaltyConsumer-Swift.h"
+    requires objc
+}

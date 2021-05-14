@@ -1,0 +1,175 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.3.2 (swiftlang-1200.0.45 clang-1200.0.32.28)
+// swift-module-flags: -target x86_64-apple-ios10.0-simulator -enable-objc-interop -enable-library-evolution -swift-version 5 -enforce-exclusivity=checked -O -module-name LoyaltyCore
+import Foundation
+import Logging
+@_exported import LoyaltyCore
+import LoyaltyModel
+import Swift
+import TekCoreNetwork
+import TekCoreService
+import TerraInstancesManager
+import UIKit
+public class LoyaltyServiceConfig {
+  public init(rawValue: [Swift.String : Any])
+  @objc deinit
+}
+public struct RegisterRequestParam {
+  public enum Gender : Swift.String, Swift.CaseIterable {
+    case male
+    case female
+    case undefined
+    public typealias RawValue = Swift.String
+    public init?(rawValue: Swift.String)
+    public var rawValue: Swift.String {
+      get
+    }
+    public typealias AllCases = [LoyaltyCore.RegisterRequestParam.Gender]
+    public static var allCases: [LoyaltyCore.RegisterRequestParam.Gender] {
+      get
+    }
+  }
+  public init(name: Swift.String, email: Swift.String, address: Swift.String? = nil, dateOfBirth: Swift.String? = nil, gender: LoyaltyCore.RegisterRequestParam.Gender? = nil, idCardNumber: Swift.String? = nil, idCitizenNumber: Swift.String? = nil, passportNumber: Swift.String? = nil)
+}
+extension RegisterRequestParam : Swift.Encodable {
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@_hasMissingDesignatedInitializers public class LoyaltyProcessor {
+  public func getNetworkConfig(completion: @escaping (Swift.Result<LoyaltyModel.NetworkConfigResponse, LoyaltyModel.LoyaltyError>) -> ())
+  public func register(param: LoyaltyCore.RegisterRequestParam, completion: @escaping (Swift.Result<LoyaltyCore.RegisterResponse, LoyaltyModel.LoyaltyError>) -> Swift.Void)
+  public func getMemberInfo(completion: @escaping (LoyaltyModel.GetMemberInfoResponse?, LoyaltyModel.LoyaltyError?) -> Swift.Void)
+  public func getEncryptedCode(completion: @escaping (LoyaltyModel.EncryptedCodeResponse?, LoyaltyModel.LoyaltyError?) -> Swift.Void)
+  public func getHistory(params: LoyaltyCore.HistoryRequestParams, completion: @escaping (LoyaltyModel.HistoryResponse?, LoyaltyModel.LoyaltyError?) -> Swift.Void)
+  public func getMerchantList(params: LoyaltyCore.MerchantsRequestParams, completion: @escaping (LoyaltyModel.MerchantsResponse?, LoyaltyModel.LoyaltyError?) -> Swift.Void)
+  @objc deinit
+}
+extension LoyaltyProcessor {
+  public func getMemberToken(completion: @escaping (Swift.String?, LoyaltyModel.LoyaltyError?) -> Swift.Void)
+  public func checkLoyaltyBalance(hasAmount points: Swift.Int, completion: @escaping (Swift.Result<Swift.Bool, LoyaltyModel.LoyaltyError>) -> Swift.Void)
+}
+open class BaseLoyaltyService<API> : TekCoreService.CoreService where API : LoyaltyCore.LoyaltyAPIManager {
+  public var apiManager: API
+  public var serviceCredential: TekCoreService.ServicesCredential?
+  public var url: Foundation.URL
+  public init(config: LoyaltyCore.LoyaltyServiceConfig, credential: TekCoreService.ServicesCredential? = nil, bus: TerraInstancesManager.BusProtocol?)
+  @objc deinit
+}
+public class MerchantsRequestParams : Swift.Encodable {
+  public init(page: Swift.Int = 1, size: Swift.Int = 6)
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+public struct RegisterResult : Swift.Decodable {
+  public var member: LoyaltyModel.MemberInfo?
+  public init(from decoder: Swift.Decoder) throws
+}
+public enum LoyaltyResult<T> {
+  case success(T)
+  case failure(LoyaltyModel.LoyaltyError)
+}
+@_hasMissingDesignatedInitializers public class LoyaltyCore_ {
+  public static func hello()
+  @objc deinit
+}
+public class LoyaltyCredential : TekCoreService.ServicesCredential {
+  public var timeOut: Foundation.Date?
+  public var accessToken: Swift.String? {
+    get
+  }
+  public var iamServiceCredential: TekCoreService.ServicesCredential?
+  public init(serviceCredential: TekCoreService.ServicesCredential?, bus: TerraInstancesManager.BusProtocol?, config: LoyaltyCore.LoyaltyServiceConfig?)
+  public func refresh(completion: @escaping TekCoreService.ServicesCredentialRefreshHandler)
+  @objc deinit
+}
+open class LoyaltyAPIManager : TekCoreNetwork.CoreAPIManager {
+  required public init(serviceConfig: LoyaltyCore.LoyaltyServiceConfig, configuration: LoyaltyCore.LoyaltyRequestConfiguration)
+  override open var successRange: Swift.ClosedRange<Swift.Int> {
+    get
+  }
+  @objc deinit
+  override public init(configuration: TekCoreNetwork.APIClientConfiguration)
+}
+public enum HistoryTabType : Swift.String, Swift.CaseIterable {
+  case all, grant, spend
+  public typealias RawValue = Swift.String
+  public init?(rawValue: Swift.String)
+  public var rawValue: Swift.String {
+    get
+  }
+  public typealias AllCases = [LoyaltyCore.HistoryTabType]
+  public static var allCases: [LoyaltyCore.HistoryTabType] {
+    get
+  }
+}
+public class LoyaltyGenerator : TerraInstancesManager.InstanceGeneratable {
+  public typealias InstanceType = LoyaltyCore.Loyalty
+  required public init()
+  public func generateInstance(app: TerraInstancesManager.ITerraApp) -> LoyaltyCore.Loyalty?
+  public func generateDefaultInstance(config: LoyaltyCore.LoyaltyServiceConfig) -> LoyaltyCore.Loyalty
+  public func generateDefaultInstance(config: [Swift.String : Any]) -> LoyaltyCore.Loyalty
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class LoyaltySingleton : TerraInstancesManager.InstancesManageable {
+  public typealias Generator = LoyaltyCore.LoyaltyGenerator
+  public static var shared: LoyaltyCore.LoyaltySingleton
+  public var instances: [Swift.String : LoyaltyCore.Loyalty]
+  public static let DEFAULT_VALUE: Swift.String
+  public var `default`: LoyaltyCore.Loyalty {
+    get
+  }
+  public func configureWith(config: LoyaltyCore.LoyaltyServiceConfig)
+  public func configureWith(config: [Swift.String : Any])
+  public func configureWith(app: TerraInstancesManager.ITerraApp)
+  @objc deinit
+}
+public var TerraLoyalty: LoyaltyCore.LoyaltySingleton
+open class LoyaltyRequestConfiguration : TekCoreService.ServiceRequestConfigurationProtocol {
+  public var mainURL: Foundation.URL
+  public var serviceCredential: TekCoreService.ServicesCredential?
+  public var userAgent: Swift.String?
+  public var loyaltyCredential: LoyaltyCore.LoyaltyCredential?
+  public init(mainURL: Foundation.URL, credential: TekCoreService.ServicesCredential? = nil, bus: TerraInstancesManager.BusProtocol?, config: LoyaltyCore.LoyaltyServiceConfig)
+  @objc deinit
+}
+@_hasMissingDesignatedInitializers public class RegisterResponse : TekCoreNetwork.BaseResponse<LoyaltyModel.LoyaltyStatusCode> {
+  public var result: LoyaltyModel.MemberResult?
+  @objc deinit
+  override public init(code: LoyaltyModel.LoyaltyStatusCode)
+}
+public class HistoryRequestParams : Swift.Encodable {
+  public init(txnTypes: [LoyaltyModel.TransactionType], merchantCode: Swift.String? = nil, fromTime: Swift.String? = nil, toTime: Swift.String? = nil, status: Swift.Int = 4, page: Swift.Int = 1, size: Swift.Int = 20)
+  @objc deinit
+  public func encode(to encoder: Swift.Encoder) throws
+}
+@_inheritsConvenienceInitializers public class LoyaltyService : LoyaltyCore.BaseLoyaltyService<LoyaltyCore.LoyaltyAPIManager> {
+  public func register(param: LoyaltyCore.RegisterRequestParam, completion: @escaping (Swift.Result<LoyaltyCore.RegisterResponse, LoyaltyModel.LoyaltyError>) -> Swift.Void)
+  public func getMemberInfo(completion: @escaping (LoyaltyModel.GetMemberInfoResponse?, LoyaltyModel.LoyaltyError?) -> Swift.Void)
+  public func getNetworkConfig(completion: @escaping (Swift.Result<LoyaltyModel.NetworkConfigResponse, LoyaltyModel.LoyaltyError>) -> ())
+  public func getEncryptedCode(completion: @escaping (LoyaltyModel.EncryptedCodeResponse?, LoyaltyModel.LoyaltyError?) -> ())
+  public func getHistory(params: LoyaltyCore.HistoryRequestParams, completion: @escaping (LoyaltyModel.HistoryResponse?, LoyaltyModel.LoyaltyError?) -> ())
+  public func getMerchantList(params: LoyaltyCore.MerchantsRequestParams, completion: @escaping (LoyaltyModel.MerchantsResponse?, LoyaltyModel.LoyaltyError?) -> ())
+  override public init(config: LoyaltyCore.LoyaltyServiceConfig, credential: TekCoreService.ServicesCredential? = super, bus: TerraInstancesManager.BusProtocol?)
+  @objc deinit
+}
+open class Loyalty {
+  public var appName: Swift.String
+  public static let configName: Swift.String
+  public var config: LoyaltyCore.LoyaltyServiceConfig!
+  public init(appName: Swift.String, config: LoyaltyCore.LoyaltyServiceConfig)
+  open func register(param: LoyaltyCore.RegisterRequestParam, completion: @escaping (Swift.Result<LoyaltyCore.RegisterResponse, LoyaltyModel.LoyaltyError>) -> ())
+  open func getMemberInfo(completion: @escaping (Swift.Result<LoyaltyModel.GetMemberInfoResponse, LoyaltyModel.LoyaltyError>) -> ())
+  open func getNetworkConfig(completion: @escaping (Swift.Result<LoyaltyModel.NetworkConfigResponse, LoyaltyModel.LoyaltyError>) -> ())
+  open func getEncryptedCode(completion: @escaping (Swift.Result<LoyaltyModel.EncryptedCodeResponse, LoyaltyModel.LoyaltyError>) -> ())
+  open func getHistory(params: LoyaltyCore.HistoryRequestParams, completion: @escaping (Swift.Result<LoyaltyModel.HistoryResponse, LoyaltyModel.LoyaltyError>) -> ())
+  open func getMarchantList(params: LoyaltyCore.MerchantsRequestParams, completion: @escaping (Swift.Result<LoyaltyModel.MerchantsResponse, LoyaltyModel.LoyaltyError>) -> ())
+  @objc deinit
+}
+extension Loyalty {
+  public static func configure(app: TerraInstancesManager.ITerraApp) -> LoyaltyCore.Loyalty
+}
+extension LoyaltyCore.RegisterRequestParam.Gender : Swift.Equatable {}
+extension LoyaltyCore.RegisterRequestParam.Gender : Swift.Hashable {}
+extension LoyaltyCore.RegisterRequestParam.Gender : Swift.RawRepresentable {}
+extension LoyaltyCore.HistoryTabType : Swift.Equatable {}
+extension LoyaltyCore.HistoryTabType : Swift.Hashable {}
+extension LoyaltyCore.HistoryTabType : Swift.RawRepresentable {}

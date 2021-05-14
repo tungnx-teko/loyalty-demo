@@ -1,0 +1,11 @@
+framework module Terra {
+  umbrella header "Terra.h"
+
+  export *
+  module * { export * }
+}
+
+module Terra.Swift {
+    header "Terra-Swift.h"
+    requires objc
+}

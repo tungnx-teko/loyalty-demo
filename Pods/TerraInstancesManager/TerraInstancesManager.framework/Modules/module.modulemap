@@ -1,0 +1,11 @@
+framework module TerraInstancesManager {
+  umbrella header "TerraInstancesManager.h"
+
+  export *
+  module * { export * }
+}
+
+module TerraInstancesManager.Swift {
+    header "TerraInstancesManager-Swift.h"
+    requires objc
+}
